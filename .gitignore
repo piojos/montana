@@ -4,4 +4,7 @@ upgrade
 uploads
 index.php
 
-themes
+themes/twentyfifteen
+themes/twentysixteen
+themes/twentyseventeen
+themes/index.php
