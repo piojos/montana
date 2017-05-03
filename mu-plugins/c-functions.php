@@ -128,6 +128,7 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
@@ -167,6 +168,7 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
@@ -206,13 +208,14 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
 			'has_archive'         => true,
 			'exclude_from_search' => false,
 			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
+			// 'capability_type'     => 'page',
 		);
 
 		register_post_type( 'colecciones', $args );
@@ -245,6 +248,7 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
@@ -284,6 +288,7 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
@@ -323,6 +328,7 @@
 			'show_ui'             => true,
 			'show_in_menu'        => true,
 			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
 			'menu_position'       => 8,
 			'can_export'          => true,
@@ -474,6 +480,68 @@
 	// 	// return $toolbars - IMPORTANT!
 	// 	return $toolbars;
 	// }
+
+
+
+
+
+
+
+
+	/**
+	 * Grab latest post title by an author!
+	 *
+	 * @param array $data Options for the function.
+	 * @return string|null Post title for the latest,  * or null if none.
+	 */
+	// function my_awesome_func( $data ) {
+	// 	$posts = get_posts( array(
+	// 		'author' => $data['id'],
+	// 	) );
+	//
+	// 	if ( empty( $posts ) ) {
+	// 		return null;
+	// 	}
+	//
+	// 	return $posts[0]->post_title;
+	// }
+	//
+	//
+	// add_action( 'rest_api_init', function () {
+	// 	register_rest_route( 'fun/v1', '/cine/(?P<id>\d+)', array(
+	// 		'methods' => 'GET',
+	// 		'callback' => 'cine',
+	// 	) );
+	// } );
+	//
+	// function my_awesome_func( WP_REST_Request $request ) {
+	// 	// You can access parameters via direct array access on the object:
+	// 	$param = $request['some_param'];
+	//
+	// 	// Or via the helper method:
+	// 	$param = $request->get_param( 'some_param' );
+	//
+	// 	// You can get the combined, merged set of parameters:
+	// 	$parameters = $request->get_params();
+	//
+	// 	// The individual sets of parameters are also available, if needed:
+	// 	$parameters = $request->get_url_params();
+	// 	$parameters = $request->get_query_params();
+	// 	$parameters = $request->get_body_params();
+	// 	$parameters = $request->get_json_params();
+	// 	$parameters = $request->get_default_params();
+	//
+	// 	// Uploads aren't merged in, but can be accessed separately:
+	// 	$parameters = $request->get_file_params();
+	// }
+
+
+
+
+
+
+
+
 
 
 /*  The End  */
