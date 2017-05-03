@@ -1,10 +1,11 @@
-languages
-plugins
-upgrade
-uploads
-index.php
+/languages
+/plugins
+/upgrade
+/uploads
+/index.php
 
 themes/twentyfifteen
 themes/twentysixteen
 themes/twentyseventeen
+themes/blankslate
 themes/index.php
