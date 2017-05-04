@@ -1,20 +1,21 @@
 <?php
 
-// Functions index
+	function montana_fun() {
 
-	// – General Settings & Theme support
-	add_theme_support( 'post-thumbnails' );
+	// SETUP
+		locate_template( array( 'fun/setup.php' ), true, true );
+		// 1. Theme Support
+		// 2. Head
+		// 3. Image Handling
 
-function montana_fun() {
+	// CARDS
+		locate_template( array( 'fun/cards.php' ), true, true );
 
-	// – Cards
-	locate_template( array( 'fun/cards.php' ), true, true );
+	// HOME MODULES
+		locate_template( array( 'fun/home-modules.php' ), true, true );
 
-	// – Home Modules
-	locate_template( array( 'fun/home-modules.php' ), true, true );
+	// OTHER
+		locate_template( array( 'fun/other.php' ), true, true );
 
-	// – Other
-	locate_template( array( 'fun/other.php' ), true, true );
-
-}
-add_action( 'after_setup_theme', 'montana_fun' );
+	}
+	add_action( 'after_setup_theme', 'montana_fun' );
