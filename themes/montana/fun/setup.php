@@ -22,11 +22,16 @@
 
 	// STYLES
 		// wp_enqueue_style( 'Normalizer', get_template_directory_uri() . '/css/normalize.min.css');
+		wp_enqueue_style( 'Slick', get_template_directory_uri() . '/css/slick.css');
+		wp_enqueue_style( 'Dropdown', get_template_directory_uri() . '/css/dropdown.css');
 		wp_enqueue_style( 'Style', get_stylesheet_uri() );
 		// wp_enqueue_style( 'Shame', get_template_directory_uri() . '/css/shame.css');
 
 	// SCRIPTS
-		wp_enqueue_script( 'Magic', get_template_directory_uri() . '/js/scripts.js', array('jquery') );
+		wp_enqueue_script( 'Slickjs', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js', array('jquery') ); //
+		wp_enqueue_script( 'Modernizr', get_template_directory_uri() . '/js/modernizr.custom.63321.js' ); // Home
+		wp_enqueue_script( 'Dropdown', get_template_directory_uri() . '/js/jquery.dropdown.js' ); // Home
+		wp_enqueue_script( 'Magic', get_template_directory_uri() . '/js/magic.js', array('jquery') );
 
 	// CONDITIONAL LOADS
 		// if(is_page('acerca')) {
