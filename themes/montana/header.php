@@ -21,15 +21,35 @@
 	<body <?php body_class(); ?>>
 		<div id="wrapper" class="hfeed">
 			<header id="header" role="banner">
-				<section id="branding">
-					<div id="site-title"><?php if ( is_front_page() || is_home() || is_front_page() && is_home() ) { echo '<h1>'; } ?><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></a><?php if ( is_front_page() || is_home() || is_front_page() && is_home() ) { echo '</h1>'; } ?></div>
-					<div id="site-description"><?php bloginfo( 'description' ); ?></div>
-				</section>
-				<nav id="menu" role="navigation">
+				<div id="site-title">
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
+						<img src="http://www.placehold.it/123x50&text=CONARTE" alt="">
+					</a>
+				</div>
+				<a href="#" id="nav_toggle_button"></a>
+				<div class="navigation">
+					<ul class="submenu">
+						<li><a href="#">CONARTE</a></li>
+						<li><a href="#">Espacios</a></li>
+						<li><a href="#">Artistas</a></li>
+						<li><a href="#">Patrimonio</a></li>
+						<li><a href="#">Contacto</a></li>
+					</ul>
 					<div id="search">
-						<?php get_search_form(); ?>
+						<a href="#">Búsqueda</a>
+						<?php // get_search_form(); ?>
 					</div>
-					<?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
-				</nav>
+					<hr>
+					<nav id="menu" role="navigation">
+						<?php // wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
+						<ul>
+							<li><a href="#">Agenda</a></li>
+							<li><a href="#">Cineteca</a></li>
+							<li><a href="#">Exposiciones</a></li>
+							<li><a href="#">Talleres</a></li>
+							<li><a href="#">Convocatorias</a></li>
+						</ul>
+					</nav>
+				</div>
 			</header>
 			<div id="container">

@@ -1,7 +1,4 @@
 
 jQuery( function($) {
-	$( '#cd-dropdown' ).dropdown( {
-		gutter : 5
-	} );
-	console.log('Ran');
+	console.log('Hellow World!');
 });
