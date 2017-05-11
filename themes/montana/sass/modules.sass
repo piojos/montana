@@ -1,0 +1,72 @@
+.slide
+	position: relative
+	> img
+		max-width: 100%
+		min-height: 20em
+
+.details.box
+	background: $white
+	border: 1px solid
+	display: block
+	min-width: 25em
+	position: absolute
+	margin: 0 1em
+	bottom: 1em
+	padding: 1em
+	min-height: 14em
+	.parent_label
+		position: absolute
+		top: -1em
+		display: inline-block
+		background: $white
+		border: .1rem solid $black
+		font-size: .8em
+		padding: .25em .5em
+	h2
+		font-size: 2.4em
+		margin-bottom: 1em
+	.status_label
+		position: absolute
+		bottom: 1em
+		font-size: .8em
+
+.deck
+	overflow: auto
+	padding-top: 2em
+.card
+	position: relative
+	padding: 1.5rem 1rem 1.5rem 3rem
+	float: left
+	&.twos
+		width: 100%
+		// .details.box
+		// 	margin-top: 9em
+		// img
+		// 	top: -9em
+	&.fours
+		width: 50%
+	img
+		width: 100%
+		display: block
+	.details.box
+		min-height: 14em
+		min-width: inherit
+		width: 100%
+		position: relative
+		margin-left: -1em
+		padding: 0
+		.wrap
+			padding: 1em
+		.parent_label
+			top: inherit
+			bottom: -1em
+	.img_container
+		position: relative
+		right: -1em
+		margin-top: -1em
+
+	&.no-image
+		.details.box
+			min-height: 0
+		.img_container
+			margin-top: 0
