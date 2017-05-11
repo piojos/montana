@@ -65,6 +65,9 @@ body {
   font-weight: 300;
   color: #1d1d1d; }
 
+a {
+  text-decoration: none; }
+
 #wrapper > header {
   background: #1d1d1d;
   padding: 2em; }
@@ -91,6 +94,10 @@ a#nav_toggle_button {
     width: 100%;
     display: block; }
 
+.label {
+  text-transform: uppercase;
+  font-size: 0.8em; }
+
 .slide {
   position: relative; }
   .slide > img {
@@ -101,7 +108,7 @@ a#nav_toggle_button {
   background: white;
   border: 1px solid;
   display: block;
-  min-width: 25em;
+  min-width: 20em;
   position: absolute;
   margin: 0 1em;
   bottom: 1em;
@@ -159,6 +166,15 @@ a#nav_toggle_button {
   .card.no-image .img_container {
     margin-top: 0; }
 
+.label {
+  text-transform: uppercase;
+  font-size: 0.8em; }
+
+h2.area_title {
+  font-size: 1.8em;
+  text-align: center;
+  margin: 1.5em 0 0.5em; }
+
 .dropdown {
   margin: 1em;
   position: relative; }
@@ -193,7 +209,3 @@ a#nav_toggle_button {
       vertical-align: middle;
       display: table-cell;
       height: 6rem; }
-
-.label {
-  text-transform: uppercase;
-  font-size: 0.8em; }
