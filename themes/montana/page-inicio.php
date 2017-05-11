@@ -17,8 +17,8 @@
 			<p>Hasta Marzo 14 (is this dinamic?)</p>
 			<p>Location Taxonomy</p>
 
-			<a href="#" class="share button"><img src="http://placehold.it/24" alt=""></a>
-			<a href="#" class="share button"><img src="http://placehold.it/24" alt=""></a>
+			<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+			<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
 		</div>
 	</div>
 </div>
@@ -97,18 +97,23 @@
 
 		echo cards(4, 'fours movie') ?>
 	</div>
+	<div class="actions_tray">
+		<a href="#" class="button">Ver todo hoy</a>
+	</div>
 
 
-	<div class="collections">
+	<div class="area collections">
 		<h2 class="area_title">No te pierdas</h2>
 		<div class="controls">
 			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
+				<li><a href="#">Exposiciones Gratuitas</a></li>
+				<li><a href="#">Una tarde con niños</a></li>
+				<li><a href="#">Conciertos Gratuitos</a></li>
+				<li><a href="#">Noches de Poesía</a></li>
+				<li><a href="#">Callegenera</a></li>
+				<li><a href="#">Esta Semana</a></li>
+				<li><a href="#">Festival de Teatro Nuevo León</a></li>
+				<li><a href="#">Poder Femenino</a></li>
 			</ul>
 		</div>
 		<div class="details_container">
@@ -123,11 +128,29 @@
 				</div>
 			</div>
 			<div class="gallery column">
+				<a href="#" class="full"><img src="http://placehold.it/780x400" alt=""></a>
+				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+				<a href="#" class="half more"> Ver todo</a>
 
 			</div>
 		</div>
 	</div>
 
+	<div class="area">
+		<h2 class="area_title">Esta semana</h2>
+		<div class="deck">
+			<?php echo cards(8, 'fours'); ?>
+		</div>
+	</div>
+
+	<div class="area">
+		<h2 class="area_title">Próximamente</h2>
+		<div class="deck">
+			<?php echo cards(2, 'twos'); ?>
+		</div>
+	</div>
 
 
 </section>
