@@ -25,9 +25,8 @@
 					Parque Fundidora Av. Fundidora y Adolfo Prieto, <br>
 					Col. Obrera, C.P. 64010, Monterrey, Nuevo León. <br>
 					T. +52 (81) 2315 1101</p>
-					<?php echo sprintf( __( '%1$s %2$s %3$s. All Rights Reserved.', 'blankslate' ), '&copy;', date( 'Y' ), esc_html( get_bloginfo( 'name' ) ) ); echo sprintf( __( ' Theme By: %1$s.', 'blankslate' ), '<a href="http://tidythemes.com/">TidyThemes</a>' ); ?>
-					<a href="#" id="logo_nl"><img src="http://placehold.it/180x80&text=Nuevo+Leon" alt=""></a>
 				</div>
+				<a href="#" id="logo_nl"><img src="http://placehold.it/180x80&text=Nuevo+Leon" alt=""></a>
 			</div>
 		</footer>
 	</div>
