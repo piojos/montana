@@ -1,3 +1,10 @@
+// Fonts
+
+// +font-face("NewJune", font-files("NewJune-Book.ttf", "truetype"))
+// +font-face("NewJune Bold", font-files("NewJune-Bold.ttf" "truetype"))
+
+
+
 *,
 *:after,
 *:before
@@ -5,13 +12,15 @@
 	padding: 0
 	margin: 0
 
+
+
 html, body
 	font-size: 10px
 	line-height: inherit
 
 body
 	background: $whitegray
-	font-family: 'Helvetica', Arial, sans-serif
+	font-family: $NewJune
 	font-size: 1.4em
 	font-weight: 300
 	color: $black
@@ -33,6 +42,13 @@ hr
 	margin: 0 auto
 	width: 100%
 	// overflow: auto
+
+ol
+	list-style: decimal
+	padding-left: 1.2em
+
+strong
+	font-weight: 700
 
 
 

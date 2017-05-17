@@ -14,6 +14,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="<?php bloginfo('description'); ?>">
 
+		<style>
+		@font-face {
+			font-family: "New June";
+			src: url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Book.eot');
+			src: url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Book.eot?#iefix') format('embedded-opentype'),
+				url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Book.ttf') format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: "New June";
+			src: url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Bold.eot');
+			src: url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Bold.eot?#iefix') format('embedded-opentype'),
+				url('<?php echo get_template_directory_uri(); ?>/fonts/NewJune-Bold.ttf') format('truetype');
+			font-weight: 700;
+			font-style: normal;
+		}
+
+		</style>
+
 		<?php wp_head(); ?>
 	</head>
 
