@@ -3,7 +3,7 @@
 	get_header();
 	if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-<section id="content" role="main">
+<section id="content" role="main" class="home">
 	<div class="home slider"><?php
 	function huge_slide() { ?>
 <div class="slide">
