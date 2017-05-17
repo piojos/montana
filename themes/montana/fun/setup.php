@@ -22,7 +22,7 @@
 
 	// STYLES
 		// wp_enqueue_style( 'Normalizer', get_template_directory_uri() . '/css/normalize.min.css');
-		wp_enqueue_style( 'Slick', get_template_directory_uri() . '/css/slick.css');
+		wp_enqueue_style( 'Slick', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css');
 		// wp_enqueue_style( 'Dropdown', get_template_directory_uri() . '/css/dropdown.css');
 		wp_enqueue_style( 'Style', get_stylesheet_uri() );
 		// wp_enqueue_style( 'Shame', get_template_directory_uri() . '/css/shame.css');
