@@ -9,29 +9,80 @@
 
 // Home
 
+.home.slider
+	margin-top: -4em
+	.slide .bg_img
+		max-width: 166rem
+		margin: 0 auto
+	.details.box
+		bottom: 4em
+		width: 90%
+		img
+			display: inline-block
+		@media screen and (min-width: 30rem)
+			width: 60%
+	@media screen and (min-width: 50rem)
+		.slide
+			height: 50em
+		.details.box
+			width: 45%
+	@media screen and (min-width: 79rem)
+		.slide
+			height: 60em
+		.details.box
+			width: 35%
+			bottom: 6em
+
+
+
+
+
 h2.area_title
 	font-size: 1.8em
 	text-align: center
 	margin: 1.5em 0 .5em
 
 .dropdown
-	margin: 1em
 	position: relative
-	.latest.story:after
-		content: url('http://placehold.it/10')
-		border: .2rem solid $white
-		position: absolute
-		right: 2em
-		top: 2.5em
-		+border-radius(50%)
-		width: 2.2rem
-		height: 2.2rem
-		text-align: center
+	padding: 0 1em
+	top: -3em
+	.latest.story
+		position: relative
+		z-index: 14
+		&:after
+			content: url('http://placehold.it/10')
+			border: .2rem solid $white
+			position: absolute
+			right: 2em
+			top: 2.5em
+			+border-radius(50%)
+			width: 2.2rem
+			height: 2.2rem
+			text-align: center
+	ul.stories
+		position: relative
+		width: 100%
+		display: block
+		margin-top: -6.25em
+		margin-bottom: 6em
+		z-index: 13
+		li
+			position: absolute
+			width: 100%
+			&:nth-child(1)
+				width: 99%
+				margin-left: 0.5%
+				z-index: 12
+				border: none
+			&:nth-child(1n+2)
+				opacity: 0
 	.stories li, .story
 		background: $black
 		border-bottom: .1rem solid $lightgray
 		display: block
 		padding: 1em
+		@media screen and (max-width: 30rem)
+			display: none
 		img
 			display: inline
 			margin-right: 1em
@@ -46,6 +97,15 @@ h2.area_title
 			vertical-align: middle
 			display: table-cell
 			height: 6rem
+		@media screen and (max-width: 30rem)
+			width: 80%
+
+
+
+
+
+
+
 
 
 
@@ -67,3 +127,6 @@ h2.area_title
 		color: white
 		margin: 0 1em
 		padding: 1em
+
+	.gallery img
+		max-width: 100%
