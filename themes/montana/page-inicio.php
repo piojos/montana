@@ -4,30 +4,35 @@
 	if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 <section id="content" role="main">
-	<div class="slider"><?php
+	<div class="home slider"><?php
 	function huge_slide() { ?>
 <div class="slide">
-	<img src="http://lorempixel.com/1200/800" alt="">
-	<div class="details box">
-		<span class="parent_label">Post type + Category (if available)</span>
-		<h2>Title</h2>
-		<p>Slogan / Subtitle</p>
+	<a href="#">
+		<div class="bg_img" style="background-image:url(http://lorempixel.com/1200/800);"></div>
+	</a>
+	<div class="max_wrap">
+		<div class="details box">
+			<a href="#">
+				<span class="parent_label">Post type + Category (if available)</span>
+				<h2>Title</h2>
+				<p>Slogan / Subtitle</p>
+			</a>
+			<div class="status_label">
+				<p>Hasta Marzo 14 (is this dinamic?)</p>
+				<p>Location Taxonomy</p>
 
-		<div class="status_label">
-			<p>Hasta Marzo 14 (is this dinamic?)</p>
-			<p>Location Taxonomy</p>
-
-			<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
-			<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+				<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+				<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+			</div>
 		</div>
 	</div>
 </div>
 <?php }
 
 		echo huge_slide();
-		// echo huge_slide();
-		// echo huge_slide();
-		// echo huge_slide(); ?>
+		echo huge_slide();
+		echo huge_slide();
+		echo huge_slide(); ?>
 	</div><?php
 
 
@@ -35,7 +40,7 @@
 
 // Noticias ?>
 
-	<div class="dropdown active">
+	<div class="dropdown closed max_wrap">
 		<div class="latest story">
 			<a href="#">
 				<img src="http://lorempixel.com/90/60" alt="">
@@ -84,25 +89,29 @@
 	</div>
 
 
-	<h2 class="area_title">¿Qué hacer hoy?</h2>
-	<div class="deck"><?php
+	<div class="area max_wrap">
+		<h2 class="area_title">¿Qué hacer hoy?</h2>
+		<div class="deck "><?php
 
-		echo card('twos');
-		echo cards(2, 'fours no-image') ?>
+			echo card('twos');
+			echo cards(2, 'fours') ?>
+		</div>
 	</div>
 
 
-	<h2 class="area_title">Hoy en Cineteca</h2>
-	<div class="deck"><?php
+	<div class="area max_wrap">
+		<h2 class="area_title">Hoy en Cineteca</h2>
+		<div class="deck"><?php
 
-		echo cards(4, 'fours movie') ?>
+			echo cards(4, 'fours movie') ?>
+		</div>
+		<div class="actions_tray">
+			<a href="#" class="button">Ver todo hoy</a>
+		</div>
 	</div>
-	<div class="actions_tray">
-		<a href="#" class="button">Ver todo hoy</a>
-	</div>
 
 
-	<div class="area collections">
+	<div class="area max_wrap collections">
 		<h2 class="area_title">No te pierdas</h2>
 		<div class="controls">
 			<ul>
@@ -133,19 +142,18 @@
 				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
 				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
 				<a href="#" class="half more"> Ver todo</a>
-
 			</div>
 		</div>
 	</div>
 
-	<div class="area">
+	<div class="area max_wrap">
 		<h2 class="area_title">Esta semana</h2>
 		<div class="deck">
 			<?php echo cards(8, 'fours'); ?>
 		</div>
 	</div>
 
-	<div class="area">
+	<div class="area max_wrap">
 		<h2 class="area_title">Próximamente</h2>
 		<div class="deck">
 			<?php echo cards(2, 'twos'); ?>
