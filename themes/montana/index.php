@@ -2,11 +2,10 @@
 
 <section id="content" role="main">
 	<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-	<?php get_template_part( 'entry' ); ?>
-	<?php comments_template(); ?>
+		<div class="">
+			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+		</div>
 	<?php endwhile; endif; ?>
-	<?php get_template_part( 'nav', 'below' ); ?>
 </section>
 
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>
