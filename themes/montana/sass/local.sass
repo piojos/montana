@@ -39,6 +39,7 @@
 
 h2.area_title
 	font-size: 1.8em
+	font-weight: bold
 	text-align: center
 	margin: 1.5em 0 .5em
 
@@ -208,3 +209,64 @@ h2.area_title
 		padding: 1em 0
 		font-size: 0.9em
 		line-height: 1.6em
+
+
+
+
+
+// Agenda
+
+#agenda
+	form
+		margin: 2em 0
+
+	input, select
+		font: inherit
+		+appearance(none)
+		border: .1rem solid
+		border-radius: 0
+		background: $white
+		min-width: 14em
+		padding: 1em 1em .8em
+		margin-right: .8em
+
+	.input_wrap
+		position: relative
+		display: inline-block
+		&.hoy
+			&:before
+				content: 'HOY'
+				font-family: Helvetica
+				font-weight: bold
+				position: absolute
+				z-index: 1
+				left: 1em
+				top: .85em
+				border-right: .1rem solid
+				padding: 0.1em .4em 0 0
+			input
+				padding-left: 4em
+
+	.ag_results
+		h3
+			font-size: 1.2em
+			font-weight: bold
+		ul
+			border-top: .1rem solid
+			border-bottom: 0.1rem solid
+			margin: 1em 0 4em
+			li
+				background: $white
+				&:hover
+					background: $black
+					color: $white
+				&:last-child .max_wrap
+					border: none
+			.max_wrap
+				border-bottom: .1rem solid $black
+				> div
+					display: table-cell
+					vertical-align: middle
+					padding: 1em 2em 1em 0
+			img
+				display: block
