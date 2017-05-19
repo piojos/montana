@@ -73,7 +73,7 @@ hr {
   clear: both;
   width: 100%;
   border: 0.1rem solid #818181;
-  margin: 0.5em 0; }
+  margin: 0.5em 0 0.75em; }
 
 .max_wrap {
   max-width: 126rem;
@@ -93,7 +93,7 @@ header {
   max-width: 126rem;
   position: relative;
   margin: 0 auto;
-  overflow: auto;
+  overflow: hidden;
   z-index: 1000; }
   header .navigation {
     display: none;
@@ -538,15 +538,19 @@ h2.area_title {
   font-weight: bold; }
 #agenda .ag_results ul {
   border-top: 0.1rem solid;
-  border-bottom: 0.1rem solid;
   margin: 1em 0 4em; }
   #agenda .ag_results ul li {
     background: white; }
     #agenda .ag_results ul li:hover {
       background: #1d1d1d;
-      color: white; }
-    #agenda .ag_results ul li:last-child .max_wrap {
-      border: none; }
+      color: white;
+      border-top: 0.1rem solid;
+      position: relative;
+      top: -0.1rem; }
+    #agenda .ag_results ul li:last-child {
+      border-bottom: 0.1rem solid; }
+      #agenda .ag_results ul li:last-child .max_wrap {
+        border: none; }
   #agenda .ag_results ul .max_wrap {
     border-bottom: 0.1rem solid #1d1d1d; }
     #agenda .ag_results ul .max_wrap > div {

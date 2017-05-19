@@ -253,15 +253,20 @@ h2.area_title
 			font-weight: bold
 		ul
 			border-top: .1rem solid
-			border-bottom: 0.1rem solid
 			margin: 1em 0 4em
 			li
 				background: $white
 				&:hover
 					background: $black
 					color: $white
-				&:last-child .max_wrap
-					border: none
+					border-top: .1rem solid
+					position: relative
+					top: -.1rem
+				&:last-child
+					border-bottom: 0.1rem solid
+					.max_wrap
+						border: none
+
 			.max_wrap
 				border-bottom: .1rem solid $black
 				> div
