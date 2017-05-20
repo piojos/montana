@@ -3,7 +3,7 @@
 <section id="content" role="main" class="single">
 	<div class="header">
 
-		<div class="bg_featured_banner" style="background-image:url(http://placehold.it/2000x1000)"></div>
+		<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div>
 
 		<div class="max_wrap post_head">
 			<div class="post_info main_content_column">
