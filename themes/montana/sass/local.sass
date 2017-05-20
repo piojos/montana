@@ -158,10 +158,12 @@ h2.area_title
 .post_info, .post_meta
 	padding: 1.6em
 
-.max_wrap.post_head
+.post_head
 	padding: 0 1em
 	margin-top: -8em
+	margin-bottom: 4em
 	position: relative
+	overflow: auto
 
 .post_info
 	background: $white
@@ -183,6 +185,9 @@ h2.area_title
 	color: $white
 	li
 		margin-bottom: 1em
+	a.button
+		border: .1rem solid $white
+		padding-top: .65em
 
 @media screen and (min-width: 50rem)
 	.main_content_column
@@ -273,5 +278,13 @@ h2.area_title
 					display: table-cell
 					vertical-align: middle
 					padding: 1em 2em 1em 0
+					&.schedule
+						width: 20em
+					&.thumbnail
+						width: 16rem
+					&.title
+						width: 50%
 			img
 				display: block
+				width: 100%
+				height: auto
