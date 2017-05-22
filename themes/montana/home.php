@@ -4,8 +4,16 @@
 
 
 	<section id="content" role="main" class="home">
-<br><br><br>
-		<?php // slider
+	<br><br><br><?php
+
+// slider
+
+
+
+
+
+
+
 
 
 // Noticias
@@ -48,15 +56,17 @@
 			wp_reset_postdata();
 		} ?>
 	</div><?php
-	} ?>
+	}
 
 
 
-		<?php
-// que hacer hoy
-		// 4 primero
-		// Cómo escoger los tamaños?
-		?>
+
+
+
+
+
+// #queHacerHoy
+	// jQuery: contar cards y distribuír de acuerdo al número. ?>
 
 		<div class="area max_wrap">
 			<h2 class="area_title">¿Qué hacer hoy?</h2><?php
@@ -75,10 +85,18 @@
 				)
 			);
 			deck($args, 'fours'); ?>
-		</div>
+		</div><?php
 
 
-		<?php // cineteca ?>
+
+
+
+
+
+
+// cineteca
+	// Mostrar "por orden"?
+	// Conectar "ver todas" ?>
 
 		<div class="area max_wrap">
 			<h2 class="area_title">Cineteca</h2><?php
@@ -88,21 +106,47 @@
 			$args = array(
 				'post_type' => 'cineteca',
 				'posts_per_page' => 4,
-				// 'meta_key'		=> 'everyday',
-				// 'meta_value'	=> $today
+				// 'meta_query' => array (
+				// 	array(
+				// 		'key'       => 'everyday',
+				// 		'value'     => $today,
+				// 		'compare'   => 'LIKE',
+				// 	),
+				// )
 			);
 			deck($args, 'fours movie'); ?>
-		</div>
-
-
-		<?php // conarteTV ?>
-		<?php // colecciones ?>
-
-
-		<?php // esta semana ?>
+		</div><?php
 
 
 
+
+
+
+
+
+// conarteTV
+	// CPT? Options? YT? ?>
+
+		<?php
+
+
+
+
+// colecciones ?>
+
+		<?php
+
+
+
+
+// esta semana ?>
+
+		<?php
+
+
+
+
+// Próximamente ?>
 		<div class="area max_wrap">
 			<h2 class="area_title">Próximamente</h2><?php
 
