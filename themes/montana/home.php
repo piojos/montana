@@ -66,8 +66,13 @@
 			$args = array(
 				'post_type' => 'agenda',
 				'posts_per_page' => 4,
-				'meta_key'		=> 'everyday',
-				'meta_value'	=> $today
+				'meta_query' => array (
+					array(
+						'key'       => 'everyday',
+						'value'     => $today,
+						'compare'   => 'LIKE',
+					),
+				)
 			);
 			deck($args, 'fours'); ?>
 		</div>

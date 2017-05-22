@@ -14,15 +14,13 @@
 	$iArgs = array(
 		'post_type'		=> 'agenda',
 		'numberposts'	=> 1,
-		// 'posts_per_page'	=> 1
-		// 'meta_query'	=> array(
-		// 	'relation'		=> 'AND',
-		// 	array(
-		// 		'key'		=> 'days_%_date',
-		// 		'compare'	=> '=',
-		// 		'value'		=> $_GET['dateFormat']
-		// 	)
-		// )
+		'meta_query' => array (
+			array(
+				'key'       => 'everyday',
+				'value'     => $today,
+				'compare'   => 'LIKE',
+			),
+		)
 	);
 
 	// $eArgs = array(
