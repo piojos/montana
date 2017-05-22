@@ -1,5 +1,31 @@
 <?php
 
+
+	function movie_meta($post) {
+		if(have_rows('meta')){
+			while (have_rows('meta')) {
+				the_row();
+				$mYear = get_sub_field('year');
+				$mCountry = get_sub_field('countries');
+				$mDirector = get_sub_field('director');
+				$mGenre = get_sub_field('genre');
+				$mLength = get_sub_field('length');
+				$mRating = get_sub_field('rating');
+			}
+		}
+		$string = '<p>';
+		$string .= '<strong>'.$mYear.' '.$mDirector.'</strong><br>';
+		if($mGenre) $string .= $mGenre['label'].' <span>•</span> ';
+		if($mLength) $string .= $mLength.' <span>•</span> ';
+		$string .= $mRating['label'].'<br>';
+		// MISSING: Function to show hours.
+		$string .= '<br>14:00 <span>•</span> 17:00 <span>•</span> 21:00';
+		$string .= '</p>';
+		return $string;
+	}
+
+
+
 	function card($class) {
 		// eights (smallest, home)
 		// fours (common)
@@ -9,8 +35,12 @@
 		// featured (home)
 		// movie (cineteca)
 		// poster (cineteca)
-		// video? (home, más sencilla)
 
+	// video? (home, más sencilla)
+		// if(strpos($class, 'movie')) {}
+
+
+	// Manage having ftd image or movie poster.
 		if(has_post_thumbnail() OR get_field('poster_img')) { $class .= ' has-image'; }
 		else { $class .= ' no-image'; }
 
@@ -23,10 +53,8 @@
 					if(strpos($class, 'movie')) {
 						$image = get_field('poster_img');
 						if( !empty($image) ){ ?>
-
-							<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+				<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
 						}
-
 					} else {
 						the_post_thumbnail();
 
@@ -38,11 +66,8 @@
 				<h2><?php the_title(); ?></h2>
 
 				<div class="status_label"><?php
-				if(strpos($class, 'movie')) { ?>
-					<p><strong>2017 Danny Boyle</strong><br>
-					Drama  •  1h 57m  •  R <br>
-					<br>
-					14:00  •  17:00  •  21:00</p><?php
+				if(strpos($class, 'movie')) {
+					echo movie_meta();
 				} else { ?>
 					<p><strong>Hasta Marzo 14 <?php //(is this dinamic?) ?></strong></p>
 					<p>Location Taxonomy</p><?php
