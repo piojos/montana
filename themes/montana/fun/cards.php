@@ -11,24 +11,46 @@
 		// poster (cineteca)
 		// video? (home, más sencilla)
 
-		if(has_post_thumbnail()) { $class .= ' has-image'; }
+		if(has_post_thumbnail() OR get_field('poster_img')) { $class .= ' has-image'; }
 		else { $class .= ' no-image'; }
 
 
 	?><div class="card <?php echo $class; ?>">
 		<div class="details box">
+			<a href="<?php the_permalink(); ?>">
 			<div class="img_container"><?php
-				if(!strpos($class, 'no-image')) the_post_thumbnail(); ?>
+				if(!strpos($class, 'no-image')) {
+					if(strpos($class, 'movie')) {
+						$image = get_field('poster_img');
+						if( !empty($image) ){ ?>
+
+							<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+						}
+
+					} else {
+						the_post_thumbnail();
+
+					}
+				} ?>
 				<span class="parent_label"><?php echo get_post_type(); // Post type + Category (if available) ?></span>
 			</div>
 			<div class="wrap">
 				<h2><?php the_title(); ?></h2>
 
-				<div class="status_label">
+				<div class="status_label"><?php
+				if(strpos($class, 'movie')) { ?>
+					<p><strong>2017 Danny Boyle</strong><br>
+					Drama  •  1h 57m  •  R <br>
+					<br>
+					14:00  •  17:00  •  21:00</p><?php
+				} else { ?>
 					<p><strong>Hasta Marzo 14 <?php //(is this dinamic?) ?></strong></p>
-					<p>Location Taxonomy</p>
+					<p>Location Taxonomy</p><?php
+				} ?>
+					<p><?php echo schedule_days(); ?></p>
 				</div>
 			</div>
+			</a>
 		</div>
 	</div><?php
 	}
