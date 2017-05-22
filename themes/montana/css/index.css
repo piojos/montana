@@ -104,7 +104,10 @@ header {
     width: 100%;
     padding-left: 10.5em;
     padding-right: 4em;
-    position: absolute; }
+    position: absolute;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
     @media screen and (min-width: 50rem) {
       header .navigation {
         display: block; } }
@@ -117,6 +120,8 @@ header {
     header #site-title, header #site-title a {
       display: inline-block;
       line-height: 0; }
+    header #site-title img {
+      max-width: 12rem; }
   header #search {
     display: inline-block;
     float: right;
@@ -158,7 +163,8 @@ footer .social {
   background-color: #161616;
   text-align: center;
   padding-top: 8em;
-  background-image: url(http://placehold.it/120x50&text=CONARTE);
+  background-image: url(../img/logo_conarte.svg);
+  background-size: 12rem;
   background-repeat: no-repeat;
   background-position: center top 3rem; }
   footer .social input {
@@ -177,8 +183,7 @@ footer .social {
     margin: 2em 1em; }
   @media screen and (min-width: 50rem) {
     footer .social {
-      padding: 2em;
-      overflow: auto; }
+      padding: 2em; }
       footer .social form {
         float: left; }
       footer .social ul.sm_tray {
@@ -193,7 +198,11 @@ footer #foot_nav {
   padding-top: 1.4em;
   top: 2em;
   margin-bottom: 2em;
-  display: none; }
+  display: none;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.2em; }
   footer #foot_nav a {
     color: white; }
   footer #foot_nav ul {
@@ -370,7 +379,7 @@ h2.area_title {
     position: relative;
     z-index: 14; }
     .dropdown .latest.story:after {
-      content: url("http://placehold.it/10");
+      content: url(../img/arr_down.svg);
       border: 0.2rem solid white;
       position: absolute;
       right: 2em;
@@ -379,7 +388,7 @@ h2.area_title {
       -webkit-border-radius: 50%;
       border-radius: 50%;
       width: 2.2rem;
-      height: 2.2rem;
+      padding-top: 0.3rem;
       text-align: center; }
   .dropdown ul.stories {
     position: relative;
