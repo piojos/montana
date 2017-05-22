@@ -37,3 +37,25 @@
 		}
 		return $bunch;
 	}
+
+	function agenda_card() { ?>
+		<li>
+			<a class="max_wrap" href="<?php the_permalink(); ?>">
+				<div class="schedule">
+					<p><strong><?php echo schedule_hours(); ?></strong> <br>
+					<?php echo schedule_days(); ?>
+					</p>
+				</div>
+				<div class="thumbnail">
+					<?php the_post_thumbnail(); ?>
+				</div>
+				<div class="title">
+					<h2><strong><?php the_title(); ?></strong></h2>
+					<p><?php the_excerpt(); ?></p>
+				</div>
+				<div class="location">
+					<p><strong>Centro de las Artes</strong></p>
+				</div>
+			</a>
+		</li><?php
+	}
