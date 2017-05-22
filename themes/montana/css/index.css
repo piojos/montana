@@ -292,7 +292,11 @@ a.button {
   .details.box .status_label {
     position: absolute;
     bottom: 1em;
-    font-size: 0.8em; }
+    font-size: 0.8em;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #818181; }
+    .details.box .status_label span {
+      opacity: 0.3; }
 
 .deck {
   overflow: auto;
@@ -310,6 +314,10 @@ a.button {
     width: 50vw; }
     .card.fours.has-image .details.box {
       height: 20em; }
+  .card.movie .details.box {
+    margin-top: 18em; }
+  .card.movie img {
+    margin-top: -20em; }
   @media screen and (min-width: 50rem) {
     .card.twos {
       width: 50%; }

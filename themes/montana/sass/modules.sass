@@ -59,6 +59,10 @@ a.button
 		position: absolute
 		bottom: 1em
 		font-size: .8em
+		font-family: $Helvetica
+		color: $gray
+		span
+			opacity: .3
 
 .deck
 	overflow: auto
@@ -80,6 +84,11 @@ a.button
 		width: 50vw
 		&.has-image .details.box
 			height: 20em
+	&.movie
+		.details.box
+			margin-top: 18em
+		img
+			margin-top: -20em
 	@media screen and (min-width: 50rem)
 		&.twos
 			width: 50%
