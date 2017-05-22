@@ -10,16 +10,19 @@
 		// movie (cineteca)
 		// poster (cineteca)
 		// video? (home, más sencilla)
+
+		if(has_post_thumbnail()) { $class .= ' has-image'; }
+		else { $class .= ' no-image'; }
+
+
 	?><div class="card <?php echo $class; ?>">
 		<div class="details box">
 			<div class="img_container"><?php
-				if(!strpos($class, 'no-image')) {
-					echo '<img src="http://placehold.it/500x250" alt="">';
-				} ?>
-				<span class="parent_label">Post type + Category <?php //(if available) ?></span>
+				if(!strpos($class, 'no-image')) the_post_thumbnail(); ?>
+				<span class="parent_label"><?php echo get_post_type(); // Post type + Category (if available) ?></span>
 			</div>
 			<div class="wrap">
-				<h2>Title</h2>
+				<h2><?php the_title(); ?></h2>
 
 				<div class="status_label">
 					<p><strong>Hasta Marzo 14 <?php //(is this dinamic?) ?></strong></p>
@@ -58,4 +61,19 @@
 				</div>
 			</a>
 		</li><?php
+	}
+
+
+	function deck($args, $class) {
+
+		$the_query = new WP_Query( $args );
+		if ( $the_query->have_posts() ) { ?>
+		<div class="deck"><?php
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo card($class);
+			} ?>
+		</div><?php
+			wp_reset_postdata();
+		}
 	}
