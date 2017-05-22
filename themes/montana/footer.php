@@ -38,7 +38,7 @@
 						Col. Obrera, C.P. 64010, Monterrey, Nuevo León. <br>
 						T. +52 (81) 2315 1101</p>
 					</div>
-					<a href="#" id="logo_nl"><img src="http://placehold.it/180x80&text=Nuevo+Leon" alt=""></a>
+					<a href="#" id="logo_nl"><img src="<?php echo get_template_directory_uri(); ?>/img/logo_nuevoleon.png" alt="" width="180"></a>
 				</div>
 			</div>
 		</footer>

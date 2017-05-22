@@ -43,7 +43,7 @@
 			<header id="header" role="banner">
 				<div id="site-title">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
-						<img src="http://www.placehold.it/123x50&text=CONARTE" alt="">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/logo_conarte.svg" alt="">
 					</a>
 				</div>
 				<a href="#" id="nav_toggle_button"></a>
