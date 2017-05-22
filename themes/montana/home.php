@@ -52,10 +52,48 @@
 
 
 
-		<?php // que hacer hoy ?>
+		<?php
+// que hacer hoy
+		// 4 primero
+		// Cómo escoger los tamaños?
+		?>
+
+		<div class="area max_wrap">
+			<h2 class="area_title">¿Qué hacer hoy?</h2><?php
+
+			$today = date('Ymd');
+
+			$args = array(
+				'post_type' => 'agenda',
+				'posts_per_page' => 4,
+				'meta_key'		=> 'everyday',
+				'meta_value'	=> $today
+			);
+			deck($args, 'fours'); ?>
+		</div>
+
+
 		<?php // cineteca ?>
+
+		<div class="area max_wrap">
+			<h2 class="area_title">Cineteca</h2><?php
+
+			$today = date('Ymd');
+
+			$args = array(
+				'post_type' => 'cineteca',
+				'posts_per_page' => 4,
+				// 'meta_key'		=> 'everyday',
+				// 'meta_value'	=> $today
+			);
+			deck($args, 'fours movie'); ?>
+		</div>
+
+
 		<?php // conarteTV ?>
 		<?php // colecciones ?>
+
+
 		<?php // esta semana ?>
 
 
