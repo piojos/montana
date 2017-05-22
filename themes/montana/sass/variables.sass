@@ -21,3 +21,12 @@ $radius: .5rem
 $NewJune: "New June", Helvetica, Arial, sans-serif
 $NewJuneBold: "New June Bold", Helvetica, Arial, sans-serif
 $Helvetica: Helvetica, Arial, sans-serif
+
+//hacer mixin
+@mixin font-smoothing($value: antialiased)
+	@if $value == antialiased
+		-webkit-font-smoothing: antialiased
+		-moz-osx-font-smoothing: grayscale
+	@else
+		-webkit-font-smoothing: subpixel-antialiased
+		-moz-osx-font-smoothing: auto

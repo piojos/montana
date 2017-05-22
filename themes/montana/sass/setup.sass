@@ -73,6 +73,8 @@ header
 		padding-left: 10.5em
 		padding-right: 4em
 		position: absolute
+		font-weight: bold
+		+font-smoothing()
 		@media screen and (min-width:50rem)
 			display: block
 		a
@@ -85,6 +87,8 @@ header
 		&, a
 			display: inline-block
 			line-height: 0
+		img
+			max-width: 12rem
 
 	#search
 		display: inline-block
@@ -144,7 +148,8 @@ footer
 		background-color: $darkgray
 		text-align: center
 		padding-top: 8em
-		background-image: url(http://placehold.it/120x50&text=CONARTE)
+		background-image: url(../img/logo_conarte.svg)
+		background-size: 12rem
 		background-repeat: no-repeat
 		background-position: center top 3rem
 		input
@@ -163,7 +168,7 @@ footer
 			margin: 2em 1em
 		@media screen and (min-width: 50rem)
 			padding: 2em
-			overflow: auto
+			// overflow: auto
 			form
 				float: left
 			ul.sm_tray
@@ -180,6 +185,9 @@ footer
 		top: 2em
 		margin-bottom: 2em
 		display: none
+		font-weight: bold
+		+font-smoothing()
+		font-size: 1.2em
 		a
 			color: $white
 		ul
