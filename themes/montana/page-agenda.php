@@ -5,11 +5,16 @@
 
 
 // First(Empty) Query ( .../eventos )
-	if(htmlentities($_GET['date']) == "") {
-		$_GET['fecha'] = date('Ymd');
-		$_GET['tipo'] = '';
-		$_GET['lugar'] = '';
-	}
+	$today = current_time('Ymd');
+	$todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
+
+	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
+	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ymd');
+	if(htmlentities($_GET['tipo']) == '') $_GET['tipo'] = '';
+	if(htmlentities($_GET['lugar']) == '') $_GET['lugar'] = '';
+
+	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
+	else { $queryDay = $today; }
 
 	$iArgs = array(
 		'post_type'		=> 'agenda',
@@ -17,7 +22,7 @@
 		'meta_query' => array (
 			array(
 				'key'       => 'everyday',
-				'value'     => $today,
+				'value'     => $queryDay,
 				'compare'   => 'LIKE',
 			),
 		)
@@ -56,23 +61,25 @@
 			<div class="max_wrap">
 				<h2 class="area_title">o Busca Eventos por Fecha y Disciplina</h2>
 				<p class="label">Estas viendo eventos de:</p>
-				<form class="ag_filter" action="#" method="post">
+				<form role="search" method="get" id="searchform" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
 					<div class="input_wrap hoy">
-						<input type="text" name="" value="Lunes Marzo 13, 2017">
+						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
+						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
 					</div>
-					<select class="" name="disciplinas">
+					<select name="tipo" id="tipo">
 						<option value="todas">Todas las Disciplinas</option>
-						<option value="todas">Exposiciones</option>
-						<option value="todas">Talleres</option>
-						<option value="todas">Museos</option>
+						<option value="exposiciones">Exposiciones</option>
+						<option value="talleres">Talleres</option>
+						<option value="museos">Museos</option>
 					</select>
-					<select class="" name="disciplinas">
+					<select name="lugar" id="lugar">
 						<option value="todas">Todos las Espacios</option>
-						<option value="todas">Exposiciones</option>
-						<option value="todas">Talleres</option>
-						<option value="todas">Museos</option>
+						<option value="arraval">Arravál</option>
+						<option value="pinacoteca">Pinacoteca</option>
+						<option value="museos">Museos</option>
 					</select>
-					<input type="submit" name="" value="Filtrar">
+					<!-- <input type="submit" name="enviar" value="Filtrar"> -->
+					<input type="submit" value="Actualizar">
 				</form>
 			</div>
 

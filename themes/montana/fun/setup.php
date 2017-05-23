@@ -24,20 +24,20 @@
 	// ADD ALL EXTERNAL scripts & styles FIRST. AVOID shame.css
 
 	// STYLES
-		// wp_enqueue_style( 'Normalizer', get_template_directory_uri() . '/css/normalize.min.css');
+		wp_register_style( 'jquery-ui', 'http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css' );
+
 		wp_enqueue_style( 'Slick', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css');
-		// wp_enqueue_style( 'Dropdown', get_template_directory_uri() . '/css/dropdown.css');
 		wp_enqueue_style( 'Style', get_stylesheet_uri() );
-		// wp_enqueue_style( 'Shame', get_template_directory_uri() . '/css/shame.css');
+		wp_enqueue_style( 'jquery-ui' );
 
 	// SCRIPTS
 		wp_enqueue_script( 'Slickjs', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js', array('jquery') ); //
 		wp_enqueue_script( 'Modernizr', get_template_directory_uri() . '/js/modernizr.custom.63321.js' ); // Home
-		// wp_enqueue_script( 'Dropdown', get_template_directory_uri() . '/js/jquery.dropdown.js' ); // Home
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'Magic', get_template_directory_uri() . '/js/magic.js', array('jquery') );
 
 	// CONDITIONAL LOADS
-		// if(is_page('acerca')) {
+		// if(is_page('agenda')) {
 		// 	wp_enqueue_script( 'Acerca', get_template_directory_uri() . '/js/acerca.js', array('jquery'));
 		// }
 	}
@@ -106,6 +106,12 @@
 	add_filter('wp_generate_attachment_metadata', 'replace_uploaded_image');
 
 
+
+// Excerpt Length
+	function custom_excerpt_length( $length ) {
+		return 15;
+	}
+	add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 
 
