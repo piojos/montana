@@ -240,7 +240,10 @@ footer #foot_nav {
 
 .label {
   text-transform: uppercase;
-  font-size: 0.8em; }
+  font-size: 0.8em;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
 
 .actions_tray {
   text-align: center; }
@@ -251,6 +254,17 @@ a.button {
   color: white;
   font-size: 1.2em;
   padding: 0.5em 1em; }
+
+.excerpt {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #818181;
+  margin-top: 1em; }
+
+.status_label {
+  font-size: 0.85em;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #818181;
+  letter-spacing: 0.02em; }
 
 .slider {
   position: relative;
@@ -291,10 +305,7 @@ a.button {
     line-height: 1.4em; }
   .details.box .status_label {
     position: absolute;
-    bottom: 1em;
-    font-size: 0.8em;
-    font-family: Helvetica, Arial, sans-serif;
-    color: #818181; }
+    bottom: 1em; }
     .details.box .status_label span {
       opacity: 0.3; }
 
@@ -500,8 +511,7 @@ h2.area_title {
   .post_info .label {
     color: #f57b20; }
   .post_info .status_label {
-    margin-top: 2em;
-    font-size: 0.8em; }
+    margin-top: 2em; }
     .post_info .status_label.stick {
       position: absolute;
       bottom: 1.5em; }

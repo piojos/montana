@@ -3,6 +3,8 @@
 .label
 	text-transform: uppercase
 	font-size: .8em
+	font-weight: bold
+	+font-smoothing()
 
 .actions_tray
 	text-align: center
@@ -13,6 +15,18 @@ a.button
 	color: $white
 	font-size: 1.2em
 	padding: .5em 1em
+
+.excerpt
+	font-family: $Helvetica
+	color: $gray
+	margin-top: 1em
+	line-height: 1.4em
+
+.status_label
+	font-size: .85em
+	font-family: $Helvetica
+	color: $gray
+	letter-spacing: .02em
 
 
 
@@ -58,9 +72,6 @@ a.button
 	.status_label
 		position: absolute
 		bottom: 1em
-		font-size: .8em
-		font-family: $Helvetica
-		color: $gray
 		span
 			opacity: .3
 
