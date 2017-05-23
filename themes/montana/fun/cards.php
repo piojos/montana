@@ -1,7 +1,8 @@
 <?php
 
 
-	function movie_meta($post) {
+	function movie_meta($shHour = true) {
+		// NOTA: $post use postid?
 		if(have_rows('meta')){
 			while (have_rows('meta')) {
 				the_row();
@@ -17,9 +18,9 @@
 		$string .= '<strong>'.$mYear.' '.$mDirector.'</strong><br>';
 		if($mGenre) $string .= $mGenre['label'].' <span>•</span> ';
 		if($mLength) $string .= $mLength.' <span>•</span> ';
-		$string .= $mRating['label'].'<br>';
+		$string .= $mRating['label'].'<br><br>';
 		// MISSING: Function to show hours.
-		$string .= '<br>14:00 <span>•</span> 17:00 <span>•</span> 21:00';
+		if($shHour == true) $string .= '14:00 <span>•</span> 17:00 <span>•</span> 21:00';
 		$string .= '</p>';
 		return $string;
 	}
