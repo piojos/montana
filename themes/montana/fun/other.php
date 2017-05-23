@@ -1,5 +1,10 @@
 <?php
 
+
+/*
+ *	AGENDA: Get clean array from hours
+ */
+
 function schedule_hours_array() {
 	$hours = array();
 	$hoursField = get_field('schedules');
@@ -11,11 +16,19 @@ function schedule_hours_array() {
 	return $hours;
 }
 
+
 function schedule_hours() {
 	$allHours = schedule_hours_array();
 	$string = rtrim(implode(', ', $allHours), ',');
 	return $string;
 }
+
+
+
+
+/*
+ *	Get clean array from dates & range
+ */
 
 function schedule_days_array() {
 	// 1 Get chosen method
@@ -69,6 +82,7 @@ function schedule_days_array() {
 	return $result;
 }
 
+
 function schedule_days($format) {
 	if(empty($format)) $format = 'F j Y';
 	$allDaysArray = schedule_days_array();
@@ -96,18 +110,12 @@ function schedule_days($format) {
 
 
 /*
- *	Guardar un campo con un arreglo de
+ *	Process days schedules and update $everyday
  */
 
 function my_acf_save_post( $post_id ) {
-
-    // get new value
-    $value = get_field('everyday');
-
-
-    // do somethingy
+	$value = get_field('everyday');
 	update_field('everyday', schedule_days_array());
-    // update field to value 'working'
 }
 
 add_action('acf/save_post', 'my_acf_save_post', 20);
@@ -121,13 +129,9 @@ add_action('acf/save_post', 'my_acf_save_post', 20);
 
 
 /*
- *	Legalize Date repeater field
+ *	Post Meta Box
  */
-	//
-	// function my_posts_where( $where ) {
-	// 	$where = str_replace("meta_key = 'days_%_date", "meta_key LIKE 'days_%_date", $where);
-	// 	// $where = str_replace("meta_key = 'dates_%_start-day", "meta_key LIKE 'dates_%_start-day", $where);
-	// 	// $where = str_replace("meta_key = 'dates_%_end-day", "meta_key LIKE 'dates_%_end-day", $where);
-	// 	return $where;
-	// }
-	// add_filter('posts_where', 'my_posts_where');
+
+function single_metabox() {
+	return 'hola!';
+}
