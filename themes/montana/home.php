@@ -1,6 +1,7 @@
 <?php
 
-	get_header(); ?>
+	get_header();
+	$today = current_time('Ymd'); ?>
 
 
 	<section id="content" role="main" class="home">
@@ -36,8 +37,8 @@
 					</div>
 				</div>
 			</a><?php
-		} ?>
-			wp_reset_postdata();
+		}
+		wp_reset_postdata(); ?>
 		</div><?php
 		if ( $restQuery->have_posts() ) { ?>
 		<ul class="stories"><?php
@@ -71,8 +72,6 @@
 		<div class="area max_wrap">
 			<h2 class="area_title">¿Qué hacer hoy?</h2><?php
 
-			$today = date('Ymd');
-
 			$args = array(
 				'post_type' => 'agenda',
 				'posts_per_page' => 4,
@@ -100,8 +99,6 @@
 
 		<div class="area max_wrap">
 			<h2 class="area_title">Cineteca</h2><?php
-
-			$today = date('Ymd');
 
 			$args = array(
 				'post_type' => 'cineteca',
@@ -134,14 +131,57 @@
 
 // colecciones ?>
 
+	<div class="area max_wrap collections">
+		<h2 class="area_title">No te pierdas</h2><?php
+
+		$args = array(
+			'post_type' => 'colecciones',
+			'posts_per_page' => -1
+		);
+
+		$the_query = new WP_Query( $args );
+		if ( $the_query->have_posts() ) { ?>
+		<div class="controls">
+			<ul><?php
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post(); ?>
+				<li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li><?php
+			} ?>
+			</ul>
+		</div><?php
+			wp_reset_postdata();
+		}
+		// <div class="details_container">
+		// </div> ?>
+	</div>
 		<?php
 
 
 
 
-// esta semana ?>
+// esta semana
+	// jQuery: contar cards y distribuír de acuerdo al número. ?>
 
-		<?php
+		<div class="area max_wrap">
+			<h2 class="area_title">Esta Semana</h2><?php
+
+			$args = array(
+				'post_type' => 'agenda',
+				'posts_per_page' => 12,
+				// 'meta_query' => array (
+				// 	array(
+				// 		'key'       => 'everyday',
+				// 		'value'     => $today,
+				// 		'compare'   => 'LIKE',
+				// 	),
+				// )
+			);
+			deck($args, 'sixs'); ?>
+		</div><?php
+
+
+
+
 
 
 
