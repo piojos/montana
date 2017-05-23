@@ -53,7 +53,7 @@ function schedule_days_array() {
 		if($weekdays) {
 			foreach($weekdays as $row) {
 				for($i = strtotime($row, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
-					$days[] = date('l dM', $i);
+					$days[] = date('Ymd', $i);
 				}
 			}
 		}
@@ -79,7 +79,7 @@ function schedule_days($format) {
 			$newDate = date($format, strtotime($originalDate));
 			// $today = date('Ymd');
 			// if($today == $originalDate) {
-			// 	$days[] = '<strong>'.$newDate.'</strong>';}
+			// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
 			// else {
 				$days[] = $newDate;
 			// }
