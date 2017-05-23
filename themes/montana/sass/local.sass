@@ -186,7 +186,12 @@ h2.area_title
 .post_meta
 	background: $black
 	color: $white
-	li
+	dt
+		+font-smoothing()
+		font-weight: bold
+		color: $gray
+	dd
+		font-family: $Helvetica
 		margin-bottom: 1em
 	a.button
 		border: .1rem solid $white
@@ -255,39 +260,42 @@ h2.area_title
 			input
 				padding-left: 4em
 
-	.ag_results
-		h3
-			font-size: 1.2em
-			font-weight: bold
-		ul
-			border-top: .1rem solid
-			margin: 1em 0 4em
-			li
-				background: $white
-				&:hover
-					background: $black
-					color: $white
-					border-top: .1rem solid
-					position: relative
-					top: -.1rem
-				&:last-child
-					border-bottom: 0.1rem solid
-					.max_wrap
-						border: none
+.ag_results
+	h3
+		font-size: 1.2em
+		font-weight: bold
+		span
+			color: $orange
+			margin-right: .5em
+	ul
+		border-top: .1rem solid
+		margin: 1em 0 4em
+		li
+			background: $white
+			&:hover
+				background: $black
+				color: $white
+				border-top: .1rem solid
+				position: relative
+				top: -.1rem
+			&:last-child
+				border-bottom: 0.1rem solid
+				.max_wrap
+					border: none
 
-			.max_wrap
-				border-bottom: .1rem solid $black
-				> div
-					display: table-cell
-					vertical-align: middle
-					padding: 1em 2em 1em 0
-					&.schedule
-						width: 20em
-					&.thumbnail
-						width: 16rem
-					&.title
-						width: 50%
-			img
-				display: block
-				width: 100%
-				height: auto
+		.max_wrap
+			border-bottom: .1rem solid $black
+			> div
+				display: table-cell
+				vertical-align: middle
+				padding: 1em 2em 1em 0
+				&.schedule
+					width: 20em
+				&.thumbnail
+					width: 16rem
+				&.title
+					width: 50%
+		img
+			display: block
+			width: 100%
+			height: auto

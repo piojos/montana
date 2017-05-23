@@ -509,7 +509,13 @@ h2.area_title {
 .post_meta {
   background: #1d1d1d;
   color: white; }
-  .post_meta li {
+  .post_meta dt {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
+    color: #818181; }
+  .post_meta dd {
+    font-family: Helvetica, Arial, sans-serif;
     margin-bottom: 1em; }
   .post_meta a.button {
     border: 0.1rem solid white;
@@ -568,37 +574,41 @@ h2.area_title {
     padding: 0.1em 0.4em 0 0; }
   #agenda .input_wrap.hoy input {
     padding-left: 4em; }
-#agenda .ag_results h3 {
+
+.ag_results h3 {
   font-size: 1.2em;
   font-weight: bold; }
-#agenda .ag_results ul {
+  .ag_results h3 span {
+    color: #f57b20;
+    margin-right: 0.5em; }
+.ag_results ul {
   border-top: 0.1rem solid;
   margin: 1em 0 4em; }
-  #agenda .ag_results ul li {
+  .ag_results ul li {
     background: white; }
-    #agenda .ag_results ul li:hover {
+    .ag_results ul li:hover {
       background: #1d1d1d;
       color: white;
       border-top: 0.1rem solid;
       position: relative;
       top: -0.1rem; }
-    #agenda .ag_results ul li:last-child {
+    .ag_results ul li:last-child {
       border-bottom: 0.1rem solid; }
-      #agenda .ag_results ul li:last-child .max_wrap {
+      .ag_results ul li:last-child .max_wrap {
         border: none; }
-  #agenda .ag_results ul .max_wrap {
+  .ag_results ul .max_wrap {
     border-bottom: 0.1rem solid #1d1d1d; }
-    #agenda .ag_results ul .max_wrap > div {
+    .ag_results ul .max_wrap > div {
       display: table-cell;
       vertical-align: middle;
       padding: 1em 2em 1em 0; }
-      #agenda .ag_results ul .max_wrap > div.schedule {
+      .ag_results ul .max_wrap > div.schedule {
         width: 20em; }
-      #agenda .ag_results ul .max_wrap > div.thumbnail {
+      .ag_results ul .max_wrap > div.thumbnail {
         width: 16rem; }
-      #agenda .ag_results ul .max_wrap > div.title {
+      .ag_results ul .max_wrap > div.title {
         width: 50%; }
-  #agenda .ag_results ul img {
+  .ag_results ul img {
     display: block;
     width: 100%;
     height: auto; }
