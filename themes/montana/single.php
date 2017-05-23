@@ -10,18 +10,22 @@
 
 		<div class="max_wrap post_head">
 			<div class="post_info main_content_column">
-				<p class="label">Noticias</p>
+				<p class="label"><?php echo get_post_type(); ?></p>
 				<h1><?php the_title(); ?></h1>
 				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
 
-				<div class="about excerpt">
-					<?php the_content(); ?>
+				<div class="excerpt"><?php
+					if(is_singular('cineteca')) {
+						$image = get_field('poster_img');
+						if( !empty($image) ){ ?>
+							<img src="<?php echo $image['sizes']['poster']; ?>" class="poster" alt="<?php echo $image['alt']; ?>" /><?php
+						}
+						echo movie_meta(false);
+					}
+					the_content(); ?>
 				</div>
 
 				<div class="status_label">
-					<p><strong>Get last event date</strong></p>
-					<p>Location Taxonomy</p>
-
 					<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
 					<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
 				</div>

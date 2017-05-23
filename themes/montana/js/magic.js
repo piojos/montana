@@ -10,8 +10,9 @@ jQuery( function($) {
 	function sameSizeBox() {
 		var bL = $('.single .post_info').outerHeight();
 		var bR = $('.single .post_meta').outerHeight();
-		if(bL > bR) {
+		if(bL >= bR) {
 			$('.single .post_meta').css('height', bL);
+			$('.single .status_label').removeClass('stick');
 		} else {
 			$('.single .post_info').css('height', bR);
 			$('.single .status_label').addClass('stick');

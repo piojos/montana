@@ -17,12 +17,17 @@
 
 	 ?>
 <div class="post_meta">
-	<dl>
-		<dt class="label">Fecha</dt>
-		<dd><?php echo schedule_days(); ?></dd>
+	<dl><?php
 
-		<dt class="label">Hora</dt>
-		<dd><?php echo schedule_hours(); ?></dd>
+		if(is_singular('cineteca')) {
+			echo movieDays('l d M');
+			// echo movieHoursToday();
+		} else { ?>
+			<dt class="label">Fecha</dt>
+			<dd><?php echo schedule_days(); ?></dd>
+			<dt class="label">Hora</dt>
+			<dd><?php echo schedule_hours(); ?></dd><?php
+		} ?>
 
 		<dt class="label">Costo</dt>
 		<dd><?php echo $finalCost; ?></dd>

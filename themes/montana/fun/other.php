@@ -110,6 +110,52 @@ function schedule_days($format) {
 
 
 /*
+ *	MOVIES: Make array from days & hours
+ */
+
+// function movieSchedule_array() {
+// 	$hours = array('holis');
+// 	// $hoursField = get_field('schedules');
+// 	return $hours;
+// }
+
+
+function movieDays($format) {
+	if(empty($format)) $format = 'F j Y';
+	$status = 'online';
+	$days = array();
+	$hours = array();
+	if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
+		$days[] = date_i18n($format, strtotime(get_sub_field('day')));
+		if(have_rows('schedules')) { while (have_rows('schedules')) { the_row();
+			$hours[] = get_sub_field('hour');
+		}}
+	}}
+	$stDays = rtrim(implode(', ', $days), ',');
+	$stHours = rtrim(implode('&nbsp; <span>•</span> &nbsp;', $hours), ' <span>•</span> ');
+	$string = '<dt class="label">Fecha</dt><dd>'.$stDays.'</dd>';
+	$string .= '<dt class="label">Horarios</dt><dd>'.$stHours.'</dd>';
+	return $string;
+}
+
+// function movieHoursToday() {
+// 	// Get movieSchedule_array
+// 	// On day == today display hours
+
+// 	$today = date('today');
+// 	if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
+// 		$days[] = date_i18n($format, strtotime(get_sub_field('day')));
+// 		if(have_rows('schedules')) { while (have_rows('schedules')) { the_row();
+// 			$hours[] = get_sub_field('hour');
+// 		}}
+// 	}}
+// 	$string .= '<dt class="label">Horarios</dt><dd>'.$stHours.'</dd>';
+// 	return $string;
+// }
+
+
+
+/*
  *	Process days schedules and update $everyday
  */
 
