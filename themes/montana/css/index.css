@@ -322,7 +322,9 @@ a.button {
     .card.twos {
       width: 50%; }
     .card.fours {
-      width: 25%; } }
+      width: 25%; }
+    .card.sixs {
+      width: 16.666%; } }
   .card img {
     width: 100%;
     height: auto;
