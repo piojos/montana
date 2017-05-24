@@ -20,6 +20,7 @@ jQuery( function($) {
 	}
 	$(window).bind("load", function() {
 		sameSizeBox();
+		$('.post_head').removeClass('loading');
 	});
 	$(window).resize(function() {
 		sameSizeBox();
