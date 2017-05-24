@@ -8,30 +8,19 @@
 						<input type="submit" name="" value="Enviar">
 					</form>
 					<ul class="sm_tray">
-						<li><a href="#"><img src="http://placehold.it/48" alt=""></a></li>
-						<li><a href="#"><img src="http://placehold.it/48" alt=""></a></li>
-						<li><a href="#"><img src="http://placehold.it/48" alt=""></a></li>
+						<li><a href="#"><svg class="icon facebook"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg></a></li>
+						<li><a href="#"><svg class="icon twitter"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg></a></li>
+						<li><a href="#"><svg class="icon instagram"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-instagram"></use></svg></a></li>
+						<li><a href="#"><svg class="icon youtube-play"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-youtube-play"></use></svg></a></li>
 					</ul>
 					<div id="foot_nav">
-						<ul>
-							<li><a href="#">Agenda</a></li>
-							<li><a href="#">Cineteca</a></li>
-							<li><a href="#">Exposiciones</a></li>
-							<li><a href="#">Talleres</a></li>
-							<li><a href="#">Convocatorias</a></li>
-						</ul>
+						<?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
 					</div>
 				</div>
 			</div>
 			<div class="sitemap">
 				<div class="max_wrap">
-					<ul class="links">
-						<li><a href="#">Privacidad</a></li>
-						<li><a href="#">Transparencia</a></li>
-						<li><a href="#">Leyes</a></li>
-						<li><a href="#">Políticas Culturales</a></li>
-						<li><a href="#">Estructura Organica</a></li>
-					</ul>
+					<?php wp_nav_menu( array( 'theme_location' => 'legal-menu', 'container_class' => 'links' ) ); ?>
 					<div id="copyright">
 						<p>CENTRO DE LAS ARTES <br>
 						Parque Fundidora Av. Fundidora y Adolfo Prieto, <br>

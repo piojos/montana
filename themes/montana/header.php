@@ -37,8 +37,8 @@
 		<?php wp_head(); ?>
 	</head>
 
-
 	<body <?php body_class(); ?>>
+		<?php get_template_part('img/icons'); ?>
 		<div id="wrapper" class="hfeed">
 			<header id="header" role="banner">
 				<div id="site-title">
@@ -48,27 +48,15 @@
 				</div>
 				<a href="#" id="nav_toggle_button"></a>
 				<div class="navigation">
-					<ul class="submenu">
-						<li><a href="#">CONARTE</a></li>
-						<li><a href="#">Espacios</a></li>
-						<li><a href="#">Artistas</a></li>
-						<li><a href="#">Patrimonio</a></li>
-						<li><a href="#">Contacto</a></li>
-					</ul>
+					<?php wp_nav_menu( array( 'theme_location' => 'second-menu', 'container_class' => 'submenu' ) ); ?>
+
 					<div id="search">
 						<a href="#">Búsqueda</a>
 						<?php // get_search_form(); ?>
 					</div>
 					<hr>
 					<nav id="menu" role="navigation">
-						<?php // wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
-						<ul>
-							<li><a href="#">Agenda</a></li>
-							<li><a href="#">Cineteca</a></li>
-							<li><a href="#">Exposiciones</a></li>
-							<li><a href="#">Talleres</a></li>
-							<li><a href="#">Convocatorias</a></li>
-						</ul>
+						<?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
 					</nav>
 				</div>
 			</header>

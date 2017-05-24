@@ -49,16 +49,16 @@
 
 	// Register Menus
 
-	// function register_my_menus() {
-	// 	register_nav_menus(
-	// 		array(
-	// 			'header-menu' => __( 'Menu principal' ),
-	// 			'extra-menu' => __( 'Menu secundario' ),
-	// 			'footer-menu' => __( 'Menu inferior' )
-	// 		)
-	// 	);
-	// }
-	// add_action( 'init', 'register_my_menus' );
+	function register_my_menus() {
+		register_nav_menus(
+			array(
+				'main-menu' => __( 'Principal' ),
+				'second-menu' => __( 'Secundario' ),
+				'legal-menu' => __( 'Legal' )
+			)
+		);
+	}
+	add_action( 'init', 'register_my_menus' );
 
 
 

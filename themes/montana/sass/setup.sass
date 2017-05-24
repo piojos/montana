@@ -98,7 +98,7 @@ header
 		font-size: .8em
 		text-transform: uppercase
 
-	ul.submenu
+	.submenu
 		display: inline-block
 		font-size: .8em
 		text-transform: uppercase
@@ -176,9 +176,12 @@ footer
 			ul.sm_tray
 				display: inline-block
 				float: right
+				padding-top: 1em
 			li
 				margin: 0 1em
 
+	ul.sm_tray svg.icon
+		fill: $white
 	#foot_nav
 		clear: both
 		border-top: .2rem solid $gray
@@ -206,7 +209,7 @@ footer
 	text-align: center
 	@media screen and (min-width: 50rem)
 		overflow: auto
-	ul.links, #copyright
+	.links, #copyright
 		width: 50%
 		float: left
 		text-align: left
