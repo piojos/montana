@@ -8,7 +8,7 @@
 
 		<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div>
 
-		<div class="max_wrap post_head">
+		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
 				<p class="label"><?php echo get_post_type(); ?></p>
 				<h1><?php the_title(); ?></h1>
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="post_body max_wrap"><?php
+	<div class="post_body <?php if(!is_singular('colecciones')) echo 'max_wrap'; ?>"><?php
 
 		if(is_singular('colecciones')) {
 			$post_objects = get_field('collection');
@@ -68,7 +68,7 @@
 
 
 		<div class="area max_wrap">
-			<h2 class="area_title">Otras fechas y horarios para Trainspotting</h2>
+			<h2 class="area_title">Otras fechas y horarios para <?php the_title(); ?></h2>
 			<div class="deck">
 				<?php echo cards(4, 'schedules fours'); ?>
 			</div>
@@ -79,10 +79,13 @@
 
 
 		<div class="area max_wrap">
-			<h2 class="area_title">Mas en Cineteca</h2>
-			<div class="deck">
-				<?php echo cards(4, 'movie fours'); ?>
-			</div>
+			<h2 class="area_title">Mas en Cineteca</h2><?php
+
+			$args = array(
+				'post_type' => 'cineteca',
+				'posts_per_page' => 4
+			);
+			deck($args, 'fours movie'); ?>
 		</div>
 	</div>
 </section>
