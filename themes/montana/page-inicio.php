@@ -21,8 +21,7 @@
 				<p>Hasta Marzo 14 (is this dinamic?)</p>
 				<p>Location Taxonomy</p>
 
-				<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
-				<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+				<?php get_template_part('inc/sharer'); ?>
 			</div>
 		</div>
 	</div>
