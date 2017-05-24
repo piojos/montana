@@ -31,8 +31,7 @@
 							<p><strong>Hasta Marzo 14</strong></p>
 							<p>Location Taxonomy</p>
 
-							<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
-							<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+							<?php get_template_part('inc/sharer'); ?>
 						</div>
 					</div>
 				</div>
