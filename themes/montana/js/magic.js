@@ -41,4 +41,10 @@ jQuery( function($) {
 	var valL = location.href.match(/[?&]lugar=(.*?)$/)[1];
 	$('select#lugar').val(valL);
 
+
+
+
+// Fitvids
+	$(".widget iframe").fitVids();
+
 });

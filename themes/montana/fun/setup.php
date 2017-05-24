@@ -33,6 +33,7 @@
 	// SCRIPTS
 		wp_enqueue_script( 'Slickjs', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js', array('jquery') ); //
 		wp_enqueue_script( 'Modernizr', get_template_directory_uri() . '/js/modernizr.custom.63321.js' ); // Home
+		wp_enqueue_script( 'fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'Magic', get_template_directory_uri() . '/js/magic.js', array('jquery') );
 
