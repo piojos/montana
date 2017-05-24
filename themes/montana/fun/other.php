@@ -90,7 +90,7 @@ function schedule_days($format) {
 	if($allDaysArray) {
 		foreach($allDaysArray as $row) {
 			$originalDate = $row;
-			$newDate = date($format, strtotime($originalDate));
+			$newDate = date_i18n($format, strtotime($originalDate));
 			// $today = date('Ymd');
 			// if($today == $originalDate) {
 			// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
@@ -113,11 +113,21 @@ function schedule_days($format) {
  *	MOVIES: Make array from days & hours
  */
 
-// function movieSchedule_array() {
-// 	$hours = array('holis');
-// 	// $hoursField = get_field('schedules');
-// 	return $hours;
-// }
+function movieSchedule_array($format) {
+	if(empty($format)) $format = 'Ymd';
+	$status = 'online';
+	if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
+		$day = date_i18n($format, strtotime(get_sub_field('day')));
+		if(have_rows('schedules')) {
+			$hours = array();
+			while (have_rows('schedules')) { the_row();
+			$hours[] = get_sub_field('hour');
+			}
+		}
+		$daysList[] = array($day, $hours);
+	}}
+	return $daysList;
+}
 
 
 function movieDays($format) {

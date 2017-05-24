@@ -26,8 +26,7 @@
 				</div>
 
 				<div class="status_label">
-					<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
-					<a href="#" class="share"><img src="http://placehold.it/24" alt=""></a>
+					<?php get_template_part('inc/sharer'); ?>
 				</div>
 			</div><?php
 			if(is_singular(array('agenda', 'cineteca'))) {
@@ -64,18 +63,33 @@
 		<div class="main_content_column"><?php
 			get_template_part('inc/widgets'); ?>
 		</div><?php
+		}
+
+
+
+
+		if(is_singular('cineteca')) { ?>
+			<div class="area max_wrap">
+				<h2 class="area_title">Otras fechas y horarios para <?php the_title(); ?></h2>
+				<div class="deck"><?php
+					$schedArray = movieSchedule_array('Ymd');
+					foreach ($schedArray as $key) {
+						$niceday = date_i18n('l M d', strtotime($key[0]));
+						$today = current_time('Ymd');
+						echo '<div class="schedule card fours"><div class="details box"><div class="wrap">';
+						if($today == $key[0]) echo '<strong>HOY </strong> | ';
+						if($today+1 == $key[0]) echo '<strong>MAÑANA </strong> | ';
+						echo $niceday.'<br><ul class="hours">';
+						if(is_array($key[1])){ foreach ($key[1] as $hour) {
+							echo '<li>'.$hour.'</li>';
+						}}
+						echo '</ul></div></div></div>';
+					}?>
+				</div>
+			</div><?php
 		} ?>
 
 
-		<div class="area max_wrap">
-			<h2 class="area_title">Otras fechas y horarios para <?php the_title(); ?></h2>
-			<div class="deck">
-				<?php echo cards(4, 'schedules fours'); ?>
-			</div>
-			<div class="actions_tray">
-				<a href="#" class="button">Ver todo</a>
-			</div>
-		</div>
 
 
 		<div class="area max_wrap">

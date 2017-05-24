@@ -52,6 +52,11 @@ a.button
 		width: 100%
 		height: 100%
 
+svg.icon
+	fill: $gray
+	width: 2em
+	height: 2em
+
 
 // Home
 .slider
@@ -123,6 +128,21 @@ a.button
 			margin-top: 18em
 		img
 			margin-top: -20em
+	&.schedule
+		.details.box
+			min-height: inherit
+		li
+			font-family: $Helvetica
+			display: inline-block
+			color: $gray
+			&:before
+				content: '•'
+				margin: 0 .5em
+				color: $lightgray
+			&:nth-child(1):before
+				content: ''
+				margin: 0
+
 	@media screen and (min-width: 50rem)
 		&.twos
 			width: 50%
