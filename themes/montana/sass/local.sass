@@ -167,6 +167,11 @@ h2.area_title
 	margin-bottom: 4em
 	position: relative
 	overflow: auto
+	top: -1em
+	+transition(all .25s ease)
+	&.loading
+		top: 6em
+		opacity: 0
 
 .post_info
 	background: $white
@@ -213,8 +218,14 @@ h2.area_title
 		font-weight: bold
 	iframe
 		width: 100%
-	ol span
-		float: right
+		min-height: 26em
+	ol
+		li
+			border-bottom: .1rem solid rgba(255, 255, 255, 0)
+			&:hover
+				border-bottom: .1rem dotted $lightgray
+		span
+			float: right
 	.body_content
 		font-family: $Helvetica
 		color: $gray

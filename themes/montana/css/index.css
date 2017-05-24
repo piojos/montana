@@ -119,7 +119,9 @@ header {
     float: left; }
     header #site-title, header #site-title a {
       display: inline-block;
-      line-height: 0; }
+      line-height: 0;
+      position: relative;
+      z-index: 100; }
     header #site-title img {
       max-width: 12rem; }
   header #search {
@@ -255,21 +257,39 @@ a.button {
   font-size: 1.2em;
   padding: 0.5em 1em; }
 
+.fleft, .excerpt img.poster {
+  float: left;
+  margin-right: 1em;
+  max-width: 14em; }
+
 .excerpt {
   font-family: Helvetica, Arial, sans-serif;
   line-height: 1.4em;
   color: #818181;
   margin-top: 1em; }
-  .excerpt img.poster {
-    float: left;
-    margin-right: 1em;
-    max-width: 14em; }
 
 .status_label {
   font-size: 0.85em;
   font-family: Helvetica, Arial, sans-serif;
   color: #818181;
   letter-spacing: 0.02em; }
+
+.clear {
+  clear: both; }
+
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto; }
+  .embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
 
 .slider {
   position: relative;
@@ -505,7 +525,15 @@ h2.area_title {
   margin-top: -8em;
   margin-bottom: 4em;
   position: relative;
-  overflow: auto; }
+  overflow: auto;
+  top: -1em;
+  -moz-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease; }
+  .post_head.loading {
+    top: 6em;
+    opacity: 0; }
 
 .post_info {
   background: white;
@@ -552,7 +580,12 @@ h2.area_title {
     font-size: 1.2em;
     font-weight: bold; }
   .widget iframe {
-    width: 100%; }
+    width: 100%;
+    min-height: 26em; }
+  .widget ol li {
+    border-bottom: 0.1rem solid rgba(255, 255, 255, 0); }
+    .widget ol li:hover {
+      border-bottom: 0.1rem dotted #ababab; }
   .widget ol span {
     float: right; }
   .widget .body_content {

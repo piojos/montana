@@ -16,15 +16,18 @@ a.button
 	font-size: 1.2em
 	padding: .5em 1em
 
+.fleft
+	float: left
+	margin-right: 1em
+	max-width: 14em
+
 .excerpt
 	font-family: $Helvetica
 	line-height: 1.4em
 	color: $gray
 	margin-top: 1em
 	img.poster
-		float: left
-		margin-right: 1em
-		max-width: 14em
+		@extend .fleft
 
 .status_label
 	font-size: .85em
@@ -32,6 +35,22 @@ a.button
 	color: $gray
 	letter-spacing: .02em
 
+.clear
+	clear: both
+
+.embed-container
+	position: relative
+	padding-bottom: 56.25%
+	height: 0
+	overflow: hidden
+	max-width: 100%
+	height: auto
+	iframe, object, embed
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
 
 
 // Home
