@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -129,11 +130,11 @@ header {
     float: right;
     font-size: 0.8em;
     text-transform: uppercase; }
-  header ul.submenu {
+  header .submenu {
     display: inline-block;
     font-size: 0.8em;
     text-transform: uppercase; }
-    header ul.submenu li {
+    header .submenu li {
       margin-right: 1.5em; }
   header nav#menu {
     font-size: 1.2em; }
@@ -190,9 +191,12 @@ footer .social {
         float: left; }
       footer .social ul.sm_tray {
         display: inline-block;
-        float: right; }
+        float: right;
+        padding-top: 1em; }
       footer .social li {
         margin: 0 1em; } }
+footer ul.sm_tray svg.icon {
+  fill: white; }
 footer #foot_nav {
   clear: both;
   border-top: 0.2rem solid #818181;
@@ -222,7 +226,7 @@ footer #foot_nav {
   @media screen and (min-width: 50rem) {
     .sitemap {
       overflow: auto; } }
-  .sitemap ul.links, .sitemap #copyright {
+  .sitemap .links, .sitemap #copyright {
     width: 50%;
     float: left;
     text-align: left;
@@ -291,6 +295,11 @@ a.button {
     width: 100%;
     height: 100%; }
 
+svg.icon {
+  fill: #818181;
+  width: 2em;
+  height: 2em; }
+
 .slider {
   position: relative;
   z-index: 0; }
@@ -354,6 +363,19 @@ a.button {
     margin-top: 18em; }
   .card.movie img {
     margin-top: -20em; }
+  .card.schedule .details.box {
+    min-height: inherit; }
+  .card.schedule li {
+    font-family: Helvetica, Arial, sans-serif;
+    display: inline-block;
+    color: #818181; }
+    .card.schedule li:before {
+      content: "•";
+      margin: 0 0.5em;
+      color: #ababab; }
+    .card.schedule li:nth-child(1):before {
+      content: "";
+      margin: 0; }
   @media screen and (min-width: 50rem) {
     .card.twos {
       width: 50%; }
@@ -542,7 +564,8 @@ h2.area_title {
   .post_info h1 {
     font-size: 2em; }
   .post_info .label {
-    color: #f57b20; }
+    color: #f57b20;
+    margin-bottom: 0.5em; }
   .post_info .status_label {
     margin-top: 2em; }
     .post_info .status_label.stick {
