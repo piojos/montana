@@ -27,6 +27,7 @@
 
 
 
+
 	function card($class) {
 		// eights (smallest, home)
 		// fours (common)
@@ -56,6 +57,8 @@
 						if( !empty($image) ){ ?>
 				<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
 						}
+					} elseif(!strpos($class, 'twos')) {
+						the_post_thumbnail('medium');
 					} else {
 						the_post_thumbnail();
 					}
@@ -81,12 +84,16 @@
 	}
 
 
+
+
 	function cards($loops, $class) {
 		for ($x = 1; $x <= $loops; $x++) {
 			$bunch .= card($class);
 		}
 		return $bunch;
 	}
+
+
 
 
 	function agenda_card() { ?>
@@ -114,6 +121,8 @@
 	}
 
 
+
+
 	function deck($args, $class) {
 
 		$the_query = new WP_Query( $args );
@@ -126,4 +135,21 @@
 		</div><?php
 			wp_reset_postdata();
 		}
+	}
+
+
+
+
+	function getClassofQuery($args) {
+		// if WP LOOP
+		// $custom_posts = new WP_Query($args);
+		// $count = $custom_posts->post_count;
+		// else
+		$count = count($args);
+		if($count <= 2) {
+			$class = ' twos';
+		} else {
+			$class = ' fours';
+		}
+		return $class;
 	}
