@@ -130,6 +130,17 @@ function movieSchedule_array($format) {
 }
 
 
+function movieDays_array($format) {
+	if(empty($format)) $format = 'Ymd';
+	$status = 'online';
+	$days = array();
+	if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
+		$days[] = date_i18n($format, strtotime(get_sub_field('day')));
+	}}
+	return $days;
+}
+
+
 function movieDays($format) {
 	if(empty($format)) $format = 'F j Y';
 	$status = 'online';
@@ -169,25 +180,21 @@ function movieDays($format) {
  *	Process days schedules and update $everyday
  */
 
+function everydayGen() {
+	$post_type = get_post_type($post_id);
+	if ($post_type == 'agenda') {
+		$result = schedule_days_array();
+	} elseif ($post_type == 'cineteca') {
+		$result = movieDays_array();
+	} else {}
+	return $result;
+}
+
+
+
 function my_acf_save_post( $post_id ) {
 	$value = get_field('everyday');
-	update_field('everyday', schedule_days_array());
+	update_field('everyday', everydayGen());
 }
 
 add_action('acf/save_post', 'my_acf_save_post', 20);
-
-
-
-
-
-
-
-
-
-/*
- *	Post Meta Box
- */
-
-function single_metabox() {
-	return 'hola!';
-}
