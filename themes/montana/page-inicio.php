@@ -3,162 +3,253 @@
 	get_header();
 	if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-<section id="content" role="main" class="home">
+<section id="content" role="main" class="home"><?php
+
+// slider
+
+	$sliderPosts = get_field('featured_slider', 2);
+
+	if($sliderPosts) { ?>
 	<div class="home slider"><?php
-	function huge_slide() { ?>
-<div class="slide">
-	<a href="#">
-		<div class="bg_img" style="background-image:url(http://lorempixel.com/1200/800);"></div>
-	</a>
-	<div class="max_wrap">
-		<div class="details box">
-			<a href="#">
-				<span class="parent_label">Post type + Category (if available)</span>
-				<h2>Title</h2>
-				<p>Slogan / Subtitle</p>
-			</a>
-			<div class="status_label">
-				<p>Hasta Marzo 14 (is this dinamic?)</p>
-				<p>Location Taxonomy</p>
+		foreach( $sliderPosts as $post) {
+			setup_postdata($post); ?>
+			<div class="slide">
+				<a href="#">
+					<div class="bg_img" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>);"></div>
+				</a>
+				<div class="max_wrap">
+					<div class="details box">
+						<a href="<?php the_permalink(); ?>">
+							<span class="parent_label"><?php echo get_post_type(); ?></span>
+							<h2><?php the_title(); ?></h2>
+							<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
+							<div class="about excerpt">
+								<?php the_content(); ?>
+							</div>
+						</a>
+						<div class="status_label"><?php
+							// <p><strong>Hasta Marzo 14</strong></p>
+							// <p>Location Taxonomy</p>
+							get_template_part('inc/sharer'); ?>
+						</div>
+					</div>
+				</div>
+			</div><?php
+		} ?>
+	</div><?php
+	}
 
-				<?php get_template_part('inc/sharer'); ?>
-			</div>
-		</div>
-	</div>
-</div>
-<?php }
 
-		echo huge_slide();
-		echo huge_slide();
-		echo huge_slide();
-		echo huge_slide(); ?>
+
+
+
+
+
+
+// Noticias
+
+	$latestQuery = new WP_Query( array('post_type' => 'post', 'posts_per_page' => 1 ) );
+	$restQuery = new WP_Query( array('post_type' => 'post', 'posts_per_page' => 6 , 'offset' => 1) );
+
+	if ( $latestQuery->have_posts() ) { ?>
+	<div class="dropdown closed max_wrap">
+		<div class="latest story"><?php
+		while ( $latestQuery->have_posts() ) {
+			$latestQuery->the_post(); ?>
+			<a href="<?php the_permalink(); ?>">
+				<?php the_post_thumbnail(); ?>
+				<div class="title">
+					<div>
+						<p class="label">Noticias</p>
+						<h2><?php the_title(); ?></h2>
+					</div>
+				</div>
+			</a><?php
+		}
+		wp_reset_postdata(); ?>
+		</div><?php
+		if ( $restQuery->have_posts() ) { ?>
+		<ul class="stories"><?php
+			while ( $restQuery->have_posts() ) {
+				$restQuery->the_post(); ?>
+			<li>
+				<a href="<?php the_permalink(); ?>">
+					<?php the_post_thumbnail(); ?>
+					<div class="title"><div>
+						<h2><?php the_title(); ?></h2>
+					</div></div>
+				</a>
+			</li><?php
+			} ?>
+		</ul><?php
+			wp_reset_postdata();
+		} ?>
+	</div><?php
+	}
+
+
+
+
+
+
+
+
+// #queHacerHoy
+	// jQuery: contar cards y distribuír de acuerdo al número. ?>
+
+	<div class="area max_wrap">
+		<h2 class="area_title">¿Qué hacer hoy?</h2><?php
+
+		$args = array(
+			'post_type' => 'agenda',
+			'posts_per_page' => 4,
+			'meta_query' => array (
+				array(
+					'key'       => 'everyday',
+					'value'     => $today,
+					'compare'   => 'LIKE',
+				),
+			)
+		);
+		deck($args, 'fours'); ?>
 	</div><?php
 
 
 
 
-// Noticias ?>
 
-	<div class="dropdown closed max_wrap">
-		<div class="latest story">
-			<a href="#">
-				<img src="http://lorempixel.com/90/60" alt="">
-				<div class="title">
-					<div>
-						<p class="label">Noticias</p>
-						<h2>Divierten Con Historias de Encuentros</h2>
-					</div>
-				</div>
-			</a>
-		</div>
-		<ul class="stories">
-			<li>
-				<a href="#">
-					<img src="http://lorempixel.com/90/60" alt="">
-					<div class="title"><div>
-						<h2>Desarrollan habilidades creativas en el taller de Animación de Animales Fantásticos</h2>
-					</div></div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://lorempixel.com/90/60" alt="">
-					<div class="title"><div>
-						<h2>Disfrutan Día del Patrimonio de Nuevo León en CONARTE</h2>
-					</div></div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://lorempixel.com/90/60" alt="">
-					<div class="title"><div>
-						<h2>Aparecen Fantasmas en la Escuela Adolfo Prieto</h2>
-					</div></div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://lorempixel.com/90/60" alt="">
-					<div class="title"><div>
-						<h2>Invitan a contemplar los Paisajes de Nuevo León, de David E. Fern, en la Casa de la Cultura</h2>
-					</div></div>
-				</a>
-			</li>
-		</ul>
-	</div>
 
+
+
+// cineteca
+	// Mostrar "por orden"?
+	// Conectar "ver todas" ?>
 
 	<div class="area max_wrap">
-		<h2 class="area_title">¿Qué hacer hoy?</h2>
-		<div class="deck "><?php
+		<h2 class="area_title">Cineteca</h2><?php
 
-			echo card('twos');
-			echo cards(2, 'fours') ?>
-		</div>
-	</div>
-
-
-	<div class="area max_wrap">
-		<h2 class="area_title">Hoy en Cineteca</h2>
-		<div class="deck"><?php
-
-			echo cards(4, 'fours movie') ?>
-		</div>
+		$args = array(
+			'post_type' => 'cineteca',
+			'posts_per_page' => 4,
+			// 'meta_query' => array (
+			// 	array(
+			// 		'key'       => 'everyday',
+			// 		'value'     => $today,
+			// 		'compare'   => 'LIKE',
+			// 	),
+			// )
+		);
+		deck($args, 'fours movie'); ?>
 		<div class="actions_tray">
 			<a href="#" class="button">Ver todo hoy</a>
 		</div>
-	</div>
+	</div><?php
 
+
+
+
+
+
+
+
+// conarteTV
+	// CPT? Options? YT? ?>
+	<?php
+
+
+
+
+
+
+
+
+// colecciones ?>
 
 	<div class="area max_wrap collections">
-		<h2 class="area_title">No te pierdas</h2>
-		<div class="controls">
-			<ul>
-				<li><a href="#">Exposiciones Gratuitas</a></li>
-				<li><a href="#">Una tarde con niños</a></li>
-				<li><a href="#">Conciertos Gratuitos</a></li>
-				<li><a href="#">Noches de Poesía</a></li>
-				<li><a href="#">Callegenera</a></li>
-				<li><a href="#">Esta Semana</a></li>
-				<li><a href="#">Festival de Teatro Nuevo León</a></li>
-				<li><a href="#">Poder Femenino</a></li>
-			</ul>
-		</div>
-		<div class="details_container">
-			<div class="info column">
-				<h1>Callegenera</h1>
-				<span>Slogan</span>
-				<p class="about">wara wara</p>
+		<h2 class="area_title">No te pierdas</h2><?php
 
-				<div class="status_label">
-					<p><strong>Hasta Marzo 14 (is this dinamic?)</strong></p>
-					<p>Location Taxonomy</p>
-				</div>
-			</div>
-			<div class="gallery column">
-				<a href="#" class="full"><img src="http://placehold.it/780x400" alt=""></a>
-				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-				<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-				<a href="#" class="half more"> Ver todo</a>
-			</div>
-		</div>
-	</div>
+	$args = array(
+		'post_type' => 'colecciones',
+		'posts_per_page' => -1
+	);
+
+	$the_query = new WP_Query( $args );
+	if ( $the_query->have_posts() ) { ?>
+	<div class="controls">
+		<ul><?php
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post(); ?>
+			<li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li><?php
+		} ?>
+		</ul>
+	</div><?php
+		wp_reset_postdata();
+	}
+	// <div class="details_container">
+		// <div class="info column">
+		// 	<h1>Callegenera</h1>
+		// 	<span>Slogan</span>
+		// 	<p class="about">wara wara</p>
+		//
+		// 	<div class="status_label">
+		// 		<p><strong>Hasta Marzo 14 (is this dinamic?)</strong></p>
+		// 		<p>Location Taxonomy</p>
+		// 	</div>
+		// </div>
+		// <div class="gallery column">
+		// 	<a href="#" class="full"><img src="http://placehold.it/780x400" alt=""></a>
+		// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+		// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+		// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
+		// 	<a href="#" class="half more"> Ver todo</a>
+		// </div>
+	// </div> ?>
+	</div><?php
+
+
+
+
+
+
+
+
+// esta semana
+	// jQuery: contar cards y distribuír de acuerdo al número. ?>
 
 	<div class="area max_wrap">
-		<h2 class="area_title">Esta semana</h2>
-		<div class="deck">
-			<?php echo cards(8, 'fours'); ?>
-		</div>
-	</div>
+		<h2 class="area_title">Esta Semana</h2><?php
 
+		$args = array(
+			'post_type' => 'agenda',
+			'posts_per_page' => 12,
+			// 'meta_query' => array (
+			// 	array(
+			// 		'key'       => 'everyday',
+			// 		'value'     => $today,
+			// 		'compare'   => 'LIKE',
+			// 	),
+			// )
+		);
+		deck($args, 'sixs'); ?>
+	</div><?php
+
+
+
+
+
+
+
+
+// Próximamente ?>
 	<div class="area max_wrap">
-		<h2 class="area_title">Próximamente</h2>
-		<div class="deck">
-			<?php echo cards(2, 'twos'); ?>
-		</div>
-	</div>
+		<h2 class="area_title">Próximamente</h2><?php
 
+		$args = array(
+			'post_type' => 'agenda',
+			'posts_per_page' => 2,
+		);
+		deck($args, 'twos'); ?>
+	</div>
 
 </section>
 <?php
