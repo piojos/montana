@@ -1,10 +1,13 @@
 
 jQuery( function($) {
 
+// Home
 	$('.slider').slick({
 		arrows : false
 	});
-
+	$('.dropdown a.toggle_button').click(function() {
+		$('.dropdown').toggleClass('open closed');
+	});
 
 // Single > Same size info
 	function sameSizeBox() {

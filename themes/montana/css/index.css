@@ -162,61 +162,63 @@ a#nav_toggle_button {
     a#nav_toggle_button {
       display: none; } }
 
-footer .social {
-  background-color: #161616;
-  text-align: center;
-  padding-top: 8em;
-  background-image: url(../img/logo_conarte.svg);
-  background-size: 12rem;
-  background-repeat: no-repeat;
-  background-position: center top 3rem; }
-  footer .social input {
-    -webkit-appearance: none;
-    padding: 1em 1.5em;
-    font-size: initial;
-    border: none; }
-  footer .social form {
-    background: yellow;
-    display: inline-block;
-    border-radius: 0.4rem;
-    overflow: hidden;
-    font-size: 0rem; }
-  footer .social li {
-    display: inline-block;
-    margin: 2em 1em; }
-  @media screen and (min-width: 50rem) {
-    footer .social {
-      padding: 2em; }
-      footer .social form {
-        float: left; }
-      footer .social ul.sm_tray {
-        display: inline-block;
-        float: right;
-        padding-top: 1em; }
-      footer .social li {
-        margin: 0 1em; } }
-footer ul.sm_tray svg.icon {
-  fill: white; }
-footer #foot_nav {
-  clear: both;
-  border-top: 0.2rem solid #818181;
-  position: relative;
-  padding-top: 1.4em;
-  top: 2em;
-  margin-bottom: 2em;
-  display: none;
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 1.2em; }
-  footer #foot_nav a {
-    color: white; }
-  footer #foot_nav ul {
-    display: flex;
-    justify-content: space-between; }
-  @media screen and (min-width: 50rem) {
-    footer #foot_nav {
-      display: block; } }
+footer {
+  margin-top: 6em; }
+  footer .social {
+    background-color: #161616;
+    text-align: center;
+    padding-top: 8em;
+    background-image: url(../img/logo_conarte.svg);
+    background-size: 12rem;
+    background-repeat: no-repeat;
+    background-position: center top 3rem; }
+    footer .social input {
+      -webkit-appearance: none;
+      padding: 1em 1.5em;
+      font-size: initial;
+      border: none; }
+    footer .social form {
+      background: yellow;
+      display: inline-block;
+      border-radius: 0.4rem;
+      overflow: hidden;
+      font-size: 0rem; }
+    footer .social li {
+      display: inline-block;
+      margin: 2em 1em; }
+    @media screen and (min-width: 50rem) {
+      footer .social {
+        padding: 2em; }
+        footer .social form {
+          float: left; }
+        footer .social ul.sm_tray {
+          display: inline-block;
+          float: right;
+          padding-top: 1em; }
+        footer .social li {
+          margin: 0 1em; } }
+  footer ul.sm_tray svg.icon {
+    fill: white; }
+  footer #foot_nav {
+    clear: both;
+    border-top: 0.2rem solid #818181;
+    position: relative;
+    padding-top: 1.4em;
+    top: 2em;
+    margin-bottom: 2em;
+    display: none;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.2em; }
+    footer #foot_nav a {
+      color: white; }
+    footer #foot_nav ul {
+      display: flex;
+      justify-content: space-between; }
+    @media screen and (min-width: 50rem) {
+      footer #foot_nav {
+        display: block; } }
 
 .sitemap {
   background: #1d1d1d;
@@ -463,24 +465,44 @@ h2.area_title {
       border-radius: 50%;
       width: 2.2rem;
       padding-top: 0.3rem;
-      text-align: center; }
+      text-align: center;
+      -moz-transition: -moz-transform 0.5s;
+      -o-transition: -o-transform 0.5s;
+      -webkit-transition: -webkit-transform 0.5s;
+      transition: transform 0.5s; }
   .dropdown ul.stories {
     position: relative;
     width: 100%;
     display: block;
     margin-top: -6.25em;
     margin-bottom: 6em;
-    z-index: 13; }
+    z-index: 13;
+    top: 0;
+    -moz-transition: top 0.5s;
+    -o-transition: top 0.5s;
+    -webkit-transition: top 0.5s;
+    transition: top 0.5s; }
     .dropdown ul.stories li {
       position: absolute;
-      width: 100%; }
+      width: 99%;
+      margin-left: 0.5%;
+      top: 0;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease; }
       .dropdown ul.stories li:nth-child(1) {
         width: 99%;
         margin-left: 0.5%;
-        z-index: 12;
-        border: none; }
-      .dropdown ul.stories li:nth-child(1n+2) {
-        opacity: 0; }
+        z-index: 5; }
+      .dropdown ul.stories li:nth-child(2) {
+        z-index: 4; }
+      .dropdown ul.stories li:nth-child(3) {
+        z-index: 3; }
+      .dropdown ul.stories li:nth-child(4) {
+        z-index: 2; }
+      .dropdown ul.stories li:nth-child(5) {
+        z-index: 1; }
   .dropdown .stories li, .dropdown .story {
     background: #1d1d1d;
     border-bottom: 0.1rem solid #ababab;
@@ -490,13 +512,22 @@ h2.area_title {
       .dropdown .stories li, .dropdown .story {
         display: none; } }
     .dropdown .stories li img, .dropdown .story img {
-      display: inline;
+      display: inline-block;
       margin-right: 1em;
       vertical-align: top;
-      max-height: 8rem;
+      max-height: 6rem;
       width: auto; }
   .dropdown a {
-    color: white; }
+    color: white;
+    display: inline-block; }
+    .dropdown a.toggle_button {
+      position: absolute;
+      top: 1.75em;
+      right: 1.25em;
+      width: 3em;
+      height: 3em;
+      z-index: 1;
+      cursor: pointer; }
   .dropdown .title {
     width: 60%;
     display: inline-block;
@@ -508,6 +539,21 @@ h2.area_title {
     @media screen and (max-width: 30rem) {
       .dropdown .title {
         width: 80%; } }
+  .dropdown.open .latest.story:after {
+    transform: rotate(180deg); }
+  .dropdown.open ul.stories {
+    top: 6.25em; }
+    .dropdown.open ul.stories li {
+      width: 100%;
+      margin-left: 0; }
+      .dropdown.open ul.stories li:nth-child(2) {
+        top: 6.65em; }
+      .dropdown.open ul.stories li:nth-child(3) {
+        top: 13.3em; }
+      .dropdown.open ul.stories li:nth-child(4) {
+        top: 19.9em; }
+      .dropdown.open ul.stories li:nth-child(5) {
+        top: 26.6em; }
 
 .collections .controls {
   background: white;

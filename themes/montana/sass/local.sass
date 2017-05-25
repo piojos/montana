@@ -61,6 +61,7 @@ h2.area_title
 			// height: 2.2rem
 			padding-top: .3rem
 			text-align: center
+			+transition(transform .5s)
 	ul.stories
 		position: relative
 		width: 100%
@@ -68,16 +69,26 @@ h2.area_title
 		margin-top: -6.25em
 		margin-bottom: 6em
 		z-index: 13
+		top: 0
+		+transition(top .5s)
 		li
 			position: absolute
-			width: 100%
+			width: 99%
+			margin-left: .5%
+			top: 0
+			+transition(all .5s ease)
 			&:nth-child(1)
 				width: 99%
 				margin-left: 0.5%
-				z-index: 12
-				border: none
-			&:nth-child(1n+2)
-				opacity: 0
+				z-index: 5
+			&:nth-child(2)
+				z-index: 4
+			&:nth-child(3)
+				z-index: 3
+			&:nth-child(4)
+				z-index: 2
+			&:nth-child(5)
+				z-index: 1
 	.stories li, .story
 		background: $black
 		border-bottom: .1rem solid $lightgray
@@ -86,13 +97,22 @@ h2.area_title
 		@media screen and (max-width: 30rem)
 			display: none
 		img
-			display: inline
+			display: inline-block
 			margin-right: 1em
 			vertical-align: top
-			max-height: 8rem
+			max-height: 6rem
 			width: auto
 	a
 		color: $white
+		display: inline-block
+		&.toggle_button
+			position: absolute
+			top: 1.75em
+			right: 1.25em
+			width: 3em
+			height: 3em
+			z-index: 1
+			cursor: pointer
 	.title
 		width: 60%
 		display: inline-block
@@ -103,9 +123,22 @@ h2.area_title
 			height: 6rem
 		@media screen and (max-width: 30rem)
 			width: 80%
-
-
-
+	&.open
+		.latest.story:after
+			transform: rotate(180deg)
+		ul.stories
+			top: 6.25em
+			li
+				width: 100%
+				margin-left: 0
+				&:nth-child(2)
+					top: 6.65em
+				&:nth-child(3)
+					top: 13.3em
+				&:nth-child(4)
+					top: 19.9em
+				&:nth-child(5)
+					top: 26.6em
 
 
 
