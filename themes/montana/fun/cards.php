@@ -123,11 +123,11 @@
 
 
 
-	function deck($args, $class) {
+	function deck($args, $class, $deckClass) {
 
 		$the_query = new WP_Query( $args );
 		if ( $the_query->have_posts() ) { ?>
-		<div class="deck"><?php
+		<div class="deck<?php echo ' '.$deckClass; ?>"><?php
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				echo card($class);
