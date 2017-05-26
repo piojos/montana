@@ -39,8 +39,8 @@ jQuery( function($) {
 		altFormat: 'yymmdd'
 	});
 
-	var valT = location.href.match(/[?&]tipo=(.*?)[$&]/)[1];
-	$('select#tipo').val(valT);
+	var valT = location.href.match(/[?&]disciplina=(.*?)[$&]/)[1];
+	$('select#disciplina').val(valT);
 
 	var valL = location.href.match(/[?&]lugar=(.*?)$/)[1];
 	$('select#lugar').val(valL);
