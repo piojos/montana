@@ -90,6 +90,74 @@
 
 
 
+	//hook into the init action and call create_topics_nonhierarchical_taxonomy when it fires
+
+	add_action( 'init', 'create_topics_nonhierarchical_taxonomy', 0 );
+
+	function create_topics_nonhierarchical_taxonomy() {
+		// Labels part for the GUI
+		$labels = array(
+			'name' => _x( 'Lugares', 'taxonomy general name' ),
+			'singular_name' => _x( 'Lugar', 'taxonomy singular name' ),
+			'search_items' =>  __( 'Busca Lugares' ),
+			'popular_items' => __( 'Lugares Populares' ),
+			'all_items' => __( 'Todos los Lugares' ),
+			'parent_item' => null,
+			'parent_item_colon' => null,
+			'edit_item' => __( 'Editar lugar' ),
+			'update_item' => __( 'Actualizar lugar' ),
+			'add_new_item' => __( 'Agregar nuevo lugar' ),
+			'new_item_name' => __( 'Nuevo nombre de lugar' ),
+			'separate_items_with_commas' => __( 'Separar lugares con commas' ),
+			'add_or_remove_items' => __( 'Agregar o quitar lugares' ),
+			'choose_from_most_used' => __( 'Escoge de los lugares más usados' ),
+			'menu_name' => __( 'Lugares' ),
+		);
+
+		register_taxonomy('lugares',array('post', 'agenda', 'convocatorias', 'talleres', 'exposiciones'),array(
+			'hierarchical' => false,
+			'labels' => $labels,
+			'show_ui' => true,
+			'show_in_quick_edit' => false,
+			'meta_box_cb' => false,
+			'show_admin_column' => true,
+			'update_count_callback' => '_update_post_term_count',
+			'query_var' => true,
+			'rewrite' => array( 'slug' => 'lugar' ),
+		));
+
+
+		$labels = array(
+			'name' => _x( 'Disciplinas', 'taxonomy general name' ),
+			'singular_name' => _x( 'Disciplina', 'taxonomy singular name' ),
+			'search_items' =>  __( 'Busca Disciplinas' ),
+			'popular_items' => __( 'Disciplinas Populares' ),
+			'all_items' => __( 'Todos las Disciplinas' ),
+			'parent_item' => null,
+			'parent_item_colon' => null,
+			'edit_item' => __( 'Editar disciplina' ),
+			'update_item' => __( 'Actualizar disciplina' ),
+			'add_new_item' => __( 'Agregar nueva disciplina' ),
+			'new_item_name' => __( 'Nuevo nombre de disciplina' ),
+			'separate_items_with_commas' => __( 'Separar disciplinas con commas' ),
+			'add_or_remove_items' => __( 'Agregar o quitar disciplinas' ),
+			'choose_from_most_used' => __( 'Escoge de las disciplinas más usadas' ),
+			'menu_name' => __( 'Disciplinas' ),
+		);
+
+		register_taxonomy('disciplinas',array('post', 'agenda', 'convocatorias', 'talleres'),array(
+			'hierarchical' => false,
+			'labels' => $labels,
+			'show_ui' => true,
+			'show_in_quick_edit' => false,
+			'meta_box_cb' => false,
+			'show_admin_column' => true,
+			'update_count_callback' => '_update_post_term_count',
+			'query_var' => true,
+			'rewrite' => array( 'slug' => 'disciplinas' ),
+		));
+
+	}
 
 
 
@@ -363,6 +431,22 @@
 		return $mimes;
 	}
 	add_filter( 'upload_mimes', 'cc_mime_types' );
+
+
+
+
+
+
+
+
+
+/* Google API key */
+	function my_acf_init() {
+		acf_update_setting('google_api_key', 'AIzaSyCG3l_pG-5BMKnGDpYenf_eUgVSy0wtPes');
+	}
+	add_action('acf/init', 'my_acf_init');
+
+
 
 
 
