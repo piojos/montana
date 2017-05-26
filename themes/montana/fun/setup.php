@@ -27,8 +27,8 @@
 		wp_register_style( 'jquery-ui', 'http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css' );
 
 		wp_enqueue_style( 'Slick', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css');
-		wp_enqueue_style( 'Style', get_stylesheet_uri() );
 		wp_enqueue_style( 'jquery-ui' );
+		wp_enqueue_style( 'Style', get_stylesheet_uri() );
 
 	// SCRIPTS
 		wp_enqueue_script( 'Slickjs', '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js', array('jquery') ); //

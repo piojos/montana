@@ -729,3 +729,24 @@ h2.area_title {
     display: block;
     width: 100%;
     height: auto; }
+
+.ui-widget-header {
+  background: transparent;
+  border: none; }
+
+.ui-corner-all {
+  border-radius: 0;
+  border-color: #1d1d1d; }
+
+.ui-widget {
+  font-family: Helvetica, Arial, sans-serif; }
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+  background: transparent;
+  text-align: center; }
+
+.ui-datepicker {
+  width: 15.3em; }
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+  background: transparent; }
