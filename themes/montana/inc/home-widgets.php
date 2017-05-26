@@ -28,7 +28,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		);
 		$custom_posts = new WP_Query($args);
 		$count = $custom_posts->post_count;
-		if($count < 2) {
+		if($count <= 2) {
 			$class = ' twos';
 		} else {
 			$class = ' fours';
