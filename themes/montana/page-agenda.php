@@ -10,7 +10,7 @@
 
 	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
 	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ymd');
-	if(htmlentities($_GET['tipo']) == '') $_GET['tipo'] = '';
+	if(htmlentities($_GET['disciplina']) == '') $_GET['disciplina'] = '';
 	if(htmlentities($_GET['lugar']) == '') $_GET['lugar'] = '';
 
 	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
@@ -19,66 +19,123 @@
 	$iArgs = array(
 		'post_type'		=> 'agenda',
 		'numberposts'	=> 1,
+		'meta_key'		=> 'type',
+		'meta_value'	=> 'int',
 		'meta_query' => array (
 			array(
 				'key'       => 'everyday',
 				'value'     => $queryDay,
 				'compare'   => 'LIKE',
 			),
-		)
+		),
 	);
 
-	// $eArgs = array(
-	// 	'numberposts'	=> 2,
-	// 	'post_type'		=> 'agenda',
-	// );
+	$eArgs = array(
+		'post_type'		=> 'agenda',
+		'numberposts'	=> 1,
+		'meta_key'		=> 'type',
+		'meta_value'	=> 'ext',
+		'meta_query' => array (
+			array(
+				'key'       => 'everyday',
+				'value'     => $queryDay,
+				'compare'   => 'LIKE',
+			),
+		),
+	);
+
+	if($_GET['disciplina'] != '') {
+		$iArgs[tax_query] = array( array(
+			'taxonomy' => 'disciplinas',
+			'field'    => 'slug',
+			'terms'    => $_GET['disciplina'],
+		));
+		$eArgs[tax_query] = array( array(
+			'taxonomy' => 'disciplinas',
+			'field'    => 'slug',
+			'terms'    => $_GET['disciplina'],
+		));
+	}
+
+	if($_GET['lugar'] != '') {
+		$iArgs[tax_query][] = array( array(
+			'taxonomy' => 'lugares',
+			'field'    => 'slug',
+			'terms'    => $_GET['lugar'],
+		));
+		$eArgs[tax_query][] = array( array(
+			'taxonomy' => 'lugares',
+			'field'    => 'slug',
+			'terms'    => $_GET['lugar'],
+		));
+	}
+
 
 	$int_query = new WP_Query( $iArgs );
-	// $ext_query = new WP_Query( $eArgs ); ?>
+	$ext_query = new WP_Query( $eArgs ); ?>
 
-	<section id="content" role="main">
-<?php /*
-		<div class="area blurry_bg">
+	<section id="content" role="main"><?php
+
+		$ftd_events = get_field('ftd_events');
+
+		if( $ftd_events ): ?>
+		<div class="area max_wrap collections">
 			<h2 class="area_title">No te pierdas</h2>
-			<div class="deck max_wrap"><?php
-				echo cards(2, 'twos'); ?>
+			<div class="deck"><?php
+			$count = getClassofQuery($ftd_events);
+			foreach( $ftd_events as $post):
+				setup_postdata($post);
+				echo card($count);
+			endforeach; ?>
 			</div>
-		</div>
+		</div><?php
+			wp_reset_postdata();
+		endif;
 
 
+
+
+		$explore_events = get_field('explore_events');
+
+		$args = array(
+			'post_type' => 'agenda',
+			'posts_per_page' => 4
+		); ?>
 		<div class="area" style="background:white;">
 			<h2 class="area_title">Explora CONARTE</h2>
+			<?php
+
+			if ($explore_events) { ?>
 			<div class="deck max_wrap"><?php
-				echo cards(6, 'fours'); // sixths?>
-			</div>
+				$count = getClassofQuery($explore_events);
+				foreach( $explore_events as $post):
+					setup_postdata($post);
+					echo card($count);
+				endforeach; ?>
+			</div><?php
+
+			} else {
+				deck($args, 'fours', 'max_wrap');
+			}  ?>
 		</div>
-*/
-
-
- ?>
 
 		<div class="area" id="agenda">
 			<div class="max_wrap">
 				<h2 class="area_title">o Busca Eventos por Fecha y Disciplina</h2>
 				<p class="label">Estas viendo eventos de:</p>
 				<form role="search" method="get" id="searchform" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
-					<div class="input_wrap hoy">
+					<div class="input_wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
 						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
 						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
 					</div>
-					<select name="tipo" id="tipo">
-						<option value="todas">Todas las Disciplinas</option>
-						<option value="exposiciones">Exposiciones</option>
-						<option value="talleres">Talleres</option>
-						<option value="museos">Museos</option>
+					<select name="disciplina" id="disciplina">
+						<option value="">Todas las Disciplinas</option>
+						<?php echo listSelOptions('disciplinas'); ?>
 					</select>
 					<select name="lugar" id="lugar">
-						<option value="todas">Todos las Espacios</option>
-						<option value="arraval">Arravál</option>
-						<option value="pinacoteca">Pinacoteca</option>
-						<option value="museos">Museos</option>
+						<option value="">Todos las Espacios</option>
+						<?php echo listSelOptions('lugares'); ?>
 					</select>
-					<!-- <input type="submit" name="enviar" value="Filtrar"> -->
 					<input type="submit" value="Actualizar">
 				</form>
 			</div>
@@ -88,7 +145,6 @@
 				<div class="internal">
 					<h3 class="max_wrap">Eventos CONARTE</h3><?php
 
-					// $the_query = new WP_Query( $args );
 					if ( $int_query->have_posts() ) { ?>
 					<ul><?php
 						while ( $int_query->have_posts() ) {
@@ -108,9 +164,8 @@
 							</li>
 						</ul><?php
 					}
-						wp_reset_query();?>
+					wp_reset_query(); ?>
 				</div>
-<?php /*
 				<div class="external">
 					<h3 class="max_wrap">Eventos Externos</h3><?php
 
@@ -133,9 +188,8 @@
 							</li>
 						</ul><?php
 					}
-						wp_reset_query();?>
+					wp_reset_query();?>
 				</div>
-*/ ?>
 			</div>
 		</div>
 	</section>
