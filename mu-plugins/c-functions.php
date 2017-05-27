@@ -114,7 +114,7 @@
 			'menu_name' => __( 'Lugares' ),
 		);
 
-		register_taxonomy('lugares',array('post', 'agenda', 'convocatorias', 'talleres', 'exposiciones'),array(
+		register_taxonomy('lugares',array('agenda', 'convocatorias', 'talleres', 'exposiciones'),array(
 			'hierarchical' => false,
 			'labels' => $labels,
 			'show_ui' => true,
@@ -145,7 +145,7 @@
 			'menu_name' => __( 'Disciplinas' ),
 		);
 
-		register_taxonomy('disciplinas',array('post', 'agenda', 'convocatorias', 'talleres'),array(
+		register_taxonomy('disciplinas',array('agenda', 'convocatorias', 'talleres'),array(
 			'hierarchical' => false,
 			'labels' => $labels,
 			'show_ui' => true,

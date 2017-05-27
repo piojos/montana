@@ -188,7 +188,7 @@
 							</li>
 						</ul><?php
 					}
-					wp_reset_query();?>
+					wp_reset_query(); ?>
 				</div>
 			</div>
 		</div>

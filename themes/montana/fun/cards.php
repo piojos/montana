@@ -123,7 +123,7 @@
 
 
 
-	function deck($args, $class, $deckClass) {
+	function deck($args, $class = '', $deckClass = '') {
 
 		$the_query = new WP_Query( $args );
 		if ( $the_query->have_posts() ) { ?>
