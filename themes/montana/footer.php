@@ -22,12 +22,13 @@
 				<div class="max_wrap">
 					<?php wp_nav_menu( array( 'theme_location' => 'legal-menu', 'container_class' => 'links' ) ); ?>
 					<div id="copyright">
-						<p>CENTRO DE LAS ARTES <br>
-						Parque Fundidora Av. Fundidora y Adolfo Prieto, <br>
+						<h3>CENTRO DE LAS ARTES</h3>
+						<p>Parque Fundidora Av. Fundidora y Adolfo Prieto, <br>
 						Col. Obrera, C.P. 64010, Monterrey, Nuevo León. <br>
 						T. +52 (81) 2315 1101</p>
+						<p class="legal_note">Todos los derechos reservados CONARTE &copy; <?php the_time('Y'); ?></p>
 					</div>
-					<a href="#" id="logo_nl"><img src="<?php echo get_template_directory_uri(); ?>/img/logo_nuevoleon.png" alt="" width="180"></a>
+					<a href="#" id="logo_nl"><img src="<?php echo get_template_directory_uri(); ?>/img/logo_nuevoleon.png" alt="" width="140"></a>
 				</div>
 			</div>
 		</footer>

@@ -112,6 +112,8 @@ header
 		ul
 			display: flex
 			justify-content: space-between
+	.current-menu-item a
+		color: $orange !important
 
 
 
@@ -208,6 +210,8 @@ footer
 	color: $lightgray
 	padding: 2em
 	text-align: center
+	+font-smoothing()
+	font-weight: bold
 	@media screen and (min-width: 50rem)
 		overflow: auto
 	.links, #copyright
@@ -220,10 +224,15 @@ footer
 		padding-top: 2em
 		display: block
 		clear: both
+	h3
+		color: $whitegray
+	.legal_note
+		color: #4c4c4c
 	@media screen and (min-width: 50rem)
-		ul.links, #copyright
+		.links, #copyright
 			width: 25%
+			margin-left: 1.4em
 		a#logo_nl
-			padding-top: 0
+			padding: 1em 1.4em 0 0
 			float: right
 			clear: none

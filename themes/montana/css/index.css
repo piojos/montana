@@ -143,6 +143,8 @@ header {
     header nav#menu ul {
       display: flex;
       justify-content: space-between; }
+  header .current-menu-item a {
+    color: #f57b20 !important; }
 
 a#nav_toggle_button {
   border-top: 0.25em solid white;
@@ -224,7 +226,10 @@ footer {
   background: #1d1d1d;
   color: #ababab;
   padding: 2em;
-  text-align: center; }
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: bold; }
   @media screen and (min-width: 50rem) {
     .sitemap {
       overflow: auto; } }
@@ -238,11 +243,16 @@ footer {
     padding-top: 2em;
     display: block;
     clear: both; }
+  .sitemap h3 {
+    color: #f7f7f7; }
+  .sitemap .legal_note {
+    color: #4c4c4c; }
   @media screen and (min-width: 50rem) {
-    .sitemap ul.links, .sitemap #copyright {
-      width: 25%; }
+    .sitemap .links, .sitemap #copyright {
+      width: 25%;
+      margin-left: 1.4em; }
     .sitemap a#logo_nl {
-      padding-top: 0;
+      padding: 1em 1.4em 0 0;
       float: right;
       clear: none; } }
 
