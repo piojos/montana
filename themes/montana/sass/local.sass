@@ -47,6 +47,8 @@ h2.area_title
 	position: relative
 	padding: 0 1em
 	top: -3em
+	h2
+		font-size: 1.2em
 	.latest.story
 		position: relative
 		z-index: 14
@@ -66,20 +68,19 @@ h2.area_title
 		position: relative
 		width: 100%
 		display: block
-		margin-top: -6.25em
+		// margin-top: -6.25em
+		margin-top: -6.65em
 		margin-bottom: 6em
 		z-index: 13
 		top: 0
 		+transition(top .5s)
 		li
 			position: absolute
-			width: 99%
-			margin-left: .5%
+			width: 100%
+			// margin-left: .5%
 			top: 0
 			+transition(all .5s ease)
 			&:nth-child(1)
-				width: 99%
-				margin-left: 0.5%
 				z-index: 5
 			&:nth-child(2)
 				z-index: 4
@@ -105,6 +106,7 @@ h2.area_title
 	a
 		color: $white
 		display: inline-block
+		width: 100%
 		&.toggle_button
 			position: absolute
 			top: 1.75em
@@ -132,13 +134,17 @@ h2.area_title
 				width: 100%
 				margin-left: 0
 				&:nth-child(2)
-					top: 6.65em
+					top: 6.6em
 				&:nth-child(3)
-					top: 13.3em
+					top: 13.25em
 				&:nth-child(4)
 					top: 19.9em
 				&:nth-child(5)
-					top: 26.6em
+					top: 26.55em
+				&:hover
+					background: $white
+					a
+						color: $orange
 
 
 

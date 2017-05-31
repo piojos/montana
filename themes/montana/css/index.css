@@ -451,6 +451,8 @@ h2.area_title {
   position: relative;
   padding: 0 1em;
   top: -3em; }
+  .dropdown h2 {
+    font-size: 1.2em; }
   .dropdown .latest.story {
     position: relative;
     z-index: 14; }
@@ -474,7 +476,7 @@ h2.area_title {
     position: relative;
     width: 100%;
     display: block;
-    margin-top: -6.25em;
+    margin-top: -6.65em;
     margin-bottom: 6em;
     z-index: 13;
     top: 0;
@@ -484,16 +486,13 @@ h2.area_title {
     transition: top 0.5s; }
     .dropdown ul.stories li {
       position: absolute;
-      width: 99%;
-      margin-left: 0.5%;
+      width: 100%;
       top: 0;
       -moz-transition: all 0.5s ease;
       -o-transition: all 0.5s ease;
       -webkit-transition: all 0.5s ease;
       transition: all 0.5s ease; }
       .dropdown ul.stories li:nth-child(1) {
-        width: 99%;
-        margin-left: 0.5%;
         z-index: 5; }
       .dropdown ul.stories li:nth-child(2) {
         z-index: 4; }
@@ -519,7 +518,8 @@ h2.area_title {
       width: auto; }
   .dropdown a {
     color: white;
-    display: inline-block; }
+    display: inline-block;
+    width: 100%; }
     .dropdown a.toggle_button {
       position: absolute;
       top: 1.75em;
@@ -547,13 +547,17 @@ h2.area_title {
       width: 100%;
       margin-left: 0; }
       .dropdown.open ul.stories li:nth-child(2) {
-        top: 6.65em; }
+        top: 6.6em; }
       .dropdown.open ul.stories li:nth-child(3) {
-        top: 13.3em; }
+        top: 13.25em; }
       .dropdown.open ul.stories li:nth-child(4) {
         top: 19.9em; }
       .dropdown.open ul.stories li:nth-child(5) {
-        top: 26.6em; }
+        top: 26.55em; }
+      .dropdown.open ul.stories li:hover {
+        background: white; }
+        .dropdown.open ul.stories li:hover a {
+          color: #f57b20; }
 
 .collections .controls {
   background: white;
