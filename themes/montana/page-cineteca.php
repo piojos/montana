@@ -28,33 +28,39 @@
 
 	$query = new WP_Query( $args ); ?>
 
-	<section id="content" role="main">
-<?php /*
-		<div class="area blurry_bg">
+	<section id="content" role="main"><?php
+
+
+		$explore_events = get_field('ftd_events');
+
+		$args = array(
+			'post_type' => 'cineteca',
+			'posts_per_page' => 4
+		); ?>
+		<div class="area" style="background:white; padding: 3em 0 4em;">
 			<h2 class="area_title">No te pierdas</h2>
+			<?php
+
+			if ($explore_events) { ?>
 			<div class="deck max_wrap"><?php
-				echo cards(2, 'twos'); ?>
-			</div>
+				$count = getClassofQuery($explore_events);
+				foreach( $explore_events as $post):
+					setup_postdata($post);
+					echo card($count);
+				endforeach; ?>
+			</div><?php
+
+			} else {
+				deck($args, 'fours movie', 'max_wrap');
+			}  ?>
 		</div>
-
-
-		<div class="area" style="background:white;">
-			<h2 class="area_title">Explora CONARTE</h2>
-			<div class="deck max_wrap"><?php
-				echo cards(6, 'fours'); // sixths?>
-			</div>
-		</div>
-*/
-
-
- ?>
 
 		<div class="area" id="agenda">
 			<div class="max_wrap">
 				<h2 class="area_title">Películas por día</h2>
 				<p class="label">Estas viendo las funciones de:</p>
 				<form role="search" method="get" id="searchform" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
-					<div class="input_wrap hoy">
+					<div class="input_wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
 						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
 						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
 					</div>
@@ -69,7 +75,7 @@
 					<ul><?php
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							agenda_card();
+							list_card();
 						} ?>
 					</ul><?php
 					} else { ?>
