@@ -83,8 +83,7 @@
 	}
 
 
-	function schedule_days($format) {
-		if(empty($format)) $format = 'F j Y';
+	function schedule_days($format = 'F j Y') {
 		$allDaysArray = schedule_days_array();
 
 		if($allDaysArray) {
@@ -130,8 +129,7 @@
 	}
 
 
-	function movieDays_array($format) {
-		if(empty($format)) $format = 'Ymd';
+	function movieDays_array($format = 'Ymd') {
 		$status = 'online';
 		$days = array();
 		if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
@@ -141,8 +139,7 @@
 	}
 
 
-	function movieDays($format) {
-		if(empty($format)) $format = 'F j Y';
+	function movieDays($format = 'F j Y') {
 		$status = 'online';
 		$days = array();
 		$hours = array();
@@ -242,4 +239,36 @@
 		$string .= '<br>';
 		return $string;
 		// Not working. Copy&Paste
+	}
+
+
+
+
+
+
+
+
+
+
+//
+	function result_list($query = '', $keyword) {
+		if ( $query->have_posts() ) { ?>
+		<ul><?php
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				list_card();
+			} ?>
+		</ul><?php
+		} else { ?>
+			<ul>
+				<li>
+					<div class="max_wrap">
+						<div class="no-events">
+							<h2>No hay <?php echo $keyword; ?> en esta fecha.</h2>
+						</div>
+					</div>
+				</li>
+			</ul><?php
+		}
+		wp_reset_query();
 	}
