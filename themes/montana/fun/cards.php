@@ -96,12 +96,20 @@
 
 
 
-	function agenda_card() { ?>
+	function list_card() { ?>
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
 				<div class="schedule">
-					<p><strong><?php echo schedule_hours(); ?></strong> <br>
-					<?php // echo schedule_days(); ?>
+					<p><strong><?php echo schedule_hours(); ?></strong> <br><?php
+
+					if( get_post_type( $post->ID ) == 'exposiciones') {
+						if(have_rows('range_date_picker')) { while(have_rows('range_date_picker')){
+							the_row();
+							echo 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) );
+						}}
+					}
+
+					// echo schedule_days(); ?>
 					</p>
 				</div>
 				<div class="thumbnail">
