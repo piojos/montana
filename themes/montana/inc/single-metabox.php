@@ -3,9 +3,9 @@
 	// Get Cost
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
-		$finalCost = '<strong>Entrada gratuita</strong>';
+		$finalCost = '<strong>Entrada gratuita</strong>. ';
 	} else {
-		$finalCost = '<strong>$'.get_field('cost').'</strong>';
+		$finalCost = '<strong>$'.get_field('cost').'</strong>. ';
 	}
 	$finalCost .= get_field('cost_message');
 
