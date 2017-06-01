@@ -66,7 +66,7 @@
 			if($weekdays) {
 				foreach($weekdays as $row) {
 					for($i = strtotime($row, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
-						$days[] = date('Ymd', $i);
+						$days[] = current_time('Ymd', $i);
 					}
 				}
 			}
@@ -90,7 +90,7 @@
 			foreach($allDaysArray as $row) {
 				$originalDate = $row;
 				$newDate = date_i18n($format, strtotime($originalDate));
-				$today = date('Ymd');
+				$today = current_time('Ymd');
 				// if($today == $originalDate) {
 				// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
 				// else {
@@ -142,34 +142,60 @@
 	function movieDays($format = 'F j Y') {
 		$status = 'online';
 		$days = array();
-		$hours = array();
+		// $hours = array();
 		if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
 			$days[] = date_i18n($format, strtotime(get_sub_field('day')));
-			if(have_rows('schedules')) { while (have_rows('schedules')) { the_row();
-				$hours[] = get_sub_field('hour');
-			}}
+			// if(have_rows('schedules')) { while (have_rows('schedules')) { the_row();
+			// 	$hours[] = get_sub_field('hour');
+			// }}
 		}}
 		$stDays = rtrim(implode(', ', $days), ',');
-		$stHours = rtrim(implode('&nbsp; <span>•</span> &nbsp;', $hours), ' <span>•</span> ');
-		$string = '<dt class="label">Fecha</dt><dd>'.$stDays.'</dd>';
-		$string .= '<dt class="label">Horarios</dt><dd>'.$stHours.'</dd>';
+		// $stHours = rtrim(implode('&nbsp; <span>•</span> &nbsp;', $hours), ' <span>•</span> ');
+		$string = '<dt class="label">Fechas</dt><dd style="text-transform:capitalize;">'.$stDays.'</dd>';
+		// $string .= '<dt class="label">Horarios</dt><dd>'.$stHours.'</dd>';
 		return $string;
 	}
 
-	// function movieHoursToday() {
-	// 	// Get movieSchedule_array
-	// 	// On day == today display hours
 
-	// 	$today = date('today');
-	// 	if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
-	// 		$days[] = date_i18n($format, strtotime(get_sub_field('day')));
-	// 		if(have_rows('schedules')) { while (have_rows('schedules')) { the_row();
-	// 			$hours[] = get_sub_field('hour');
-	// 		}}
-	// 	}}
-	// 	$string .= '<dt class="label">Horarios</dt><dd>'.$stHours.'</dd>';
-	// 	return $string;
-	// }
+	function movieFutureSchedule_array() {
+		$schedArray = movieSchedule_array('Ymd');
+		$today = current_time('Ymd');
+		$new = array_filter($schedArray, function ($var) use ($today) {
+			return ($var[0] >= $today);
+		});
+		$new = array_values($new);
+		return $new;
+	}
+
+
+	function movieHoursClosestday() {
+		$schedArray = movieSchedule_array('Ymd');
+		$today = current_time('Ymd');
+		$new = array_filter($schedArray, function ($var) use ($today) {
+			return ($var[0] >= $today);
+		});
+		$new = array_values($new);
+		foreach ($new[0] as $key) {
+			$gethours[1] = $key;
+		}
+		if(is_array($gethours[1])){
+			$hours = '<ul class="moviehours">';
+			foreach ($gethours[1] as $hour) {
+				$hours .= '<li>'.$hour.'</li>';
+			}
+			$hours .= '</ul>';
+		}
+		return $hours;
+		// return $new;
+	}
+
+
+	function prefix_forDay($any_day) {
+		$today = current_time('Ymd');
+		if($today == $any_day) $string = '<strong>HOY </strong> | ';
+		if($today+1 == $any_day) $string = '<strong>MAÑANA </strong> | ';
+		return $string;
+	}
 
 
 
