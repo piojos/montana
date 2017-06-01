@@ -1,5 +1,6 @@
 <?php
 
+	// Get Cost
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
 		$finalCost = '<strong>Entrada gratuita</strong>';
@@ -8,6 +9,7 @@
 	}
 	$finalCost .= get_field('cost_message');
 
+	// Get Tickets
 	if( $costOptions && in_array('tickets', $costOptions) ) {
 		$ctaButton = '<a href="'.get_field('ticket_url').'" class="button">';
 		if(get_field('ticket_label')) { $ctaButton .= get_field('ticket_label'); }
@@ -15,25 +17,37 @@
 		$ctaButton .= '</a>';
 	}
 
+	// Get Place
+	$placeTerm = get_term( get_field('location_picker'), 'lugares');
+
 	 ?>
 <div class="post_meta">
 	<dl><?php
 
-		if(is_singular('cineteca')) {
-			echo movieDays('l d M');
-			// echo movieHoursToday();
-		} else { ?>
-			<dt class="label">Fecha</dt>
-			<dd><?php echo schedule_days(); ?></dd>
-			<dt class="label">Hora</dt>
-			<dd><?php echo schedule_hours(); ?></dd><?php
-		} ?>
+	if(is_singular('cineteca')) {
+		echo movieDays('F d');
+		if(!empty(movieHoursClosestday())) {
+			echo '<dt class="label">Horarios</dt><dd>'.movieHoursClosestday().'</dd>';
+		}
+	} else { ?>
+		<dt class="label">Fechas</dt>
+		<dd><?php echo schedule_days(); ?></dd>
+		<dt class="label">Horarios</dt>
+		<dd><?php echo schedule_hours(); ?></dd><?php
+	}
 
+
+	if($finalCost) { ?>
 		<dt class="label">Costo</dt>
-		<dd><?php echo $finalCost; ?></dd>
+		<dd><?php echo $finalCost; ?></dd><?php
+	}
 
-		<dt class="label">Ubicación</dt>
-		<dd>Explanada de Museo de Historia Mexicana</dd>
+
+	if($placeTerm) { ?>
+		<dt class="label">Lugar</dt>
+		<dd><?php echo $placeTerm->name; ?></dd><?php
+	} ?>
+
 	</dl>
 	<?php if(!empty($ctaButton)) echo $ctaButton; ?>
 </div>
