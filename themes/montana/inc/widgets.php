@@ -24,7 +24,7 @@ if( have_rows('widgets') ): while ( have_rows('widgets') ) : the_row();
 			$rawDate = get_sub_field('date');
 			$content .= '<li>'.get_sub_field('element');
 			if(!empty($rawDate)) {
-				$niceDate = date('l d', strtotime($rawDate));
+				$niceDate = current_time('l d', strtotime($rawDate));
 				$content .= '<span>'.$niceDate.'</span>';
 			}
 			$content .= '</li>';
