@@ -3,11 +3,13 @@
 	// Get Cost
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
-		$finalCost = '<strong>Entrada gratuita</strong>. ';
+		$finalCost = '<strong>Entrada gratuita</strong> ';
 	} else {
-		$finalCost = '<strong>$'.get_field('cost').'</strong>. ';
+		$finalCost = '<strong>$'.get_field('cost').'</strong> ';
 	}
-	$finalCost .= get_field('cost_message');
+	if(get_field('cost_message')) {
+		$finalCost .= '. '.get_field('cost_message').'.';
+	}
 
 	// Get Tickets
 	if( $costOptions && in_array('tickets', $costOptions) ) {
