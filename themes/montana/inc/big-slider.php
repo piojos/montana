@@ -3,7 +3,7 @@
 	$sliderPosts = get_field('featured_list');
 
 	if($sliderPosts) { ?>
-	<div class="home slider"><?php
+	<div class="big slider"><?php
 		foreach( $sliderPosts as $post) {
 			setup_postdata($post); ?>
 			<div class="slide">

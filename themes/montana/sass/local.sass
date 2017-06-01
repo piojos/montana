@@ -9,7 +9,7 @@
 
 // Home
 
-.home.slider
+.big.slider
 	margin-top: -4em
 	.slide .bg_img
 		max-width: 166rem
@@ -17,6 +17,10 @@
 	.details.box
 		bottom: 4em
 		width: 90%
+		h2
+			font-size: 2em
+		.subtitle
+			font-family: $Helvetica
 		img
 			display: inline-block
 		@media screen and (min-width: 30rem)
@@ -32,7 +36,9 @@
 		.details.box
 			width: 35%
 			bottom: 6em
-
+	@media screen and (max-height: 45rem)
+		.slide
+			height: 40em
 
 
 
@@ -47,8 +53,10 @@ h2.area_title
 	position: relative
 	padding: 0 1em
 	top: -3em
+	label
+		line-height: 2em
 	h2
-		font-size: 1.2em
+		+font-smoothing()
 	.latest.story
 		position: relative
 		z-index: 14
@@ -68,7 +76,6 @@ h2.area_title
 		position: relative
 		width: 100%
 		display: block
-		// margin-top: -6.25em
 		margin-top: -6.65em
 		margin-bottom: 6em
 		z-index: 13
@@ -123,13 +130,14 @@ h2.area_title
 			vertical-align: middle
 			display: table-cell
 			height: 6rem
+			font-size: 1.4em
 		@media screen and (max-width: 30rem)
 			width: 80%
 	&.open
 		.latest.story:after
 			transform: rotate(180deg)
 		ul.stories
-			top: 6.25em
+			top: 6.6em
 			li
 				width: 100%
 				margin-left: 0
