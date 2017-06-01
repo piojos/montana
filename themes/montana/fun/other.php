@@ -37,7 +37,6 @@
 		$status = $chosenOne;
 		if(!empty($chosenOne)) {$status = 'field: ok';} else {$status = 'field: ERROR';}
 
-
 		if($chosenOne == 'dates') {
 
 			$status .= '<br>[Dates]: ';
@@ -84,28 +83,55 @@
 
 
 	function schedule_days($format = 'F j Y') {
+		$chosenOne = get_field('dates_options');
 		$allDaysArray = schedule_days_array();
-
-		if($allDaysArray) {
-			foreach($allDaysArray as $row) {
-				$originalDate = $row;
-				$newDate = date_i18n($format, strtotime($originalDate));
-				$today = current_time('Ymd');
-				// if($today == $originalDate) {
-				// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
-				// else {
-					$days[] = $newDate;
-				// }
+		if($chosenOne == 'dates') {
+			if($allDaysArray) {
+				foreach($allDaysArray as $row) {
+					$originalDate = $row;
+					$newDate = date_i18n($format, strtotime($originalDate));
+					$today = current_time('Ymd');
+					// if($today == $originalDate) {
+					// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
+					// else {
+						$days[] = $newDate;
+					// }
+				}
 			}
+			$string = rtrim(implode(', ', $days), ',');
+		} elseif($chosenOne == 'range') {
+			if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
+				the_row();
+				$start_day = get_sub_field('start_day');
+				$end_day = get_sub_field('end_day');
+				$weekdays = get_sub_field('weekdays');
+			}}
+			if($weekdays) {
+				$string = createRangeWeekdays($weekdays).'<br>';
+			}
+			$start_day = date_i18n('d \d\e F', strtotime($start_day));
+			$end_day = date_i18n('d \d\e F Y', strtotime($end_day));
+			$string .= 'Del '. $start_day .' al '. $end_day;
+		} else {
+			$status .= '[ERROR]';
 		}
-		$string = rtrim(implode(', ', $days), ',');
 
 		// Check with today
 		return $string;
 	}
 
 
-
+	function createRangeWeekdays($weekdays = '') {
+		if($weekdays) {
+			$wdString = implode(", ", $weekdays);
+			$codex = array("mon", "tue", "wed", "thu", "fri", "sat", "sun");
+			$nice = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo");
+			$string = str_replace($codex, $nice, $wdString);
+		} else {
+			$string = 'error';
+		}
+		return $string;
+	}
 
 
 /*

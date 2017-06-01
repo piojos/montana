@@ -658,6 +658,9 @@ h2.area_title {
   .post_info .label {
     color: #f57b20;
     margin-bottom: 0.5em; }
+  .post_info .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0.4em 0 2em; }
   .post_info .status_label {
     margin-top: 2em; }
     .post_info .status_label.stick {
@@ -674,6 +677,7 @@ h2.area_title {
     color: #818181; }
   .post_meta dd {
     font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
     margin-bottom: 1em; }
   .post_meta a.button {
     border: 0.1rem solid white;
