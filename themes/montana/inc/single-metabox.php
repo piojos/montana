@@ -8,7 +8,7 @@
 		$finalCost = '<strong>$'.get_field('cost').'</strong> ';
 	}
 	if(get_field('cost_message')) {
-		$finalCost .= '. '.get_field('cost_message').'.';
+		$finalCost .= get_field('cost_message').'.';
 	}
 
 	// Get Tickets
@@ -22,7 +22,9 @@
 	// Get Place
 	$placeTerm = get_term( get_field('location_picker'), 'lugares');
 
-	 ?>
+	// Get Presentors
+	$presentor = get_field('presentor');
+?>
 <div class="post_meta">
 	<dl><?php
 
@@ -36,6 +38,12 @@
 		<dd><?php echo schedule_days(); ?></dd>
 		<dt class="label">Horarios</dt>
 		<dd><?php echo schedule_hours(); ?></dd><?php
+	}
+
+
+	if($presentor) { ?>
+		<dt class="label">Imparte</dt>
+		<dd><?php echo $presentor; ?></dd><?php
 	}
 
 
