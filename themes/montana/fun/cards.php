@@ -28,6 +28,14 @@
 
 
 
+	function get_place() {
+		$aTerm = get_field('location_picker');
+		$placeTerm = get_term_by('id', $aTerm, 'lugares');
+		return $placeTerm->name;
+	}
+
+
+
 	function card($class) {
 		// eights (smallest, home)
 		// fours (common)
@@ -100,7 +108,7 @@
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
 				<div class="schedule">
-					<p><strong><?php echo schedule_hours(); ?></strong> <br><?php
+					<p><?php echo schedule_hours(); ?> <br><?php
 
 					if( get_post_type( $post->ID ) == 'exposiciones') {
 						if(have_rows('range_date_picker')) { while(have_rows('range_date_picker')){
@@ -117,16 +125,18 @@
 				</div>
 				<div class="title">
 					<h2><strong><?php the_title(); ?></strong></h2>
-					<p><?php
-					if(get_field('kicker')) { the_field('kicker'); }
-					else { the_excerpt(); } ?></p>
+					<div class="kicker"><?php
+						if(get_field('kicker')) { echo '<p>'.get_field('kicker').'</p>'; }
+						else { the_excerpt(); } ?>
+					</div>
 				</div>
 				<div class="location">
-					<p><strong>Centro de las Artes</strong></p>
+					<p><strong><?php echo get_place(); ?></strong></p>
 				</div>
 			</a>
 		</li><?php
 	}
+
 
 
 
