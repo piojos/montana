@@ -42,26 +42,35 @@
 	<div class="post_body <?php if(!is_singular('colecciones')) echo 'max_wrap'; ?>"><?php
 
 		if(is_singular('colecciones')) {
-			$post_objects = get_field('collection');
-			// print_r($col); ?>
-			<ul class="ag_results">
-				<li>
-					<div class="max_wrap">
-						<h3><span>PREFIX</span>Lunes Marzo 13 2017</h3>
-					</div><?php
 
-					if( $post_objects ) { ?>
-					<ul><?php
-						foreach( $post_objects as $post) {
-							setup_postdata($post);
-							agenda_card();
-						} ?>
+			if(have_rows('event_days')) {
+				while (have_rows('event_days')) {
+					the_row(); ?>
+
+					<ul class="ag_results">
+						<li>
+							<div class="max_wrap">
+								<h3> <?php
+								$day = get_sub_field('day');
+								$newDate = date_i18n('l F d Y', strtotime($day));
+								echo prefix_forDay($day, '<span>', '</span>').$newDate;
+								 ?></h3>
+							</div><?php
+
+							$post_objects = get_sub_field('events');
+							if( $post_objects ) { ?>
+							<ul><?php
+								foreach( $post_objects as $post) {
+									setup_postdata($post);
+									list_card();
+								} ?>
+							</ul><?php
+							wp_reset_postdata();
+							} ?>
+						</li>
 					</ul><?php
-					wp_reset_postdata();
-					} ?>
-				</li>
-			</ul><?php
-
+				}
+			}
 		} else { ?>
 
 		<div class="main_content_column"><?php
