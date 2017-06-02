@@ -149,7 +149,7 @@
 					<ul><?php
 						while ( $int_query->have_posts() ) {
 							$int_query->the_post();
-							agenda_card();
+							list_card();
 						} ?>
 					</ul><?php
 					} else { ?>
@@ -173,7 +173,7 @@
 					<ul><?php
 						while ( $ext_query->have_posts() ) {
 							$ext_query->the_post();
-							agenda_card();
+							list_card();
 						} ?>
 					</ul><?php
 					} else { ?>
