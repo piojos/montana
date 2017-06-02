@@ -5,9 +5,24 @@ jQuery( function($) {
 	$('.slider').slick({
 		arrows : false
 	});
+
+	// Dropdown
 	$('.dropdown a.toggle_button').click(function() {
 		$('.dropdown').toggleClass('open closed');
 	});
+
+	// Collections Switcher
+	$('.collections a.trig').click(function(e) {
+		e.preventDefault();
+		var slideID = $(this).attr("href");
+		$('.details_container').hide();
+		$(slideID).show();
+	});
+	$('.collections a.close').click(function() {
+		$('.details_container').hide();
+	});
+
+
 
 // Single > Same size info
 	function sameSizeBox() {
@@ -48,7 +63,12 @@ jQuery( function($) {
 
 
 
-// Fitvids
+// Fitvids (not working)
 	$(".widget iframe").fitVids();
+
+
+
+
+
 
 });

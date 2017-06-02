@@ -82,34 +82,36 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				<ul><?php
 				foreach( $post_objects as $post):
 					setup_postdata($post); ?>
-					<li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li><?php
-				endforeach; ?>
+					<li><a href="#slide_<?php the_ID(); ?>" class="trig"><?php the_title(); ?></a></li><?php
+				endforeach;
+				wp_reset_postdata(); ?>
 				</ul>
-			</div>
+			</div><?php
+
+			foreach( $post_objects as $post):
+				setup_postdata($post); ?>
+				<div class="details_container" id="slide_<?php the_ID(); ?>">
+					<a class="close"></a>
+					<div class="info column">
+						<h1><?php the_title(); ?></h1>
+						<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
+						<div class="excerpt">
+							<?php the_content(); ?>
+						</div>
+
+						<div class="status_label">
+							<p><strong>Hasta Marzo 14</strong></p>
+							<p>Location Taxonomy</p>
+						</div>
+					</div>
+					<div class="gallery column">
+						<?php the_post_thumbnail('large'); ?>
+					</div>
+				</div><?php
+			endforeach;
+			wp_reset_postdata(); ?>
 		</div><?php
-		wp_reset_postdata();
 		endif;
-
-		// <div class="details_container">
-			// <div class="info column">
-			// 	<h1>Callegenera</h1>
-			// 	<span>Slogan</span>
-			// 	<p class="about">wara wara</p>
-			//
-			// 	<div class="status_label">
-			// 		<p><strong>Hasta Marzo 14 (is this dinamic?)</strong></p>
-			// 		<p>Location Taxonomy</p>
-			// 	</div>
-			// </div>
-			// <div class="gallery column">
-			// 	<a href="#" class="full"><img src="http://placehold.it/780x400" alt=""></a>
-			// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-			// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-			// 	<a href="#" class="half"><img src="http://placehold.it/380x250" alt=""></a>
-			// 	<a href="#" class="half more"> Ver todo</a>
-			// </div>
-		// </div>
-
 
 
 

@@ -331,6 +331,25 @@ ul.moviehours li {
     content: "";
     margin: 0; }
 
+a.close {
+  position: absolute;
+  width: 1.5em;
+  height: 1.5em;
+  display: block;
+  top: 1.5em;
+  right: 1em;
+  cursor: pointer; }
+  a.close:before, a.close:after {
+    content: "";
+    border-top: 0.3rem solid white;
+    width: 100%;
+    display: block;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 0.65em; }
+  a.close:before {
+    transform: rotate(-45deg); }
+
 .slider {
   position: relative;
   z-index: 0; }
@@ -620,9 +639,33 @@ h2.area_title {
   background: #1d1d1d;
   color: white;
   margin: 0 1em;
-  padding: 1em; }
-.collections .gallery img {
-  max-width: 100%; }
+  padding: 1em;
+  clear: both;
+  overflow: auto;
+  display: none;
+  position: relative; }
+.collections .column {
+  padding: 4em 1em 2em; }
+.collections .info {
+  width: 40%;
+  float: left; }
+  .collections .info .status_label {
+    margin-top: 6em;
+    font-size: 1em;
+    color: white; }
+  .collections .info .subtitle {
+    font-family: Helvetica, Arial, sans-serif;
+    margin-top: 0.2em; }
+  .collections .info h1 {
+    font-size: 3em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+.collections .gallery {
+  width: 60%;
+  float: right; }
+  .collections .gallery img {
+    max-width: 100%;
+    height: auto; }
 
 .bg_featured_banner {
   position: relative;

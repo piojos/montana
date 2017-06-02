@@ -73,7 +73,24 @@ ul.moviehours li
 		content: ''
 		margin: 0
 
-
+a.close
+	position: absolute
+	width: 1.5em
+	height: 1.5em
+	display: block
+	top: 1.5em
+	right: 1em
+	cursor: pointer
+	&:before, &:after
+		content: ''
+		border-top: .3rem solid white
+		width: 100%
+		display: block
+		transform: rotate(45deg)
+		position: absolute
+		top: .65em
+	&:before
+		transform: rotate(-45deg)
 
 
 
