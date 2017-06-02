@@ -23,8 +23,8 @@
 	$placeTerm = get_place();
 
 	// Get Presentors
-	$presentor = get_field('presentor');
-?>
+	$presentor = get_field('presentor'); ?>
+
 <div class="post_meta">
 	<dl><?php
 
