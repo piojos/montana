@@ -55,6 +55,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0;
   margin: 0; }
 
+*:focus {
+  outline: none; }
+
 html, body {
   font-size: 10px;
   line-height: inherit; }
@@ -745,16 +748,29 @@ h2.area_title {
     padding-left: 4em; }
 
 .ag_results h3 {
-  font-size: 1.2em;
-  font-weight: bold; }
+  font-size: 1.4em;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  padding-right: 1em;
+  padding-left: 1em; }
   .ag_results h3 span {
+    font-family: "New June", Helvetica, Arial, sans-serif;
     color: #f57b20;
+    font-weight: bold;
     margin-right: 0.5em; }
+.ag_results .kicker {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  color: #818181;
+  margin-top: 0.2em;
+  width: 80%; }
 .ag_results ul {
   border-top: 0.1rem solid;
   margin: 1em 0 4em; }
   .ag_results ul li {
-    background: white; }
+    background: white;
+    padding-right: 1em;
+    padding-left: 1em; }
     .ag_results ul li:hover {
       background: #1d1d1d;
       color: white;
@@ -770,17 +786,30 @@ h2.area_title {
     .ag_results ul .max_wrap > div {
       display: table-cell;
       vertical-align: middle;
-      padding: 1em 2em 1em 0; }
+      padding: 1.5em 1em 1.4em 0; }
       .ag_results ul .max_wrap > div.schedule {
-        width: 20em; }
-      .ag_results ul .max_wrap > div.thumbnail {
-        width: 16rem; }
+        width: 16em;
+        font-family: Helvetica, Arial, sans-serif;
+        color: #818181; }
+      .ag_results ul .max_wrap > div.thumbnail, .ag_results ul .max_wrap > div.location {
+        display: none; }
       .ag_results ul .max_wrap > div.title {
-        width: 50%; }
+        width: 75%;
+        padding-left: 1em; }
+      @media screen and (min-width: 50rem) {
+        .ag_results ul .max_wrap > div.schedule {
+          width: 20em; }
+        .ag_results ul .max_wrap > div.thumbnail, .ag_results ul .max_wrap > div.location {
+          display: table-cell;
+          width: 20em; }
+        .ag_results ul .max_wrap > div.title {
+          width: 55%; } }
   .ag_results ul img {
     display: block;
     width: 100%;
     height: auto; }
+  .ag_results ul h2, .ag_results ul .location {
+    font-size: 1.2em; }
 
 .ui-widget-header {
   background: transparent;
