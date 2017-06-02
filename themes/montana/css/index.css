@@ -627,6 +627,8 @@ h2.area_title {
   height: 40em;
   background-size: cover;
   background-position: center; }
+  .bg_featured_banner.no_image {
+    height: 14em; }
   @media screen and (min-width: 79rem) {
     .bg_featured_banner {
       top: -4em; } }
