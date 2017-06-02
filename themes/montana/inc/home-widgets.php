@@ -63,7 +63,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		$args = array(
 			'post_type' => 'agenda',
-			'posts_per_page' => 12,
+			'posts_per_page' => 6,
 		);
 		runHomeWidget('Esta Semana', $args, 'sixs');
 
@@ -93,16 +93,18 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				<div class="details_container" id="slide_<?php the_ID(); ?>">
 					<a class="close"></a>
 					<div class="info column">
-						<h1><?php the_title(); ?></h1>
-						<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
-						<div class="excerpt">
-							<?php the_content(); ?>
-						</div>
+						<a href="<?php the_permalink(); ?>">
+							<h1><?php the_title(); ?></h1>
+							<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
+							<div class="excerpt">
+								<?php the_content(); ?>
+							</div>
 
-						<div class="status_label">
-							<p><strong>Hasta Marzo 14</strong></p>
-							<p>Location Taxonomy</p>
-						</div>
+							<div class="status_label">
+								<p><strong>Hasta Marzo 14</strong></p>
+								<p>Location Taxonomy</p>
+							</div>
+						</a>
 					</div>
 					<div class="gallery column">
 						<?php the_post_thumbnail('large'); ?>
