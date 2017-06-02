@@ -317,7 +317,7 @@
 
 
 
-//
+// List for search results
 	function result_list($query = '', $keyword) {
 		if ( $query->have_posts() ) { ?>
 		<ul><?php
@@ -338,4 +338,17 @@
 			</ul><?php
 		}
 		wp_reset_query();
+	}
+
+
+	// Know weather to be an image or a Title
+	function logo_or_title($hValue = 'h1') {
+		$imgLogo = get_field('title_logo');
+		if(!empty($imgLogo)) { ?>
+			<img src="<?php echo $imgLogo['sizes']['large']; ?>" alt="<?php echo $imgLogo['alt']; ?>" /><?php
+		} else {
+			echo '<'.$hValue.'>'.get_the_title().'</'.$hValue.'>';
+			// echo '<h1>'.get_the_title().'</h1>';
+			// the_title();
+		}
 	}

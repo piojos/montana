@@ -15,8 +15,7 @@
 			<div class="post_info main_content_column">
 				<p class="label"><?php echo get_post_type(); ?></p>
 
-				<?php // if(get_field('title_logo')) {}?>
-				<h1><?php the_title(); ?></h1>
+				<?php logo_or_title(); ?>
 				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
 
 				<div class="excerpt"><?php
