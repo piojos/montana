@@ -10,7 +10,16 @@
 		$hoursField = get_field('schedules');
 		if($hoursField) {
 			foreach($hoursField as $hour) {
-				$hours[] = $hour['hour'];
+				if($hour['hour']) {
+					$hours[] = $hour['hour'];
+				}
+				if($hour['hour-start']) {
+					if($hour['hour-end']) {
+						$hours[] = $hour['hour-start'].' → '.$hour['hour-end'];
+					} else {
+						$hours[] = $hour['hour-start'];
+					}
+				}
 			}
 		}
 		return $hours;
@@ -19,7 +28,11 @@
 
 	function schedule_hours() {
 		$allHours = schedule_hours_array();
-		$string = rtrim(implode(', ', $allHours), ',');
+		if(!empty($allHours)) {
+			$string = rtrim(implode(', ', $allHours), ',');
+		} else {
+			$string = 'Error';
+		}
 		return $string;
 	}
 
@@ -99,12 +112,13 @@
 				}
 			}
 			$string = rtrim(implode(', ', $days), ',');
-		} elseif($chosenOne == 'range') {
+		} else {
 			if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
 				the_row();
 				$start_day = get_sub_field('start_day');
 				$end_day = get_sub_field('end_day');
 				$weekdays = get_sub_field('weekdays');
+				$notes = get_sub_field('notes');
 			}}
 			if($weekdays) {
 				$string = createRangeWeekdays($weekdays).'<br>';
@@ -112,8 +126,9 @@
 			$start_day = date_i18n('d \d\e F', strtotime($start_day));
 			$end_day = date_i18n('d \d\e F Y', strtotime($end_day));
 			$string .= 'Del '. $start_day .' al '. $end_day;
-		} else {
-			$status .= '[ERROR]';
+			if($notes) {
+				$string .= '<br>'.$notes;
+			}
 		}
 
 		// Check with today
