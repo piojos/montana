@@ -4,13 +4,18 @@
 	if(have_posts()) : while (have_posts()) : the_post(); ?>
 
 <section id="content" role="main" class="single">
-	<div class="header">
+	<div class="header"><?php
 
-		<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div>
-
+		if(has_post_thumbnail()) { ?>
+			<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div><?php
+		} else { ?>
+			<div class="bg_featured_banner no_image"></div><?php
+		} ?>
 		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
 				<p class="label"><?php echo get_post_type(); ?></p>
+
+				<?php // if(get_field('title_logo')) {}?>
 				<h1><?php the_title(); ?></h1>
 				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
 
@@ -90,13 +95,12 @@
 		} ?>
 
 		<div class="area max_wrap">
-			<h2 class="area_title">Mas en Cineteca</h2><?php
-			// Mas en $thisPostType;
+			<h2 class="area_title">Mas en <?php echo get_post_type(); ?></h2><?php
 			$args = array(
-				'post_type' => 'cineteca',
+				'post_type' => get_post_type(),
 				'posts_per_page' => 4
 			);
-			deck($args, 'fours movie'); ?>
+			deck($args, 'fours'); ?>
 		</div>
 	</div>
 </section>
