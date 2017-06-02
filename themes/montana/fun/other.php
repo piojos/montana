@@ -231,10 +231,10 @@
 	}
 
 
-	function prefix_forDay($any_day) {
+	function prefix_forDay($any_day, $pre = '<strong>', $pos = '</strong> | ') {
 		$today = current_time('Ymd');
-		if($today == $any_day) $string = '<strong>HOY </strong> | ';
-		if($today+1 == $any_day) $string = '<strong>MAÑANA </strong> | ';
+		if($today == $any_day) $string = $pre.'HOY '.$pos;
+		if($today+1 == $any_day) $string = $pre.'MAÑANA '.$pos;
 		return $string;
 	}
 
