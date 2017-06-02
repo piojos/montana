@@ -20,7 +20,7 @@
 	}
 
 	// Get Place
-	$placeTerm = get_term( get_field('location_picker'), 'lugares');
+	$placeTerm = get_place();
 
 	// Get Presentors
 	$presentor = get_field('presentor');
@@ -55,7 +55,7 @@
 
 	if($placeTerm) { ?>
 		<dt class="label">Lugar</dt>
-		<dd><?php echo $placeTerm->name; ?></dd><?php
+		<dd><?php echo $placeTerm; ?></dd><?php
 	} ?>
 
 	</dl>
