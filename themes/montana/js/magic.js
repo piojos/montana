@@ -6,6 +6,15 @@ jQuery( function($) {
 		arrows : false
 	});
 
+	$('.slider_deck').slick({
+		arrows : false,
+		variableWidth: true,
+		infinite: false,
+		swipeToSlide: true
+	});
+
+
+
 	// Dropdown
 	$('.dropdown a.toggle_button').click(function() {
 		$('.dropdown').toggleClass('open closed');

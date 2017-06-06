@@ -66,9 +66,9 @@
 				<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
 						}
 					} elseif(!strpos($class, 'twos')) {
-						the_post_thumbnail('large');
+						the_post_thumbnail('medium');
 					} else {
-						the_post_thumbnail();
+						the_post_thumbnail('thumbnail');
 					}
 				} ?>
 				<span class="parent_label"><?php echo get_post_type(); // Post type + Category (if available) ?></span>
@@ -146,6 +146,24 @@
 		$the_query = new WP_Query( $args );
 		if ( $the_query->have_posts() ) { ?>
 		<div class="deck<?php echo ' '.$deckClass; ?>"><?php
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				echo card($class);
+			} ?>
+		</div><?php
+			wp_reset_postdata();
+		}
+	}
+
+
+
+
+
+	function slider_deck($args, $class = '', $deckClass = '') {
+
+		$the_query = new WP_Query( $args );
+		if ( $the_query->have_posts() ) { ?>
+		<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 				echo card($class);

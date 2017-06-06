@@ -144,29 +144,51 @@ a.close
 
 .deck
 	overflow: auto
-	padding-top: 2em
+	// padding-top: 2em
+
+// .slick-track
+// 	background: url(http://placehold.it/180x60/4400cc&text=slick-track)
+// .slick-list.draggable
+// 	background: url(http://placehold.it/180x60/0000FF&text=slick-list)
+// .slider_deck
+// 	background: url(http://placehold.it/180x60/ff00ff&text=slider-deck)
 
 .card
 	position: relative
-	padding: 1.5rem 1rem 1.5rem 3rem
+	padding: 1.5rem 1.5rem 1.5rem 3rem
 	float: left
+	h2
+		margin-top: .2em
+		margin-bottom: 2em
 	&.twos
 		width: 100vw
-		// .details.box
-		// 	margin-top: 9em
-		// img
-		// 	top: -9em
+		max-width: 45em
 		h2
 			font-size: 2.4em
+		&.no-image .details.box
+			min-height: 16em
 	&.fours
 		width: 50vw
-		&.has-image .details.box
-			height: 20em
+		max-width: 22.5em
+		.details.box
+			min-height: 18em
+	&.sixs
+		width: 33.33vw
+		max-width: 15em
+		h2
+			font-size: 1em
+	@media screen and (max-width: 30rem)
+		&.fours, &.sixs
+			width: 14em
+		&.fours h2
+			font-size: 1em
 	&.movie
 		.details.box
 			margin-top: 18em
 		img
 			margin-top: -20em
+			max-height: 27.5em
+
 	&.schedule
 		font-family: $Helvetica
 		.details.box
@@ -185,13 +207,6 @@ a.close
 			content: ''
 			display: block
 			margin-bottom: .5em
-	@media screen and (min-width: 50rem)
-		&.twos
-			width: 50%
-		&.fours
-			width: 25%
-		&.sixs
-			width: 16.666%
 	img
 		width: 100%
 		height: auto
@@ -202,21 +217,23 @@ a.close
 		width: 100%
 		position: relative
 		margin-left: -1em
+		margin-top: 2em
 		padding: 0
 		.wrap
 			padding: 1em
 		.parent_label
 			top: inherit
 			bottom: -1em
-		h2
-			margin-bottom: 2em
 	.img_container
 		position: relative
 		right: -1em
 		margin-top: -1em
 
 	&.no-image
+		padding-right: 0
 		.details.box
 			min-height: 0
 		.img_container
-			margin-top: 0
+			margin-top: 1.5em
+			&.sixs .img_container
+				margin-top: 0
