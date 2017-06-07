@@ -13,7 +13,7 @@
 				<div class="max_wrap">
 					<div class="details box">
 						<a href="<?php the_permalink(); ?>">
-							<span class="parent_label"><?php echo get_post_type(); ?></span>
+							<?php echo keyword_box(); ?>
 							<?php logo_or_title('h2'); ?>
 							<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
 							<div class="about excerpt">

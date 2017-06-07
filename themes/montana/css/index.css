@@ -383,7 +383,10 @@ a.close {
     background: white;
     border: 0.1rem solid #1d1d1d;
     font-size: 0.8em;
-    padding: 0.25em 0.5em; }
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 0.4em 0.5em 0.2em; }
   .details.box h2 {
     font-size: 1.4em;
     line-height: 1.4em; }

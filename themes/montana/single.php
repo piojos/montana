@@ -13,7 +13,7 @@
 		} ?>
 		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
-				<p class="label"><?php echo get_post_type(); ?></p>
+				<p class="label"><?php $pt = get_post_type(); echo keyword_gen($pt, true); ?></p>
 
 				<?php logo_or_title(); ?>
 				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
