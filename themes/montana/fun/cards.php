@@ -70,8 +70,8 @@
 					} else {
 						the_post_thumbnail('thumbnail');
 					}
-				} ?>
-				<span class="parent_label"><?php echo get_post_type(); // Post type + Category (if available) ?></span>
+				}
+				echo keyword_box($class); ?>
 			</div>
 			<div class="wrap">
 				<h2><?php the_title(); ?></h2>
@@ -188,4 +188,41 @@
 			$class = ' fours';
 		}
 		return $class;
+	}
+
+
+
+	function keyword_box($class = 'classy') {
+		 // Post type + Category (if available)
+		$pt = get_post_type();
+		if($pt != 'cineteca') {
+			$string = '<span class="parent_label">';
+			$string .= keyword_gen($pt);
+			$string .= '</span>';
+		}
+		return $string;
+	}
+
+	function keyword_gen($pt = false, $ext = false) {
+		if($ext == true) {
+			$string = $pt;
+			$sep = ' • ';
+		}
+		if($pt == 'exposiciones') {
+			$costOpts = get_field('cost_options');
+			if(in_array('free', $costOpts)) {
+				$string .= $sep.'Gratuita';
+			} else {
+				$string .= get_skills();
+			}
+		} else {
+			$skills = get_skills();
+			if(!empty($skills)) {
+				$string .= $sep.get_skills();
+			} elseif($ext == false) {
+				$string .= ucfirst(strtolower($pt));
+			}
+		}
+		// $string = 'all ok!';
+		return $string;
 	}
