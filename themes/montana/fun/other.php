@@ -308,6 +308,19 @@
 		// Not working. Copy&Paste
 	}
 
+	function get_skills() {
+		$skillArray = get_field('skill_picker');
+		foreach ($skillArray as $skill) {
+			$skillTerm = get_term( $skill, 'disciplinas' );
+			$skills[] = $skillTerm->name;
+		}
+		$string = implode(", ", $skills);
+		// $string = 'Wait.';
+		return $string;
+		// Not working. Copy&Paste
+	}
+
+
 
 
 
