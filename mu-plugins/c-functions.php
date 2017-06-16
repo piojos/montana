@@ -115,7 +115,7 @@
 		);
 
 		register_taxonomy('lugares',array('agenda', 'convocatorias', 'talleres', 'exposiciones'),array(
-			'hierarchical' => false,
+			'hierarchical' => true,
 			'labels' => $labels,
 			'show_ui' => true,
 			'show_in_quick_edit' => false,
