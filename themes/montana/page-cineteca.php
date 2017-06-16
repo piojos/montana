@@ -51,7 +51,7 @@
 			</div><?php
 
 			} else {
-				deck($args, 'fours movie', 'max_wrap');
+				slider_deck($args, 'fours movie', 'max_wrap');
 			}  ?>
 		</div>
 

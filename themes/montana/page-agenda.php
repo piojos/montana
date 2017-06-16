@@ -81,7 +81,7 @@
 		if( $ftd_events ): ?>
 		<div class="area max_wrap collections">
 			<h2 class="area_title">No te pierdas</h2>
-			<div class="deck"><?php
+			<div class="deck slider_deck"><?php
 			$count = getClassofQuery($ftd_events);
 			foreach( $ftd_events as $post):
 				setup_postdata($post);
@@ -99,14 +99,14 @@
 
 		$args = array(
 			'post_type' => 'agenda',
-			'posts_per_page' => 4
+			'posts_per_page' => 8
 		); ?>
-		<div class="area" style="background:white;">
+		<div class="area" style="background:white; padding: 3em 0 4em;">
 			<h2 class="area_title">Explora CONARTE</h2>
 			<?php
 
 			if ($explore_events) { ?>
-			<div class="deck max_wrap"><?php
+			<div class="deck slider_deck max_wrap"><?php
 				$count = getClassofQuery($explore_events);
 				foreach( $explore_events as $post):
 					setup_postdata($post);
@@ -115,7 +115,7 @@
 			</div><?php
 
 			} else {
-				deck($args, 'fours', 'max_wrap');
+				slider_deck($args, 'fours', 'max_wrap');
 			}  ?>
 		</div>
 
