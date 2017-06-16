@@ -14,11 +14,22 @@ jQuery( function($) {
 	});
 
 
-
 	// Dropdown
 	$('.dropdown a.toggle_button').click(function() {
 		$('.dropdown').toggleClass('open closed');
 	});
+
+
+	// Special formation
+	// if()
+	var gS = $('#special .slick-track > .card').length;
+	if(gS == 3) {
+		console.log('changing');
+		$('#special .slick-track .card:nth-child(3)').removeClass('fours').addClass('twos');
+	} else {
+		console.log('x');
+	}
+
 
 	// Collections Switcher
 	$('.collections a.trig').click(function(e) {
