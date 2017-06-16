@@ -350,6 +350,20 @@ a.close {
   a.close:before {
     transform: rotate(-45deg); }
 
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto; }
+  .embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+
 .slider {
   position: relative;
   z-index: 0; }
@@ -402,7 +416,9 @@ a.close {
 .card {
   position: relative;
   padding: 1.5rem 1.5rem 1.5rem 3rem;
-  float: left; }
+  display: inline-block !important;
+  vertical-align: bottom;
+  float: initial; }
   .card h2 {
     margin-top: 0.2em;
     margin-bottom: 2em; }
@@ -433,6 +449,16 @@ a.close {
   .card.movie img {
     margin-top: -20em;
     max-height: 27.5em; }
+  .card.tv {
+    min-height: 10em;
+    vertical-align: top; }
+    .card.tv h3 {
+      font-weight: bold;
+      margin-top: 1em; }
+    .card.tv .about {
+      font-family: Helvetica, Arial, sans-serif;
+      margin-top: 0.4em;
+      color: #818181; }
   .card.schedule {
     font-family: Helvetica, Arial, sans-serif; }
     .card.schedule .details.box {
