@@ -30,6 +30,8 @@
 		$allHours = schedule_hours_array();
 		if(!empty($allHours)) {
 			$string = rtrim(implode(', ', $allHours), ',');
+		} elseif(empty($allHours)) {
+			$string = false;
 		} else {
 			$string = 'Error';
 		}
@@ -95,7 +97,7 @@
 	}
 
 
-	function schedule_days($format = 'F j Y') {
+	function schedule_days($format = 'F j Y', $showToday = false, $short = false) {
 		$chosenOne = get_field('dates_options');
 		$allDaysArray = schedule_days_array();
 		if($chosenOne == 'dates') {
@@ -104,14 +106,24 @@
 					$originalDate = $row;
 					$newDate = date_i18n($format, strtotime($originalDate));
 					$today = current_time('Ymd');
-					// if($today == $originalDate) {
-					// 	$days[] = '<strong style="color:red;">'.$newDate.'</strong>';}
-					// else {
+					if($showToday == true AND $today == $originalDate) {
+						$days[] = 'Hoy, '.$newDate;}
+					else {
 						$days[] = $newDate;
-					// }
+					}
 				}
 			}
-			$string = rtrim(implode(', ', $days), ',');
+			if($short == true) {
+				$dayCount = count($days);
+				if($dayCount == 1) {
+					$string = rtrim(implode(', ', $days), ',');
+				} else {
+					$lastDay = end($days);
+					$string = 'Hasta '.$lastDay;
+				}
+			} else {
+				$string = rtrim(implode(', ', $days), ',');
+			}
 		} else {
 			if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
 				the_row();
@@ -120,20 +132,29 @@
 				$weekdays = get_sub_field('weekdays');
 				$notes = get_sub_field('notes');
 			}}
-			if($weekdays) {
+			if($short == false AND $weekdays) {
 				$string = createRangeWeekdays($weekdays).'<br>';
 			}
 			$start_day = date_i18n('d \d\e F', strtotime($start_day));
-			$end_day = date_i18n('d \d\e F Y', strtotime($end_day));
-			$string .= 'Del '. $start_day .' al '. $end_day;
-			if($notes) {
-				$string .= '<br>'.$notes;
+			if($short == true) {
+				$end_day = date_i18n('F d', strtotime($end_day));
+				$end_day = ucfirst(strtolower($end_day));
+				$string = 'Hasta '. $end_day;
+			} else {
+				$end_day = date_i18n('d \d\e F Y', strtotime($end_day));
+				$string .= 'Del '. $start_day .' al '. $end_day;
+				if($notes) {
+					$string .= '<br>'.$notes;
+				}
 			}
 		}
 
 		// Check with today
 		return $string;
 	}
+
+
+
 
 
 	function createRangeWeekdays($weekdays = '') {
@@ -209,22 +230,31 @@
 	}
 
 
-	function movieHoursClosestday() {
+	function movieHoursClosestday($plain = false) {
 		$schedArray = movieSchedule_array('Ymd');
 		$today = current_time('Ymd');
-		$new = array_filter($schedArray, function ($var) use ($today) {
-			return ($var[0] >= $today);
-		});
-		$new = array_values($new);
-		foreach ($new[0] as $key) {
-			$gethours[1] = $key;
+		if($schedArray) {
+			$new = array_filter($schedArray, function ($var) use($today) {
+				return ($var[0] >= $today);
+			});
+			$new = array_values($new);
+		}
+		if($new) {
+			foreach ($new[0] as $key) {
+				$gethours[1] = $key;
+			}
 		}
 		if(is_array($gethours[1])){
-			$hours = '<ul class="moviehours">';
-			foreach ($gethours[1] as $hour) {
-				$hours .= '<li>'.$hour.'</li>';
+			if($plain == true) {
+				$hours .= implode(", ", $gethours[1]);
+
+			} else {
+				$hours = '<ul class="moviehours">';
+				foreach ($gethours[1] as $hour) {
+					$hours .= '<li>'.$hour.'</li>';
+				}
+				$hours .= '</ul>';
 			}
-			$hours .= '</ul>';
 		}
 		return $hours;
 		// return $new;
@@ -310,14 +340,16 @@
 
 	function get_skills() {
 		$skillArray = get_field('skill_picker');
-		foreach ($skillArray as $skill) {
-			$skillTerm = get_term( $skill, 'disciplinas' );
-			$skills[] = $skillTerm->name;
+		if(is_array($skillArray) || is_object($skillArray)) {
+			foreach ($skillArray as $skill) {
+				$skillTerm = get_term( $skill, 'disciplinas' );
+				$skills[] = $skillTerm->name;
+			}
 		}
-		$string = implode(", ", $skills);
-		// $string = 'Wait.';
+		if($skills) {
+			$string = implode(", ", $skills);
+		}
 		return $string;
-		// Not working. Copy&Paste
 	}
 
 
