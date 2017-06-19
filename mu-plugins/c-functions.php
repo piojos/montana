@@ -14,32 +14,24 @@
 
 /*
  *	Hide Menu OPTS
-
+ */
 	function hide_menu() {
 		global $current_user;
 		$user_id = get_current_user_id();
-
 		if($user_id != '1') {
-
-			remove_menu_page( 'index.php' );                  	//Dashboard
-			remove_menu_page( 'upload.php' );                 	//Media
 			remove_menu_page( 'edit-comments.php' );          	//Comments
-			remove_menu_page( 'plugins.php' );                	//Plugins
-				remove_submenu_page( 'themes.php', 'themes.php' );
-				remove_submenu_page( 'themes.php', 'theme-editor.php' );
-				remove_submenu_page( 'themes.php', 'customize.php' );
-			remove_menu_page( 'nav-menus.php' );              	//Editar Menus
-			// remove_menu_page( 'users.php' );                  	Users
-			remove_menu_page( 'tools.php' );                  	//Tools
-			remove_menu_page( 'options-general.php' );        	//Settings
-			remove_menu_page( 'edit.php?post_type=acf' );     	//Advanced Custom Fields
-			remove_menu_page( 'admin.php?page=cpt_main_menu' );	//Custom Post Types
-			remove_menu_page( 'themes.php' );     			//Custom Fields
 		}
 	}
 
 	add_action('admin_head', 'hide_menu');
- */
+
+	// Remove Customize from admin bar
+	function montana_edit_admin_bar() {
+		global $wp_admin_bar;
+		$wp_admin_bar->remove_node('comments');
+		$wp_admin_bar->remove_menu('customize');
+	}
+	add_action( 'wp_before_admin_bar_render', 'montana_edit_admin_bar' );
 
 
 
