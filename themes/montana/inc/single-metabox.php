@@ -23,7 +23,10 @@
 	$placeTerm = get_place();
 
 	// Get Presentors
-	$presentor = get_field('presentor'); ?>
+	$presentor = get_field('presentor');
+
+	// Get Hours
+	$schHrs = schedule_hours(); ?>
 
 <div class="post_meta">
 	<dl><?php
@@ -35,9 +38,11 @@
 		}
 	} else { ?>
 		<dt class="label">Fechas</dt>
-		<dd><?php echo schedule_days(); ?></dd>
-		<dt class="label">Horarios</dt>
-		<dd><?php echo schedule_hours(); ?></dd><?php
+		<dd><?php echo schedule_days(); ?></dd><?php
+		if(!empty($schHrs)) { ?>
+			<dt class="label">Horarios</dt>
+			<dd><?php echo $schHrs; ?></dd><?php
+		}
 	}
 
 
