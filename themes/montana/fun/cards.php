@@ -36,21 +36,10 @@
 
 
 
-	function card($class) {
-		// eights (smallest, home)
-		// fours (common)
-		// twos
-		// threes
-
-		// featured (home)
-		// movie (cineteca)
-		// poster (cineteca)
-
-	// video? (home, más sencilla)
-		// if(strpos($class, 'movie')) {}
-
+	function card($class, $setData = false) {
 
 	// Manage having ftd image or movie poster.
+		if($setData) setup_postdata($setData);
 		if(has_post_thumbnail() OR get_field('poster_img')) { $class .= ' has-image'; }
 		else { $class .= ' no-image'; }
 
@@ -65,10 +54,10 @@
 						if( !empty($image) ){ ?>
 				<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
 						}
-					} elseif(!strpos($class, 'twos')) {
+					} elseif(strpos($class, 'twos')) {
 						the_post_thumbnail('medium');
 					} else {
-						the_post_thumbnail('thumbnail');
+						the_post_thumbnail('medium');
 					}
 				}
 				echo keyword_box($class); ?>
@@ -79,10 +68,10 @@
 				<div class="status_label"><?php
 				if(strpos($class, 'movie')) {
 					echo movie_meta();
-				} else { ?>
-					<p><strong>Hasta Marzo 14</strong></p>
-					<p>Location Taxonomy</p><?php
-					// if(strpos($class, 'fours')) echo '<p>'.schedule_days().'</p>';
+				} else {
+					$placeTerm = get_place(); ?>
+					<p><strong><?php echo schedule_days('F j y', true, true); ?></strong></p>
+					<?php if($placeTerm) echo '<p>'.$placeTerm.'</p>';
 				} ?>
 				</div>
 			</div>
@@ -104,20 +93,21 @@
 
 
 
-	function list_card() { ?>
+	function list_card() {
+		$pt = get_post_type( $post->ID ); ?>
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
 				<div class="schedule">
-					<p><?php echo schedule_hours(); ?> <br><?php
-
-					if( get_post_type( $post->ID ) == 'exposiciones') {
+					<p><?php if($pt != 'convocatorias') echo schedule_hours().' <br>'; ?><?php
+					if( $pt == 'exposiciones' OR $pt == 'convocatorias') {
 						if(have_rows('range_date_picker')) { while(have_rows('range_date_picker')){
 							the_row();
 							echo 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) );
 						}}
 					}
-
-					// echo schedule_days(); ?>
+					if(!empty(movieHoursClosestday())) {
+						echo movieHoursClosestday(true);
+					} ?>
 					</p>
 				</div>
 				<div class="thumbnail">
@@ -159,17 +149,32 @@
 
 
 
-	function slider_deck($args, $class = '', $deckClass = '') {
+	function slider_deck($args, $class = '', $deckClass = '', $post_objects = FALSE) {
+		if($post_objects == true) {
+			global $post;
+			if( $args ) { ?>
 
-		$the_query = new WP_Query( $args );
-		if ( $the_query->have_posts() ) { ?>
-		<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
-			while ( $the_query->have_posts() ) {
-				$the_query->the_post();
-				echo card($class);
-			} ?>
-		</div><?php
-			wp_reset_postdata();
+			<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
+				foreach( $args as $post):
+					setup_postdata($post);
+					echo card($class, $post);
+				endforeach; ?>
+			</div><?php
+				wp_reset_postdata();
+			}
+
+		} else {
+			$the_query = new WP_Query( $args );
+			if ( $the_query->have_posts() ) { ?>
+
+			<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
+				while ( $the_query->have_posts() ) {
+					$the_query->the_post();
+					echo card($class);
+				} ?>
+			</div><?php
+				wp_reset_postdata();
+			}
 		}
 	}
 
@@ -192,6 +197,7 @@
 
 
 
+
 	function keyword_box($class = 'classy') {
 		 // Post type + Category (if available)
 		$pt = get_post_type();
@@ -202,6 +208,7 @@
 		}
 		return $string;
 	}
+
 
 	function keyword_gen($pt = false, $ext = false) {
 		if($ext == true) {
