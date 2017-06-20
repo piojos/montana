@@ -525,6 +525,8 @@ a.close {
       font-family: Helvetica, Arial, sans-serif; }
     .big.slider .details.box img {
       display: inline-block; }
+    .big.slider .details.box .excerpt {
+      margin-bottom: 3em; }
     @media screen and (min-width: 30rem) {
       .big.slider .details.box {
         width: 60%; } }
