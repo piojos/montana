@@ -4,7 +4,7 @@
 
 		<div class="area max_wrap">
 			<?php if($title) echo '<h2 class="area_title">'.$title.'</h2>'; ?>
-			<?php deck($args, $class); ?>
+			<?php slider_deck($args, $class); ?>
 		</div><?php
 	}
 
@@ -13,27 +13,55 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // #queHacerHoy
 	if( get_row_layout() == 'op_today_events' ):
 	// jQuery: contar cards y distribuír de acuerdo al número.
+
 		$today = current_time('Ymd');
-		$args = array(
-			'post_type' => 'agenda',
-			'orderby' => 'rand',
-			'posts_per_page' => 4,
-			'meta_query' => array (
-				array(
-					'key'       => 'everyday',
-					'value'     => $today,
-					'compare'   => 'LIKE',
-				),
-			)
-		);
-		$custom_posts = new WP_Query($args);
-		$count = $custom_posts->post_count;
-		if($count <= 2) {
-			$class = ' twos';
+		$selToday = get_sub_field('or_today');
+		if($selToday) {
+			$count = count($selToday);
+			if($count <= 4) {
+				if($count <= 2) {
+					$class = ' twos';
+				} else {
+					$class = ' fours';
+				}
+			} else {
+				$class = ' sixs';
+			} ?>
+		<div class="area max_wrap" id="special">
+			<h2 class="area_title">¿Qué hacer hoy?</h2>
+			<?php slider_deck($selToday, $class, '', true); ?>
+		</div><?php
+
 		} else {
-			$class = ' fours';
+			$args = array(
+				'post_type' => 'agenda',
+				'posts_per_page' => 6,
+				'meta_query' => array(
+					array(
+						'key' => 'everyday',
+						'value' => $today,
+						'compare' => 'LIKE',
+					),
+				)
+			);
+			$qu = new WP_Query( $args );
+			$count = $qu->post_count;
+			if($count <= 4) {
+				if($count <= 2) {
+					$class = ' twos';
+				} else {
+					$class = ' fours';
+				}
+			} else {
+				$class = ' sixs';
+			} ?>
+		<div class="area max_wrap" id="special">
+			<h2 class="area_title">¿Qué hacer hoy?</h2>
+			<?php slider_deck($args, $class, '', true); ?>
+		</div><?php
+			// runHomeWidget('¿Qué hacer hoy?', $args, $class);
 		}
-		runHomeWidget('¿Qué hacer hoy?', $args, $class);
+
 
 
 
@@ -41,17 +69,25 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // Cineteca
 	elseif( get_row_layout() == 'op_today_movies' ):
 
-		$args = array(
-			'post_type' => 'cineteca',
-			'posts_per_page' => 4,
-			'meta_query' => array (
-				array(
-					'key'       => 'everyday',
-					'value'     => $today,
-					'compare'   => 'LIKE',
-				),
-			)
-		);
+		$selMovies = get_sub_field('or_movies');
+		if($selMovies) {
+			$args = array(
+				'post_type' => 'cineteca',
+				'post__in' => $selMovies
+			);
+		// } else {
+		// 	$args = array(
+		// 		'post_type' => 'cineteca',
+		// 		'posts_per_page' => 4,
+		// 		'meta_query' => array (
+		// 			array(
+		// 				'key' => 'everyday',
+		// 				'value' => $today,
+		// 				'compare' => 'LIKE',
+		// 			),
+		// 		)
+		// 	);
+		}
 		runHomeWidget('Hoy en Cineteca', $args, 'fours movie');
 
 
@@ -76,7 +112,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		$post_objects = get_sub_field('collections');
 
 		if( $post_objects ): ?>
-		<div class="area max_wrap collections">
+		<div class="area max_wrap collections" style="margin-bottom: 6em;">
 			<h2 class="area_title">No te pierdas</h2>
 			<div class="controls">
 				<ul><?php
@@ -119,9 +155,26 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 // conarteTV
 	elseif( get_row_layout() == 'op_tv' ):
-	// CPT? Options? YT?
+
+			if( have_rows('video_list') ): ?>
+			<div class="area collections" style="padding: 2em 0 4em; background: #1d1d1d; color: white;">
+				<h2 class="area_title boxed">CONARTE TV</h2>
+				<div class="deck slider_deck max_wrap"><?php
+					while (have_rows('video_list')) {
+						the_row();
+						echo '<div class="card tv fours">';
+						if(get_sub_field('embed')) { ?>
+							<div class="embed-container"><?php the_sub_field('embed'); ?></div><?php
+						}
+						echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
+					}
+				?>
+				</div>
+			</div><?php
+			endif;
 
 
+// Proximamente
 	elseif( get_row_layout() == 'op_soon' ):
 
 		$post_objects = get_sub_field('select_soon');
