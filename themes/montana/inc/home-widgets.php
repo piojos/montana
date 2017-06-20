@@ -75,18 +75,18 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				'post_type' => 'cineteca',
 				'post__in' => $selMovies
 			);
-		// } else {
-		// 	$args = array(
-		// 		'post_type' => 'cineteca',
-		// 		'posts_per_page' => 4,
-		// 		'meta_query' => array (
-		// 			array(
-		// 				'key' => 'everyday',
-		// 				'value' => $today,
-		// 				'compare' => 'LIKE',
-		// 			),
-		// 		)
-		// 	);
+		} else {
+			$args = array(
+				'post_type' => 'cineteca',
+				'posts_per_page' => 4,
+				'meta_query' => array (
+					array(
+						'key' => 'everyday',
+						'value' => $today,
+						'compare' => 'LIKE',
+					),
+				)
+			);
 		}
 		runHomeWidget('Hoy en Cineteca', $args, 'fours movie');
 
