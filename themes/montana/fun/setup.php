@@ -119,4 +119,18 @@
 
 
 
-	// SETUP : ...
+// SETUP : Rules for ACF
+	function my_acf_admin_head() { ?>
+		<style type="text/css">
+
+		</style>
+
+		<script type="text/javascript">
+		(function($){
+
+		})(jQuery);
+		</script>
+		<?php
+	}
+
+	add_action('acf/input/admin_head', 'my_acf_admin_head');
