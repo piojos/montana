@@ -27,7 +27,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			} else {
 				$class = ' sixs';
 			} ?>
-		<div class="area max_wrap" id="special">
+		<div class="area max_wrap for_today special">
 			<h2 class="area_title">¿Qué hacer hoy?</h2>
 			<?php slider_deck($selToday, $class, '', true); ?>
 		</div><?php
@@ -55,7 +55,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			} else {
 				$class = ' sixs';
 			} ?>
-		<div class="area max_wrap" id="special">
+		<div class="area max_wrap for_today special">
 			<h2 class="area_title">¿Qué hacer hoy?</h2>
 			<?php slider_deck($args, $class, '', true); ?>
 		</div><?php
@@ -157,18 +157,19 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 	elseif( get_row_layout() == 'op_tv' ):
 
 			if( have_rows('video_list') ): ?>
-			<div class="area collections" style="padding: 2em 0 4em; background: #1d1d1d; color: white;">
-				<h2 class="area_title boxed">CONARTE TV</h2>
-				<div class="deck slider_deck max_wrap"><?php
-					while (have_rows('video_list')) {
-						the_row();
-						echo '<div class="card tv fours">';
-						if(get_sub_field('embed')) { ?>
-							<div class="embed-container"><?php the_sub_field('embed'); ?></div><?php
-						}
-						echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
+			<div class="area conarte_tv">
+				<div class="max_wrap">
+					<h2 class="area_title boxed">CON<strong>ARTE TV</strong></h2>
+					<div class="deck slider_deck"><?php
+				while (have_rows('video_list')) {
+					the_row();
+					echo '<div class="card tv fours">';
+					if(get_sub_field('embed')) { ?>
+						<div class="embed-container"><?php the_sub_field('embed'); ?></div><?php
 					}
-				?>
+					echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
+				} ?>
+					</div>
 				</div>
 			</div><?php
 			endif;
@@ -180,9 +181,9 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		$post_objects = get_sub_field('select_soon');
 
 		if( $post_objects ): ?>
-		<div class="area max_wrap collections">
+		<div class="area max_wrap">
 			<h2 class="area_title">Próximamente</h2>
-			<div class="deck"><?php
+			<div class="deck slider_deck"><?php
 				$count = getClassofQuery($post_objects);
 				foreach( $post_objects as $post):
 					setup_postdata($post);
