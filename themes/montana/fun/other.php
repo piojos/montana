@@ -390,7 +390,7 @@
 	function logo_or_title($hValue = 'h1') {
 		$imgLogo = get_field('title_logo');
 		if(!empty($imgLogo)) { ?>
-			<img src="<?php echo $imgLogo['sizes']['large']; ?>" alt="<?php echo $imgLogo['alt']; ?>" /><?php
+			<img src="<?php echo $imgLogo['sizes']['large']; ?>" alt="<?php echo $imgLogo['alt']; ?>" class="event_logo" /><?php
 		} else {
 			echo '<'.$hValue.'>'.get_the_title().'</'.$hValue.'>';
 			// echo '<h1>'.get_the_title().'</h1>';
