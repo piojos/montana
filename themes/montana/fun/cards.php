@@ -217,7 +217,7 @@
 		}
 		if($pt == 'exposiciones') {
 			$costOpts = get_field('cost_options');
-			if(in_array('free', $costOpts)) {
+			if($costOpts && in_array('free', $costOpts)) {
 				$string .= $sep.'Gratuita';
 			} else {
 				$string .= get_skills();
