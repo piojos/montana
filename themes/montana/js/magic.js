@@ -3,8 +3,12 @@ jQuery( function($) {
 
 // Home
 	$('.slider').slick({
-		arrows : false
+		arrows : false,
+		dots : true,
+		autoplay: true,
+		autoplaySpeed: 4000
 	});
+	$( ".slick-dots" ).wrap( "<div class='max_wrap'></div>" );
 
 	$('.slider_deck').slick({
 		arrows : false,
@@ -22,12 +26,9 @@ jQuery( function($) {
 
 	// Special formation
 	// if()
-	var gS = $('#special .slick-track > .card').length;
+	var gS = $('.area.special .slick-track > .card').length;
 	if(gS == 3) {
-		console.log('changing');
-		$('#special .slick-track .card:nth-child(3)').removeClass('fours').addClass('twos');
-	} else {
-		console.log('x');
+		$('.area.special .slick-track .card:nth-child(3)').removeClass('fours').addClass('twos');
 	}
 
 
