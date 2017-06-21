@@ -7,7 +7,7 @@
 		foreach( $sliderPosts as $post) {
 			setup_postdata($post); ?>
 			<div class="slide">
-				<a href="#">
+				<a href="<?php the_permalink(); ?>">
 					<div class="bg_img" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>);"></div>
 				</a>
 				<div class="max_wrap">
