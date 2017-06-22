@@ -99,9 +99,25 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		$args = array(
 			'post_type' => 'agenda',
-			'posts_per_page' => 6,
-		);
-		runHomeWidget('Esta Semana', $args, 'sixs');
+			'posts_per_page' => 10,
+		); ?>
+		<div class="area max_wrap ">
+			<h2 class="area_title">Esta Semana</h2><?php
+
+			$ftd_post = get_sub_field('featured');
+
+			if($ftd_post) {
+				foreach ($ftd_post as $post) {
+					setup_postdata($post);
+					echo '<div class="row threes ftd_row">';
+					card('threes week_ftd_post', $post);
+					echo '</div>';
+				}
+				wp_reset_postdata();
+			}
+
+			slider_deck($args, 'sixs', 'this_week'); ?>
+		</div><?php
 
 
 
