@@ -40,11 +40,22 @@
 
 	// Manage having ftd image or movie poster.
 		if($setData) setup_postdata($setData);
-		if(has_post_thumbnail() OR get_field('poster_img')) { $class .= ' has-image'; }
-		else { $class .= ' no-image'; }
+		if(has_post_thumbnail() OR get_field('poster_img')) {
+			if(strpos($class, 'week_ftd_post')) {
+				$class .= ' no-image';
+			} else {
+				$class .= ' has-image';
+			}
+		} else { $class .= ' no-image'; }
 
 
-	?><div class="card <?php echo $class; ?>">
+	?><div class="card <?php echo $class; ?>"><?php
+
+		if(strpos($class, 'week_ftd_post')) { ?>
+			<div class="img_background">
+				<?php the_post_thumbnail('large'); ?>
+			</div><?php
+		} ?>
 		<div class="details box">
 			<a href="<?php the_permalink(); ?>">
 			<div class="img_container"><?php
@@ -56,6 +67,7 @@
 						}
 					} elseif(strpos($class, 'twos')) {
 						the_post_thumbnail('medium');
+					} elseif(strpos($class, 'week_ftd_post')) {
 					} else {
 						the_post_thumbnail('medium');
 					}
@@ -146,18 +158,57 @@
 	}
 
 
+	function findIn($haystack = FALSE, $needle = FALSE) {
+		// EXISTS. is exactly OR in array. MISSING: OR in string
+		if($haystack && $needle) {
+			if($haystack == $needle) {
+				$result = TRUE;
+				$debug = 'Found exactly.';
+			} elseif(in_array($needle, $haystack)) {
+				$result = TRUE;
+				$debug = 'Found in array.';
+			} elseif(strpos($haystack, $needle)) {
+				$result = TRUE;
+				$debug = 'Found in string.';
+			} else {
+				$result = FALSE;
+			}
+		} else {
+			$debug = 'ERROR: Missing variables';
+		}
+		// return $debug;
+		return $result;
+	}
+
+
+	function checkNum($num){
+		return ($num%2) ? TRUE : FALSE;
+	}
 
 
 
 	function slider_deck($args, $class = '', $deckClass = '', $post_objects = FALSE) {
+		if(findIn($deckClass, 'this_week')) $isThisWeek = TRUE; // Valid for Home: .area.this_week
+		$i = 0;
 		if($post_objects == true) {
 			global $post;
-			if( $args ) { ?>
-
+			if( $args ) {
+				$amount = count($args);
+				if($amount <= 4 && ($amount >= 7 && $amount <= 8) ) {
+					$class .= 'fours';
+				}
+				// if $class = 'fours';  ?>
 			<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
 				foreach( $args as $post):
 					setup_postdata($post);
-					echo card($class, $post);
+					if($isThisWeek && $amount > 6 ) {
+						++$i;
+						if(checkNum($i)) echo '<div class="row '.$class.'">';
+						echo card($class, $post);
+						if(!checkNum($i)) echo '</div>';
+					} else {
+						echo card($class, $post);
+					}
 				endforeach; ?>
 			</div><?php
 				wp_reset_postdata();
@@ -165,12 +216,23 @@
 
 		} else {
 			$the_query = new WP_Query( $args );
-			if ( $the_query->have_posts() ) { ?>
-
+			if ( $the_query->have_posts() ) {
+				$amount = count($the_query->posts);
+				if($amount <= 4 && ($amount >= 7 && $amount <= 8) ) {
+					$class .= 'fours';
+				} ?>
 			<div class="deck slider_deck<?php echo ' '.$deckClass; ?>"><?php
+
 				while ( $the_query->have_posts() ) {
 					$the_query->the_post();
-					echo card($class);
+					if($isThisWeek && $amount > 6 ) {
+						++$i;
+						if(checkNum($i)) echo '<div class="row '.$class.'">';
+						echo card($class, $post);
+						if(!checkNum($i)) echo '</div>';
+					} else {
+						echo card($class, $post);
+					}
 				} ?>
 			</div><?php
 				wp_reset_postdata();
