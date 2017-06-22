@@ -79,14 +79,16 @@
 		$ftd_events = get_field('ftd_events');
 
 		if( $ftd_events ): ?>
-		<div class="area max_wrap collections">
-			<h2 class="area_title">No te pierdas</h2>
-			<div class="deck slider_deck"><?php
-			$count = getClassofQuery($ftd_events);
-			foreach( $ftd_events as $post):
-				setup_postdata($post);
-				echo card($count);
-			endforeach; ?>
+		<div class="area head_agenda">
+			<div class="max_wrap">
+				<h2 class="area_title">No te pierdas</h2>
+				<div class="deck slider_deck"><?php
+				$count = getClassofQuery($ftd_events);
+				foreach( $ftd_events as $post):
+					setup_postdata($post);
+					echo card($count);
+				endforeach; ?>
+				</div>
 			</div>
 		</div><?php
 			wp_reset_postdata();
@@ -101,22 +103,24 @@
 			'post_type' => 'agenda',
 			'posts_per_page' => 8
 		); ?>
-		<div class="area" style="background:white; padding: 3em 0 4em;">
-			<h2 class="area_title">Explora CONARTE</h2>
-			<?php
+		<div class="area explore">
+			<div class="max_wrap">
+				<h2 class="area_title">Explora CONARTE</h2>
+				<?php
 
-			if ($explore_events) { ?>
-			<div class="deck slider_deck max_wrap"><?php
-				$count = getClassofQuery($explore_events);
-				foreach( $explore_events as $post):
-					setup_postdata($post);
-					echo card($count);
-				endforeach; ?>
-			</div><?php
+				if ($explore_events) { ?>
+				<div class="deck slider_deck"><?php
+					$count = getClassofQuery($explore_events);
+					foreach( $explore_events as $post):
+						setup_postdata($post);
+						echo card($count);
+					endforeach; ?>
+				</div><?php
 
-			} else {
-				slider_deck($args, 'fours', 'max_wrap');
-			}  ?>
+				} else {
+					slider_deck($args, 'sixs', 'max_wrap');
+				}  ?>
+			</div>
 		</div>
 
 		<div class="area" id="agenda">

@@ -758,7 +758,9 @@ h2.area_title {
     .collections .controls ul > li a.current {
       color: white;
       background: #1d1d1d;
-      font-weight: bold; }
+      font-weight: bold;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale; }
 .collections .details_container {
   background: #1d1d1d;
   color: white;
@@ -1017,3 +1019,15 @@ h2.area_title {
     margin-bottom: -1em;
     position: relative;
     top: 1em; }
+  .area.head_agenda {
+    margin-top: -8em;
+    padding-top: 12em;
+    padding-bottom: 2em;
+    background-image: url(../img/bg_fancy_a.jpg);
+    background-position: top;
+    background-size: cover; }
+  .area.explore {
+    margin-top: 0;
+    padding-top: 10vh;
+    padding-bottom: 6vh;
+    background: white; }
