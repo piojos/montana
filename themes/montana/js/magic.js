@@ -9,12 +9,23 @@ jQuery( function($) {
 		autoplaySpeed: 4000
 	});
 	$( ".slick-dots" ).wrap( "<div class='max_wrap'></div>" );
-
 	$('.slider_deck').slick({
 		arrows : false,
 		variableWidth: true,
 		infinite: false,
 		swipeToSlide: true
+	});
+
+	var wfp = $('.row.ftd_row');
+	$('.slider_deck.this_week').slick('slickAdd', wfp,0,1);
+
+	var maxHeight = -1;
+
+	$('.slider_deck.this_week .row').each(function() {
+		maxHeight = maxHeight > $(this).height() ? maxHeight : $(this).height();
+	});
+	$('.row.ftd_row .img_background').each(function() {
+		$(this).height(maxHeight-126);
 	});
 
 
@@ -33,7 +44,12 @@ jQuery( function($) {
 
 
 	// Collections Switcher
+	$('.collections li:nth-child(1) a.trig').addClass('current');
+	$('.details_container').first().show();
+
 	$('.collections a.trig').click(function(e) {
+		$('.collections a.trig').removeClass('current');
+		$(this).addClass('current');
 		e.preventDefault();
 		var slideID = $(this).attr("href");
 		$('.details_container').hide();
