@@ -169,12 +169,17 @@ h2.area_title
 		overflow: auto
 		padding: .5em
 		margin: 1em 1em 0 1em
-		ul > li
+		ul > li a
 			border: .1rem solid
 			display: inline
 			float: left
 			margin: .5em
-			padding: .5em .75em
+			padding: .7em .75em .5em
+			&.current
+				color: $white
+				background: $black
+				font-weight: bold
+				+font-smoothing()
 	.details_container
 		background: $black
 		color: white
