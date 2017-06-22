@@ -164,7 +164,8 @@
 			if($haystack == $needle) {
 				$result = TRUE;
 				$debug = 'Found exactly.';
-			} elseif(in_array($needle, $haystack)) {
+			}
+			if(is_array($haystack) && in_array($needle, $haystack)) {
 				$result = TRUE;
 				$debug = 'Found in array.';
 			} elseif(strpos($haystack, $needle)) {
