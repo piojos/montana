@@ -207,13 +207,19 @@ a.close
 .deck
 	overflow: auto
 	// padding-top: 2em
+	.row
+		display: inline-block !important
+		width: 33.33vw
+		max-width: 15em
+		// .card:nth-child(2)
+		&.fours
+			width: 50vw
+			max-width: 22.5em
+		&.threes
+			width: 33.33vw
+			max-width: 31em
 
-// .slick-track
-// 	background: url(http://placehold.it/180x60/4400cc&text=slick-track)
-// .slick-list.draggable
-// 	background: url(http://placehold.it/180x60/0000FF&text=slick-list)
-// .slider_deck
-// 	background: url(http://placehold.it/180x60/ff00ff&text=slider-deck)
+
 
 .card
 	position: relative
@@ -245,7 +251,6 @@ a.close
 			font-size: 1em
 		.status_label p
 			+ellipsis()
-			width: 84%
 	@media screen and (max-width: 30rem)
 		&.fours, &.sixs
 			width: 14em
@@ -317,3 +322,22 @@ a.close
 			margin-top: 1.5em
 			&.sixs .img_container
 				margin-top: 0
+
+	&.week_ftd_post
+		width: 100%
+		.img_background
+			min-height: 30em
+			width: 100%
+			overflow: hidden
+			position: relative
+			left: -1em
+			img
+				// height: 30em
+				width: auto
+		.details.box
+			position: absolute
+			width: 80%
+			left: 3.4em
+			bottom: 2.4em
+		&.no-image .img_container
+			margin-top: 0
