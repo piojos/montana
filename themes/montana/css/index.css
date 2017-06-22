@@ -449,6 +449,16 @@ a.close {
 
 .deck {
   overflow: auto; }
+  .deck .row {
+    display: inline-block !important;
+    width: 33.33vw;
+    max-width: 15em; }
+    .deck .row.fours {
+      width: 50vw;
+      max-width: 22.5em; }
+    .deck .row.threes {
+      width: 33.33vw;
+      max-width: 31em; }
 
 .card {
   position: relative;
@@ -482,8 +492,7 @@ a.close {
       overflow: hidden;
       -ms-text-overflow: ellipsis;
       -o-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-      width: 84%; }
+      text-overflow: ellipsis; }
   @media screen and (max-width: 30rem) {
     .card.fours, .card.sixs {
       width: 14em; }
@@ -554,6 +563,23 @@ a.close {
       margin-top: 1.5em; }
       .card.no-image .img_container.sixs .img_container {
         margin-top: 0; }
+  .card.week_ftd_post {
+    width: 100%; }
+    .card.week_ftd_post .img_background {
+      min-height: 30em;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      left: -1em; }
+      .card.week_ftd_post .img_background img {
+        width: auto; }
+    .card.week_ftd_post .details.box {
+      position: absolute;
+      width: 80%;
+      left: 3.4em;
+      bottom: 2.4em; }
+    .card.week_ftd_post.no-image .img_container {
+      margin-top: 0; }
 
 .label {
   text-transform: uppercase;
@@ -723,12 +749,16 @@ h2.area_title {
   overflow: auto;
   padding: 0.5em;
   margin: 1em 1em 0 1em; }
-  .collections .controls ul > li {
+  .collections .controls ul > li a {
     border: 0.1rem solid;
     display: inline;
     float: left;
     margin: 0.5em;
-    padding: 0.5em 0.75em; }
+    padding: 0.7em 0.75em 0.5em; }
+    .collections .controls ul > li a.current {
+      color: white;
+      background: #1d1d1d;
+      font-weight: bold; }
 .collections .details_container {
   background: #1d1d1d;
   color: white;
