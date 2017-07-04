@@ -283,7 +283,8 @@ a.button {
 
 .excerpt {
   font-family: Helvetica, Arial, sans-serif;
-  line-height: 1.4em;
+  letter-spacing: 0.03em;
+  line-height: 1.6em;
   color: #818181;
   margin-top: 1em; }
 
@@ -292,7 +293,7 @@ a.button {
   font-family: Helvetica, Arial, sans-serif;
   color: #818181;
   letter-spacing: 0.02em;
-  width: 100%; }
+  width: 80%; }
 
 .clear {
   clear: both; }
@@ -436,7 +437,13 @@ a.close {
     font-weight: bold;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 0.4em 0.5em 0.2em; }
+    padding: 0.4em 0.5em 0.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    max-width: 80%; }
   .details.box h2 {
     font-size: 1.4em;
     line-height: 1.4em; }
@@ -613,7 +620,7 @@ a.close {
 h2.area_title {
   font-size: 2em;
   font-weight: bold;
-  margin: 0.5em 0 0.5em 0.5em; }
+  margin: 0.5em 0; }
   h2.area_title.boxed {
     display: inline-block;
     position: relative;
@@ -805,6 +812,7 @@ h2.area_title {
   background-size: cover;
   background-position: center; }
   .bg_featured_banner.no_image {
+    min-height: 14em;
     height: 14em; }
   @media screen and (min-width: 79rem) {
     .bg_featured_banner {
@@ -893,6 +901,9 @@ h2.area_title {
     font-size: 0.9em;
     line-height: 1.6em; }
 
+#agenda .max_wrap {
+  padding-left: 1em;
+  padding-right: 1em; }
 #agenda form {
   margin: 2em 0; }
 #agenda input, #agenda select {
@@ -903,6 +914,7 @@ h2.area_title {
   border-radius: 0;
   background: white;
   min-width: 14em;
+  max-width: 17em;
   padding: 1em 1em 0.8em;
   margin-right: 0.8em; }
 #agenda .input_wrap {
@@ -943,8 +955,8 @@ h2.area_title {
   margin: 1em 0 4em; }
   .ag_results ul li {
     background: white;
-    padding-right: 1em;
-    padding-left: 1em; }
+    padding-right: 0.4em;
+    padding-left: 0.4em; }
     .ag_results ul li:hover {
       background: #1d1d1d;
       color: white;
@@ -964,6 +976,7 @@ h2.area_title {
       .ag_results ul .max_wrap > div.schedule {
         width: 16em;
         font-family: Helvetica, Arial, sans-serif;
+        font-size: 0.9em;
         color: #818181; }
       .ag_results ul .max_wrap > div.thumbnail, .ag_results ul .max_wrap > div.location {
         display: none; }
@@ -1019,15 +1032,36 @@ h2.area_title {
     margin-bottom: -1em;
     position: relative;
     top: 1em; }
-  .area.head_agenda {
+  .area.head_blur {
     margin-top: -8em;
     padding-top: 12em;
     padding-bottom: 2em;
     background-image: url(../img/bg_fancy_a.jpg);
     background-position: top;
-    background-size: cover; }
+    background-size: cover;
+    border-bottom: 0.1rem solid white; }
   .area.explore {
     margin-top: 0;
     padding-top: 10vh;
     padding-bottom: 6vh;
     background: white; }
+
+.page .body_content {
+  font-family: Helvetica, Arial, sans-serif;
+  letter-spacing: 0.03em;
+  font-size: 1.2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  line-height: 1.6em; }
+  .page .body_content h2, .page .body_content h3 {
+    font-family: "New June", Helvetica, Arial, sans-serif;
+    font-weight: bold; }
+  .page .body_content h2 {
+    font-size: 1.4em; }
+  .page .body_content pre {
+    color: #161616;
+    font-size: 0.8em;
+    margin-top: 0.2em; }
+  .page .body_content img {
+    max-width: 100%;
+    height: auto; }
