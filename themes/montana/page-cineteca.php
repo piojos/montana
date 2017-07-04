@@ -37,8 +37,7 @@
 			'post_type' => 'cineteca',
 			'posts_per_page' => 4
 		); ?>
-		<div class="area" style="background:white; padding: 3em 0 4em;">
-			<h2 class="area_title">No te pierdas</h2>
+		<div class="area head_blur">
 			<?php
 
 			if ($explore_events) { ?>

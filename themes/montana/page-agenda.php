@@ -79,7 +79,7 @@
 		$ftd_events = get_field('ftd_events');
 
 		if( $ftd_events ): ?>
-		<div class="area head_agenda">
+		<div class="area head_blur">
 			<div class="max_wrap">
 				<h2 class="area_title">No te pierdas</h2>
 				<div class="deck slider_deck"><?php

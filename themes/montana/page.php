@@ -4,18 +4,21 @@
 	if(have_posts()) : while (have_posts()) : the_post(); ?>
 
 <section id="content" role="main" class="page">
-	<div class="header">
+	<div class="header"><?php
 
-		<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div>
-
+		if(has_post_thumbnail()) { ?>
+			<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div><?php
+		} else { ?>
+			<div class="bg_featured_banner no_image"></div><?php
+		} ?>
 		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
-				<p class="label"><?php echo get_post_type(); ?></p>
+				<p class="label"><?php $pt = get_post_type(); echo keyword_gen($pt, true); ?></p>
 				<h1><?php the_title(); ?></h1>
 				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
 
 				<div class="excerpt">
-					<?php the_excerpt(); ?>
+					<?php the_field('override_excerpt'); ?>
 				</div>
 
 				<div class="status_label">
@@ -27,11 +30,9 @@
 
 	<div class="post_body <?php if(!is_singular('colecciones')) echo 'max_wrap'; ?>">
 		<div class="main_content_column">
-			<div class="widget <?php echo $class; ?>">
-				<div class="body_content">
-					<?php the_content(); ?>
-				</div>
-			</div
+			<div class="body_content">
+				<?php the_content(); ?>
+			</div>
 		</div>
 	</div>
 </section>
