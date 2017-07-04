@@ -10,11 +10,11 @@
 		// Add Thumbnail Theme Support
 		add_theme_support('post-thumbnails');
 		set_post_thumbnail_size( 350, 180, array( 'center', 'center'));
-		add_image_size('medium', 700, 360, array( 'center', 'center')); // Big Cards
-		add_image_size('medium-post', 700, ''); // Medium Post content
+		add_image_size('medium', 700, 360, array( 'center', 'center')); // Cards
+		add_image_size('poster', 260, 400, array( 'center', 'center')); // Movie Posters
+		// add_image_size('medium-post', 700, ''); // Medium Post content
 		add_image_size('large', 1100, 560); // Large Images
 		add_image_size('huge', 1660, ''); // Huge Thumbnail
-		add_image_size('poster', 260, 400, array( 'center', 'center')); // Movie Posters
 	}
 
 
@@ -134,3 +134,15 @@
 	}
 
 	add_action('acf/input/admin_head', 'my_acf_admin_head');
+
+
+
+
+
+
+// Allow linebreaks on WYSYWYIGs
+
+function clear_br($content){
+	return str_replace("<br />","<br clear='none'/>", $content);
+}
+add_filter('the_content', 'clear_br');
