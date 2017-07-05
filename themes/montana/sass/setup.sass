@@ -161,6 +161,7 @@ form#searchform
 		color: $white
 		min-width: 7em
 		float: right
+		cursor: pointer
 	a#close_search
 		float: right
 		border: .1rem solid
@@ -211,16 +212,20 @@ footer
 		background-size: 12rem
 		background-repeat: no-repeat
 		background-position: center top 3rem
+		form
+			display: inline-block
 		input
 			-webkit-appearance: none
 			padding: 1em 1.5em
-			font-size: initial
-			border: none
-		form
-			display: inline-block
-			border-radius: .4rem
-			overflow: hidden
-			font-size: 0rem
+			&[type="text"]
+				font-family: $Helvetica
+				min-width: 18em
+				float: left
+			&[type="submit"]
+				min-width: initial
+				border-left: none
+				font-weight: bold
+				padding-top: 1.5rem
 		li
 			display: inline-block
 			margin: 2em 1em

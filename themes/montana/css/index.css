@@ -200,7 +200,8 @@ form#searchform {
     background: none;
     color: white;
     min-width: 7em;
-    float: right; }
+    float: right;
+    cursor: pointer; }
   form#searchform a#close_search {
     float: right;
     border: 0.1rem solid;
@@ -242,16 +243,20 @@ footer {
     background-size: 12rem;
     background-repeat: no-repeat;
     background-position: center top 3rem; }
+    footer .social form {
+      display: inline-block; }
     footer .social input {
       -webkit-appearance: none;
-      padding: 1em 1.5em;
-      font-size: initial;
-      border: none; }
-    footer .social form {
-      display: inline-block;
-      border-radius: 0.4rem;
-      overflow: hidden;
-      font-size: 0rem; }
+      padding: 1em 1.5em; }
+      footer .social input[type="text"] {
+        font-family: Helvetica, Arial, sans-serif;
+        min-width: 18em;
+        float: left; }
+      footer .social input[type="submit"] {
+        min-width: initial;
+        border-left: none;
+        font-weight: bold;
+        padding-top: 1.5rem; }
     footer .social li {
       display: inline-block;
       margin: 2em 1em; }
@@ -466,7 +471,9 @@ a.close {
       color: transparent;
       border: 0;
       outline: none;
-      background: transparent; }
+      background: transparent;
+      min-width: initial;
+      padding: 0; }
       .slick-dots li button:hover:before, .slick-dots li button:focus:before {
         opacity: 1; }
       .slick-dots li button:before {
