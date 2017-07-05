@@ -99,7 +99,7 @@ jQuery( function($) {
 
 
 // Agenda: Ajax filtering
-	$('form#searchform').on('submit',function(e){
+	$('form#searchfilter').on('submit',function(e){
 		e.preventDefault();
 		$('img.loader').show();
 		$('#agenda input[type="submit"]').addClass('disabled');

@@ -58,7 +58,7 @@
 			<div class="max_wrap">
 				<h2 class="area_title">Películas por día</h2>
 				<p class="label">Estas viendo las funciones de:</p>
-				<form role="search" method="get" id="searchform" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
+				<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
 					<div class="input_wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
 						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
 						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
