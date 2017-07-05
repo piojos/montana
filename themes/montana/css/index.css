@@ -932,6 +932,17 @@ h2.area_title {
     padding: 0.1em 0.4em 0 0; }
   #agenda .input_wrap.hoy input {
     padding-left: 4em; }
+#agenda input[type="submit"] {
+  min-width: 8em; }
+#agenda input.disabled {
+  color: #ababab;
+  pointer-events: none; }
+#agenda img.loader {
+  vertical-align: bottom;
+  height: 2em;
+  position: relative;
+  top: -0.5em;
+  display: none; }
 
 .ag_results h3 {
   font-size: 1.4em;

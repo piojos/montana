@@ -29,13 +29,13 @@ jQuery( function($) {
 	});
 
 
-	// Dropdown
+// Home: News Dropdown
 	$('.dropdown a.toggle_button').click(function() {
 		$('.dropdown').toggleClass('open closed');
 	});
 
 
-	// Special formation
+// Home: Today's events Special formation
 	// if()
 	var gS = $('.area.special .slick-track > .card').length;
 	if(gS == 3) {
@@ -43,7 +43,7 @@ jQuery( function($) {
 	}
 
 
-	// Collections Switcher
+// Home: Collections Switcher
 	$('.collections li:nth-child(1) a.trig').addClass('current');
 	$('.details_container').first().show();
 
@@ -61,7 +61,7 @@ jQuery( function($) {
 
 
 
-// Single > Same size info
+// Single: Same size info
 	function sameSizeBox() {
 		var bL = $('.single .post_info').outerHeight();
 		var bR = $('.single .post_meta').outerHeight();
@@ -90,20 +90,39 @@ jQuery( function($) {
 		altField: 'input#fecha',
 		altFormat: 'yymmdd'
 	});
+	// DEPR! Url doesn't change now
+	// var valT = location.href.match(/[?&]disciplina=(.*?)[$&]/)[1];
+	// $('select#disciplina').val(valT);
+	//
+	// var valL = location.href.match(/[?&]lugar=(.*?)$/)[1];
+	// $('select#lugar').val(valL);
 
-	var valT = location.href.match(/[?&]disciplina=(.*?)[$&]/)[1];
-	$('select#disciplina').val(valT);
 
-	var valL = location.href.match(/[?&]lugar=(.*?)$/)[1];
-	$('select#lugar').val(valL);
+// Agenda: Ajax filtering
+	$('form#searchform').on('submit',function(e){
+		e.preventDefault();
+		$('img.loader').show();
+		$('#agenda input[type="submit"]').addClass('disabled');
+		var action = $(this).attr('action');
+		var serial = $(this).serialize();
+		$.ajax({
+			type     : "GET",
+			cache    : false,
+			url      : action,
+			data     : serial,
+			success  : function(data) {
+				$('.ag_results').html($('#result_area', data).html());
+				$('img.loader').fadeOut();
+				$('#agenda input[type="submit"]').removeClass('disabled');
+			}
+		});
+	});
 
 
 
 
 // Fitvids (not working)
 	$(".widget iframe").fitVids();
-
-
 
 
 

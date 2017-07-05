@@ -141,10 +141,11 @@
 						<?php echo listSelOptions('lugares'); ?>
 					</select>
 					<input type="submit" value="Actualizar">
+					<img class="loader" src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
 				</form>
 			</div>
 
-			<div class="ag_results">
+			<div id="result_area" class="ag_results">
 
 				<div class="internal">
 					<h3 class="max_wrap">Eventos CONARTE</h3><?php
@@ -161,7 +162,7 @@
 							<li>
 								<div class="max_wrap">
 									<div class="no-events">
-										<h2>No hay eventos hoy :(</h2>
+										<h2>No hay eventos hoy 😞</h2>
 										<p>Prueba con otra fecha o disciplina.</p>
 									</div>
 								</div>
@@ -185,7 +186,7 @@
 							<li>
 								<div class="max_wrap">
 									<div class="no-events">
-										<h2>No hay eventos hoy :(</h2>
+										<h2>No hay eventos hoy 😞</h2>
 										<p>Prueba con otra fecha o disciplina.</p>
 									</div>
 								</div>

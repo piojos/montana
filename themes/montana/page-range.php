@@ -60,10 +60,11 @@
 						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
 					</div>
 					<input type="submit" value="Actualizar">
+					<img class="loader" src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
 				</form>
 			</div>
 
-			<div class="ag_results">
+			<div id="result_area" class="ag_results">
 				<div class="internal">
 					<?php result_list($query, get_the_title()); ?>
 				</div>
