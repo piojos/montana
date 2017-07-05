@@ -119,6 +119,19 @@ jQuery( function($) {
 	});
 
 
+// Header: Searchbar
+	$('header form.searchform input#s').after('<a id="close_search">×</a>');
+	$('header .screen-reader-text').remove();
+	$('header form.searchform input#s').attr('placeholder', 'Busca en todo CONARTE');
+	$('header a#open_search').click(function() {
+		$('header .navigation').addClass('active_search');
+	});
+	$('header a#close_search').click(function() {
+		$('header .navigation').removeClass('active_search');
+	});
+
+
+
 
 
 // Fitvids (not working)

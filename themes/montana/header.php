@@ -51,8 +51,8 @@
 					<?php wp_nav_menu( array( 'theme_location' => 'second-menu', 'container_class' => 'submenu' ) ); ?>
 
 					<div id="search">
-						<a href="#">Búsqueda</a>
-						<?php // get_search_form(); ?>
+						<a href="#" id="open_search">Búsqueda</a>
+						<?php get_search_form(); ?>
 					</div>
 					<hr>
 					<nav id="menu" role="navigation">

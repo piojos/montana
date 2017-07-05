@@ -74,6 +74,7 @@ a {
   text-decoration: none; }
 
 hr {
+  position: relative;
   clear: both;
   width: 100%;
   border: none;
@@ -94,6 +95,16 @@ ol {
 
 strong {
   font-weight: 700; }
+
+input, select, button {
+  font: inherit;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border: 0.1rem solid;
+  border-radius: 0;
+  background: white;
+  min-width: 14em;
+  padding: 1em 1em 0.8em; }
 
 header {
   background: #1d1d1d;
@@ -149,6 +160,59 @@ header {
       justify-content: space-between; }
   header .current-menu-item a {
     color: #f57b20 !important; }
+  header .submenu, header nav#menu, header a#open_search, header form#searchform {
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s; }
+  header hr {
+    -moz-transition: margin-top 0.5s ease;
+    -o-transition: margin-top 0.5s ease;
+    -webkit-transition: margin-top 0.5s ease;
+    transition: margin-top 0.5s ease; }
+  header .active_search .submenu, header .active_search nav#menu, header .active_search a#open_search {
+    pointer-events: none;
+    opacity: 0; }
+  header .active_search form#searchform {
+    display: block;
+    opacity: 1; }
+  header .active_search hr {
+    margin-top: 2.4em; }
+
+form#searchform {
+  position: absolute;
+  width: 100%;
+  right: 0;
+  top: 0em;
+  padding: 0 5em 0 13em;
+  display: none;
+  opacity: 0; }
+  form#searchform input#s {
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1.6em;
+    min-width: 20em;
+    color: white;
+    width: 60%;
+    margin-top: 0.8em; }
+  form#searchform input#searchsubmit {
+    background: none;
+    color: white;
+    min-width: 7em;
+    float: right; }
+  form#searchform a#close_search {
+    float: right;
+    border: 0.1rem solid;
+    border-radius: 50%;
+    width: 1.4em;
+    height: 1.4em;
+    text-align: center;
+    font-size: 1.6em;
+    line-height: 1.3em;
+    margin-left: 1em;
+    margin-top: 0.3em;
+    cursor: pointer; }
 
 a#nav_toggle_button {
   border-top: 0.25em solid white;
@@ -907,15 +971,7 @@ h2.area_title {
 #agenda form {
   margin: 2em 0; }
 #agenda input, #agenda select {
-  font: inherit;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  border: 0.1rem solid;
-  border-radius: 0;
-  background: white;
-  min-width: 14em;
   max-width: 17em;
-  padding: 1em 1em 0.8em;
   margin-right: 0.8em; }
 #agenda .input_wrap {
   position: relative;
