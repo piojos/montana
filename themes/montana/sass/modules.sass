@@ -94,7 +94,6 @@ a.close
 		transform: rotate(-45deg)
 
 
-
 .embed-container
 	position: relative
 	padding-bottom: 56.25%
@@ -110,6 +109,28 @@ a.close
 		height: 100%
 
 
+nav.pagination
+	text-align: center
+	font-family: $Helvetica
+.page-numbers
+	border: .1rem solid
+	vertical-align: middle
+	display: inline-block
+	width: 2em
+	height: 2em
+	padding-top: .35em
+	margin: 0 0.2em
+	background: $white
+	&.prev, &.next
+		border-radius: 50%
+		padding-top: .2em
+	&.dots
+		border: none
+		background: none
+	&.current
+		background: $orange
+		border-color: $orange
+		color: $white
 
 
 
