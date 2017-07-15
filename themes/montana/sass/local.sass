@@ -42,6 +42,7 @@ h2.area_title
 	font-size: 2em
 	font-weight: bold
 	margin: .5em 0
+	padding: 0 1.2em .4em
 	&.boxed
 		display: inline-block
 		position: relative
@@ -279,8 +280,8 @@ h2.area_title
 .post_meta
 	background: $black
 	color: $white
+	+font-smoothing()
 	dt
-		+font-smoothing()
 		font-weight: bold
 		color: $gray
 	dd
