@@ -33,6 +33,11 @@
 	}
 	add_action( 'wp_before_admin_bar_render', 'montana_edit_admin_bar' );
 
+	function montana_unregister_tags() {
+		unregister_taxonomy_for_object_type('post_tag', 'post');
+		unregister_taxonomy_for_object_type('category', 'post');
+	}
+	add_action('init', 'montana_unregister_tags');
 
 
 
@@ -222,7 +227,7 @@
 				'not_found_in_trash'  => __( 'No se encontró en la basura'/* , 'montana' */ ),
 									),
 			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-			// 'taxonomies'          => array( 'ubicaciones', 'disciplinas' ),
+			'taxonomies'          => array( 'post_tag' ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
