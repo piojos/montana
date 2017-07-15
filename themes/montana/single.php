@@ -13,10 +13,14 @@
 		} ?>
 		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
-				<p class="label"><?php $pt = get_post_type(); echo keyword_gen($pt, true); ?></p>
+				<p class="label"><?php $pt = get_post_type(); echo keyword_gen($pt, true); ?></p><?php
 
-				<?php logo_or_title(); ?>
-				<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
+				logo_or_title();
+				if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>';
+
+				if(is_singular('cineteca')) {
+					the_tags('<p class="subtitle">',', ','</p>');
+				} ?>
 
 				<div class="excerpt"><?php
 					if(is_singular('cineteca')) {
