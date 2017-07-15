@@ -13,7 +13,7 @@
 				if($hour['hour']) {
 					$hours[] = $hour['hour'];
 				}
-				if($hour['hour-start']) {
+				if(!empty($hour['hour-start'])) {
 					if($hour['hour-end']) {
 						$hours[] = $hour['hour-start'].' → '.$hour['hour-end'];
 					} else {
@@ -219,9 +219,38 @@
 	}
 
 
-	function movieFutureSchedule_array() {
-		$schedArray = movieSchedule_array('Ymd');
-		$today = current_time('Ymd');
+	function movieFutureSchedule($format = 'F j Y') {
+		$status = 'online';
+
+		$string = '<dt class="label">Próximas funciones</dt><dd>';
+		$schedArray = movieFutureSchedule_array('Ymd');
+		if($schedArray) {
+			foreach ($schedArray as $key) {
+				$m = date_i18n('F', strtotime($key[0]));
+				if($m != $nm) $month = ' <strong> de '.ucfirst($m).'</strong>';
+				$niceday = date_i18n('l d', strtotime($key[0]));
+				$string .= prefix_forDay($key[0], '', ', ');
+				$string .= $niceday.$month.': ';
+				$string .= implode(", ", $key[1]);
+				$string .= '<br>';
+
+				$nm = date_i18n('F', strtotime($key[0]));
+				$month = false;
+			}
+		} else {
+			$string .= 'Esta película no se ha programado nuevamente en cartelera.';
+		}
+		$string .= '</dd>';
+
+
+
+		return $string;
+		// print_r($stDays);
+	}
+
+	function movieFutureSchedule_array($format = 'Ymd') {
+		$schedArray = movieSchedule_array($format);
+		$today = current_time($format);
 		$new = array_filter($schedArray, function ($var) use ($today) {
 			return ($var[0] >= $today);
 		});
@@ -263,8 +292,8 @@
 
 	function prefix_forDay($any_day, $pre = '<strong>', $pos = '</strong> | ') {
 		$today = current_time('Ymd');
-		if($today == $any_day) $string = $pre.'HOY '.$pos;
-		if($today+1 == $any_day) $string = $pre.'MAÑANA '.$pos;
+		if($today == $any_day) $string = $pre.'Hoy'.$pos;
+		if($today+1 == $any_day) $string = $pre.'Mañana'.$pos;
 		return $string;
 	}
 
