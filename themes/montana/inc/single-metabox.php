@@ -26,16 +26,43 @@
 	$presentor = get_field('presentor');
 
 	// Get Hours
-	$schHrs = schedule_hours(); ?>
+	$schHrs = schedule_hours();
+
+	// Get Contact
+	if( $costOptions && in_array('showcontact', $costOptions) ) {
+		$place_id = get_field('location_picker');
+		if(in_array('overridecontact', $costOptions)) {
+			if(have_rows('contact')) {
+				while (have_rows('contact')) {
+					the_row();
+					$place_email = get_sub_field('email');
+					$place_tel = get_sub_field('tel');
+				}
+			}
+		} elseif(!empty($place_id)) {
+			if(have_rows('contact', 'lugares_'.$place_id)) {
+				while (have_rows('contact', 'lugares_'.$place_id)) {
+					the_row();
+					$place_email = get_sub_field('email');
+					$place_tel = get_sub_field('tel');
+				}
+			}
+		} else {
+			// $contactTerm = 'error';
+		}
+
+	$contactTerm = $place_email;
+	if($place_tel && $place_email)$contactTerm .= ', ';
+	$contactTerm .= $place_tel;
+
+	} ?>
 
 <div class="post_meta">
 	<dl><?php
 
 	if(is_singular('cineteca')) {
-		echo movieDays('F d');
-		if(!empty(movieHoursClosestday())) {
-			echo '<dt class="label">Horarios</dt><dd>'.movieHoursClosestday().'</dd>';
-		}
+		echo movieFutureSchedule('F d');
+
 	} else { ?>
 		<dt class="label">Fechas</dt>
 		<dd><?php echo schedule_days(); ?></dd><?php
@@ -61,6 +88,12 @@
 	if($placeTerm) { ?>
 		<dt class="label">Lugar</dt>
 		<dd><?php echo $placeTerm; ?></dd><?php
+	}
+
+
+	if($contactTerm) { ?>
+		<dt class="label">Contacto</dt>
+		<dd><?php echo $contactTerm; ?></dd><?php
 	} ?>
 
 	</dl>
