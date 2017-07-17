@@ -1,7 +1,11 @@
 <?php
 
 	get_header();
-	if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	if ( have_posts() ) : while ( have_posts() ) : the_post();
+
+	$newsExcIDs = get_field('hide_news'); ?>
+
+
 
 <section id="content" role="main" class="home"><?php
 
@@ -49,7 +53,8 @@
 // Noticias
 
 	$latestQuery = new WP_Query( array('post_type' => 'post', 'posts_per_page' => 1 ) );
-	$restQuery = new WP_Query( array('post_type' => 'post', 'posts_per_page' => 6 , 'offset' => 1) );
+	$restQuery = new WP_Query( array('post_type' => 'post', 'post__not_in' => $newsExcIDs, 'offset' => 1, 'posts_per_page' => 5) );
+
 
 	if ( $latestQuery->have_posts() ) { ?>
 	<div class="dropdown closed max_wrap">
