@@ -106,6 +106,12 @@ input, select, button {
   min-width: 14em;
   padding: 1em 1em 0.8em; }
 
+.debugger {
+  width: 100%;
+  min-height: 1em;
+  background: yellow;
+  padding: 1em; }
+
 header {
   background: #1d1d1d;
   padding: 2em;
