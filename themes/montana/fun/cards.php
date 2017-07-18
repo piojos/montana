@@ -40,13 +40,13 @@
 
 	// Manage having ftd image or movie poster.
 		if($setData) setup_postdata($setData);
-		if(has_post_thumbnail() OR get_field('poster_img')) {
-			if(strpos($class, 'week_ftd_post')) {
-				$class .= ' no-image';
-			} else {
-				$class .= ' has-image';
-			}
-		} else { $class .= ' no-image'; }
+		// if(has_post_thumbnail() OR get_field('poster_img')) {
+		// 	if(strpos($class, 'week_ftd_post')) {
+		// 		$class .= ' no-image';
+		// 	} else {
+		// 		$class .= ' has-image';
+		// 	}
+		// } else { $class .= ' no-image'; }
 
 
 	?><div class="card <?php echo $class; ?>"><?php
@@ -59,19 +59,8 @@
 		<div class="details box">
 			<a href="<?php the_permalink(); ?>">
 			<div class="img_container"><?php
-				if(!strpos($class, 'no-image')) {
-					if(strpos($class, 'movie')) {
-						$image = get_field('poster_img');
-						if( !empty($image) ){ ?>
-				<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
-						}
-					} elseif(strpos($class, 'twos')) {
-						the_post_thumbnail('medium');
-					} elseif(strpos($class, 'week_ftd_post')) {
-					} else {
-						the_post_thumbnail('medium');
-					}
-				}
+
+				montana_ftdimg($class);
 				echo keyword_box($class); ?>
 			</div>
 			<div class="wrap">
@@ -95,11 +84,44 @@
 
 
 
-	function cards($loops, $class) {
-		for ($x = 1; $x <= $loops; $x++) {
-			$bunch .= card($class);
+	function montana_ftdimg($class) {
+		// if(!strpos($class, 'no-image')) {
+			if(strpos($class, 'week_ftd_post')) {
+			} else {
+				montana_post_thumbnail($class);
+			}
+		// }
+	}
+
+	function montana_post_thumbnail($class, $size = 'medium') {
+		$place_id = get_field('location_picker');
+		$taxonomy = get_term_by('id', $place_id, 'lugares');
+		$myterms = get_terms( array( 'lugares' => $taxonomy->slug, 'parent' => 0 ) );
+
+
+		if(strpos($class, 'movie')) {
+			$image = get_field('poster_img');
+			if( !empty($image) ){ ?>
+	<img src="<?php echo $image['sizes']['poster']; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+			}
+		} elseif(has_post_thumbnail()) {
+			the_post_thumbnail($size);
+		// } elseif() {			// In collection
+
+		} elseif($place_id) {			// Get lugar's image
+
+			$image = get_field('img', 'lugares_'.$place_id);
+			if( !empty($image) ){ ?>
+	<img src="<?php echo $image['sizes'][$size]; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+			} elseif($taxonomy->parent >= 1) {
+				$image = get_field('img', 'lugares_'.$taxonomy->parent);
+				if( !empty($image) ){ ?>
+	<img src="<?php echo $image['sizes'][$size]; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+				}
+			}
+		} else {
+			// no-image class. Add with js?
 		}
-		return $bunch;
 	}
 
 
@@ -182,14 +204,15 @@
 	}
 
 
-	function checkNum($num){
+	function checkOddNum($num){
 		return ($num%2) ? TRUE : FALSE;
 	}
 
 
 
 	function slider_deck($args, $class = '', $deckClass = '', $post_objects = FALSE) {
-		if(findIn($deckClass, 'this_week')) $isThisWeek = TRUE; // Valid for Home: .area.this_week
+		$checkWeek = strpos($deckClass, 'this_week');
+		if($checkWeek !== FALSE) { $isThisWeek = TRUE; } // Valid for Home: .area.this_week
 		$i = 0;
 		if($post_objects == true) {
 			global $post;
@@ -204,9 +227,9 @@
 					setup_postdata($post);
 					if($isThisWeek && $amount > 6 ) {
 						++$i;
-						if(checkNum($i)) echo '<div class="row '.$class.'">';
+						if(checkOddNum($i)) echo '<div class="row '.$class.'">';
 						echo card($class, $post);
-						if(!checkNum($i)) echo '</div>';
+						if(!checkOddNum($i)) echo '</div>';
 					} else {
 						echo card($class, $post);
 					}
@@ -228,9 +251,9 @@
 					$the_query->the_post();
 					if($isThisWeek && $amount > 6 ) {
 						++$i;
-						if(checkNum($i)) echo '<div class="row '.$class.'">';
+						if(checkOddNum($i)) echo '<div class="row '.$class.'">';
 						echo card($class, $post);
-						if(!checkNum($i)) echo '</div>';
+						if(!checkOddNum($i)) echo '</div>';
 					} else {
 						echo card($class, $post);
 					}
@@ -285,6 +308,10 @@
 			} else {
 				$string .= get_skills();
 			}
+		} elseif($pt == 'post') {
+			$string = 'Noticias';
+		} elseif($pt == 'page') {
+			$string = 'Información';
 		} else {
 			$skills = get_skills();
 			if(!empty($skills)) {
