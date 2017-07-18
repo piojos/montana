@@ -1,5 +1,13 @@
 <?php
 
+// filter
+function my_posts_where( $where ) {
+	$where = str_replace("meta_key = 'range_date_picker_%", "meta_key LIKE 'range_date_picker_%", $where);
+	return $where;
+}
+add_filter('posts_where', 'my_posts_where');
+
+
 if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales') ) : the_row();
 
 // #queHacerHoy
@@ -91,28 +99,83 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 // esta semana
 	elseif( get_row_layout() == 'op_week_events' ):
-	// jQuery: contar cards y distribuír de acuerdo al número.
 
-		$args = array(
-			'post_type' => 'agenda',
-			'posts_per_page' => 10,
-		); ?>
+		$wd0 = date("Ymd", strtotime('today'));
+		$wd1 = date("Ymd", strtotime('+1 day'));
+		$wd2 = date("Ymd", strtotime('+2 day'));
+		$wd3 = date("Ymd", strtotime('+3 day'));
+		$wd4 = date("Ymd", strtotime('+4 day'));
+		$wd5 = date("Ymd", strtotime('+5 day'));
+		$wd6 = date("Ymd", strtotime('+6 day'));
+		$wd7 = date("Ymd", strtotime('+7 day')); ?>
+		<div class="debugger"><pre><?php
+
+		echo 'custom: '.$wd0.'<br>hoy: '.$today;
+
+		?></pre></div>
+
 		<div class="area max_wrap ">
 			<h2 class="area_title">Esta Semana</h2><?php
 
 			$ftd_post = get_sub_field('featured');
+			$deckClass = 'this_week';
 
 			if($ftd_post) {
+				$deckClass .= ' has_ftd_post';
 				foreach ($ftd_post as $post) {
 					setup_postdata($post);
+					$exclude_ftd_post = $post->ID;
 					echo '<div class="row threes ftd_row">';
 					card('threes week_ftd_post', $post);
 					echo '</div>';
 				}
 				wp_reset_postdata();
 			}
+			$exclude_ftd_post = array($exclude_ftd_post);
 
-			slider_deck($args, 'sixs', 'this_week'); ?>
+			$args = array(
+				'post_type' => array('agenda'),
+				// 'post_type' => array('agenda', 'exposiciones'),
+				'posts_per_page' => 10,
+				'post__not_in' => $exclude_ftd_post,
+				'meta_query' => array(
+					'relation' => 'OR',
+					array('key' => 'everyday', 'value' => $wd0, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd3, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd4, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd5, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd6, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd7, 'compare' => 'LIKE',),
+					array(
+						'key'		=> 'range_date_picker_%_start_day',
+						'compare'	=> '<=',
+						'value'		=> $wd0,
+					),
+					array(
+						'key'		=> 'range_date_picker_%_end_day',
+						'compare'	=> '>=',
+						'value'		=> $wd7,
+					)
+				),
+				'orderby' => 'rand',
+				// 'meta_query' => array(
+				// 	'relation'		=> 'AND',
+				// 	array(
+				// 		'key'		=> 'range_date_picker_%_start_day',
+				// 		'compare'	=> '<=',
+				// 		'value'		=> $queryDay,
+				// 	),
+				// 	array(
+				// 		'key'		=> 'range_date_picker_%_end_day',
+				// 		'compare'	=> '>=',
+				// 		'value'		=> $queryDay,
+				// 	)
+				// ),
+			);
+
+			slider_deck($args, 'sixs', $deckClass); ?>
 		</div><?php
 
 

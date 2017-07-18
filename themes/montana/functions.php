@@ -21,7 +21,7 @@
 		// 6. list_card 		– Generates a "listed card"
 		// 7. deck 			– Generates a 'deck' of 'card's
 		// 8. findIn			– Find in Array or String (used in slider_deck)
-		// 9. checkNum		– Checks for even number
+		// 9. checkOddNum		– Checks for even number
 		// 10. slider_deck	– Generates a 'deck' of 'card's
 		// 11. getClassofQuery	– Chooses width of cards from query count
 		// 12. keyword_box	– Generates .parent_label box in cards

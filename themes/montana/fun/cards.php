@@ -212,6 +212,7 @@
 
 	function slider_deck($args, $class = '', $deckClass = '', $post_objects = FALSE) {
 		$checkWeek = strpos($deckClass, 'this_week');
+		$checkFtd = strpos($deckClass, 'has_ftd_post');
 		if($checkWeek !== FALSE) { $isThisWeek = TRUE; } // Valid for Home: .area.this_week
 		$i = 0;
 		if($post_objects == true) {
@@ -249,7 +250,7 @@
 
 				while ( $the_query->have_posts() ) {
 					$the_query->the_post();
-					if($isThisWeek && $amount > 6 ) {
+					if( ($isThisWeek && $amount > 6) || ($checkFtd && $amount > 4) ) {
 						++$i;
 						if(checkOddNum($i)) echo '<div class="row '.$class.'">';
 						echo card($class, $post);
