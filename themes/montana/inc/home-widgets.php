@@ -108,11 +108,6 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		$wd5 = date("Ymd", strtotime('+5 day'));
 		$wd6 = date("Ymd", strtotime('+6 day'));
 		$wd7 = date("Ymd", strtotime('+7 day')); ?>
-		<div class="debugger"><pre><?php
-
-		echo 'custom: '.$wd0.'<br>hoy: '.$today;
-
-		?></pre></div>
 
 		<div class="area max_wrap ">
 			<h2 class="area_title">Esta Semana</h2><?php
@@ -135,7 +130,6 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 			$args = array(
 				'post_type' => array('agenda'),
-				// 'post_type' => array('agenda', 'exposiciones'),
 				'posts_per_page' => 10,
 				'post__not_in' => $exclude_ftd_post,
 				'meta_query' => array(
@@ -160,20 +154,9 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 					)
 				),
 				'orderby' => 'rand',
-				// 'meta_query' => array(
-				// 	'relation'		=> 'AND',
-				// 	array(
-				// 		'key'		=> 'range_date_picker_%_start_day',
-				// 		'compare'	=> '<=',
-				// 		'value'		=> $queryDay,
-				// 	),
-				// 	array(
-				// 		'key'		=> 'range_date_picker_%_end_day',
-				// 		'compare'	=> '>=',
-				// 		'value'		=> $queryDay,
-				// 	)
-				// ),
 			);
+
+			// NOTA: Agregar aparte query de exposiciones y talleres y usar merge_array en funcion de slider_deck()
 
 			slider_deck($args, 'sixs', $deckClass); ?>
 		</div><?php
