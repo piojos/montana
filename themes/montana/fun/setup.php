@@ -142,7 +142,32 @@
 
 // Allow linebreaks on WYSYWYIGs
 
-function clear_br($content){
-	return str_replace("<br />","<br clear='none'/>", $content);
-}
-add_filter('the_content', 'clear_br');
+	function clear_br($content){
+		return str_replace("<br />","<br clear='none'/>", $content);
+	}
+	add_filter('the_content', 'clear_br');
+
+
+
+
+
+/*
+*	Process days schedules and update $everyday
+*/
+
+	function everydayGen() {
+		$post_type = get_post_type($post_id);
+		if ($post_type == 'agenda') {
+			$result = schedule_days_array();
+		} elseif ($post_type == 'cineteca') {
+			$result = movieDays_array();
+		} else {}
+		return $result;
+	}
+
+	function my_acf_save_post( $post_id ) {
+		$value = get_field('everyday');
+		update_field('everyday', everydayGen());
+	}
+
+	add_action('acf/save_post', 'my_acf_save_post', 20);
