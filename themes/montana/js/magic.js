@@ -82,6 +82,14 @@ jQuery( function($) {
 	});
 
 
+// Card: add no-image class
+	$('.card .img_container').each(function() {
+		if ($(this).find('img').length) {
+			$(this).closest('.card').addClass('has-image');
+		} else {
+			$(this).closest('.card').addClass('no-image');
+		}
+	});
 
 
 // Agenda: Pass Select fields
