@@ -1,13 +1,5 @@
 <?php
 
-	function runHomeWidget($title = '', $args, $class = 'fours') { ?>
-
-		<div class="area max_wrap">
-			<?php if($title) echo '<h2 class="area_title">'.$title.'</h2>'; ?>
-			<?php slider_deck($args, $class); ?>
-		</div><?php
-	}
-
 if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales') ) : the_row();
 
 // #queHacerHoy
@@ -34,8 +26,8 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		} else {
 			$args = array(
-				'post_type' => 'agenda',
-				'posts_per_page' => 6,
+				'post_type' => array('agenda', 'exposiciones', 'talleres'),
+				'posts_per_page' => 3,
 				'meta_query' => array(
 					array(
 						'key' => 'everyday',
@@ -57,9 +49,8 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			} ?>
 		<div class="area max_wrap for_today special">
 			<h2 class="area_title">¿Qué hacer hoy?</h2>
-			<?php slider_deck($args, $class, '', true); ?>
+			<?php slider_deck($args, $class, ''); ?>
 		</div><?php
-			// runHomeWidget('¿Qué hacer hoy?', $args, $class);
 		}
 
 
@@ -71,11 +62,13 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		$selMovies = get_sub_field('or_movies');
 		if($selMovies) {
+			$otm_titles = 'Hoy en Cineteca';
 			$args = array(
 				'post_type' => 'cineteca',
 				'post__in' => $selMovies
 			);
 		} else {
+			$otm_titles = 'En Cineteca';
 			$args = array(
 				'post_type' => 'cineteca',
 				'posts_per_page' => 4,
@@ -87,8 +80,11 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 					),
 				)
 			);
-		}
-		runHomeWidget('Hoy en Cineteca', $args, 'fours movie');
+		} ?>
+		<div class="area max_wrap">
+			<h2 class="area_title"><?php echo $otm_titles; ?></h2>
+			<?php slider_deck($args, 'fours movie'); ?>
+		</div><?php
 
 
 
