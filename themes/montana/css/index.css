@@ -601,7 +601,9 @@ span.box {
     width: 33.33vw;
     max-width: 15em; }
     .card.sixs h2 {
-      font-size: 1em; }
+      font-size: 1em;
+      max-height: 4em;
+      overflow: hidden; }
     .card.sixs .status_label p {
       white-space: nowrap;
       overflow: hidden;
@@ -898,7 +900,8 @@ h2.area_title {
     font-family: Helvetica, Arial, sans-serif;
     margin-top: 0.2em; }
   .collections .info h1 {
-    font-size: 3em;
+    font-size: 3em; }
+  .collections .info h1, .collections .info .subtitle, .collections .info .status_label {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale; }
 .collections .gallery {
