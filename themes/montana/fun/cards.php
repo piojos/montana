@@ -36,7 +36,7 @@
 
 
 
-	function card($class, $setData = false) {
+	function card($class = false, $setData = false, $day = false) {
 
 	// Manage having ftd image or movie poster.
 		if($setData) setup_postdata($setData);
@@ -66,14 +66,8 @@
 			<div class="wrap">
 				<h2><?php the_title(); ?></h2>
 
-				<div class="status_label"><?php
-				if(strpos($class, 'movie')) {
-					echo movie_meta();
-				} else {
-					$placeTerm = get_place(); ?>
-					<p><strong><?php echo schedule_days('F j y', true, true); ?></strong></p>
-					<?php if($placeTerm) echo '<p>'.$placeTerm.'</p>';
-				} ?>
+				<div class="status_label">
+					<?php echo mnt_card_status_label(); ?>
 				</div>
 			</div>
 			</a>
@@ -81,6 +75,24 @@
 	</div><?php
 	}
 
+
+
+
+	function mnt_card_status_label() {
+		if(get_post_type() == 'colecciones') {
+			$dates = get_field('coll_dates');
+			$locations = get_field('coll_locations');
+			if($dates) { $string = '<p><strong>'.$dates.'</strong></p>'; }
+			if($locations) { $string .= '<p>'.$locations.'</p>'; }
+		} elseif(get_post_type() == 'cineteca') {
+			$string = movie_meta();
+		} else {
+			$placeTerm = get_place();
+			$string = '<p><strong>'. schedule_days('F j Y', true, true) .'</strong></p>';
+			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
+		}
+		return $string;
+	}
 
 
 
