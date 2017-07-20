@@ -167,11 +167,15 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // colecciones
 	elseif( get_row_layout() == 'op_collections' ):
 
+		$col_title = get_sub_field('or_title');
+		if($col_title) { $col_title = get_sub_field('or_title'); }
+		else { $col_title = 'No te pierdas:'; }
+
 		$post_objects = get_sub_field('collections');
 
 		if( $post_objects ): ?>
 		<div class="area max_wrap collections" style="margin-bottom: 6em;">
-			<h2 class="area_title">No te pierdas</h2>
+			<h2 class="area_title"><?php echo $col_title; ?></h2>
 			<div class="controls">
 				<ul><?php
 				foreach( $post_objects as $post):
@@ -195,8 +199,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 							</div>
 
 							<div class="status_label">
-								<p><strong>Hasta Marzo 14</strong></p>
-								<p>Location Taxonomy</p>
+								<?php echo '<br>'.mnt_card_status_label(); ?>
 							</div>
 						</a>
 					</div>
