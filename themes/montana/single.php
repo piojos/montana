@@ -30,7 +30,10 @@
 						}
 						echo movie_meta(false);
 					}
-					the_content(); ?>
+					the_content();
+					if(is_singular('colecciones')) {
+						echo '<br>'.mnt_card_status_label();
+					} ?>
 				</div>
 
 				<div class="status_label">
@@ -47,34 +50,8 @@
 
 		if(is_singular('colecciones')) {
 
-			if(have_rows('event_days')) {
-				while (have_rows('event_days')) {
-					the_row(); ?>
+			get_template_part('inc/single', 'coleccion');
 
-					<ul class="ag_results">
-						<li>
-							<div class="max_wrap">
-								<h3> <?php
-								$day = get_sub_field('day');
-								$newDate = date_i18n('l F d Y', strtotime($day));
-								echo prefix_forDay($day, '<span>', '</span>').$newDate;
-								 ?></h3>
-							</div><?php
-
-							$post_objects = get_sub_field('events');
-							if( $post_objects ) { ?>
-							<ul><?php
-								foreach( $post_objects as $post) {
-									setup_postdata($post);
-									list_card();
-								} ?>
-							</ul><?php
-							wp_reset_postdata();
-							} ?>
-						</li>
-					</ul><?php
-				}
-			}
 		} else { ?>
 
 		<div class="main_content_column"><?php
