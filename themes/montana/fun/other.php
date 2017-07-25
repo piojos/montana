@@ -219,11 +219,19 @@
 	}
 
 
-	function movieFutureSchedule($format = 'F j Y') {
+	function mta_future_schedule($format = 'F j Y', $pt_labels = 'cineteca') {
+		if(is_array($pt_labels)) {
+		} elseif($pt_labels == 'cineteca') {
+			$la_title = 'Próximas funciones';
+			$la_no_results = 'Esta película no se ha programado nuevamente en cartelera.';
+		} elseif($pt_labels == 'agenda') {
+			$la_title = 'Fechas y Horarios';
+			$la_no_results = 'Este evento ya concluyó.';
+		} else {}
 		$status = 'online';
 
-		$string = '<dt class="label">Próximas funciones</dt><dd>';
-		$schedArray = movieFutureSchedule_array('Ymd');
+		$string = '<dt class="label">'.$la_title.'</dt><dd>';
+		$schedArray = mta_future_schedule_array('Ymd');
 		if($schedArray) {
 			foreach ($schedArray as $key) {
 				$m = date_i18n('F', strtotime($key[0]));
@@ -238,7 +246,7 @@
 				$month = false;
 			}
 		} else {
-			$string .= 'Esta película no se ha programado nuevamente en cartelera.';
+			$string .= $la_no_results;
 		}
 		$string .= '</dd>';
 
@@ -248,7 +256,7 @@
 		// print_r($stDays);
 	}
 
-	function movieFutureSchedule_array($format = 'Ymd') {
+	function mta_future_schedule_array($format = 'Ymd') {
 		$schedArray = movieSchedule_array($format);
 		$today = current_time($format);
 		$new = array_filter($schedArray, function ($var) use ($today) {

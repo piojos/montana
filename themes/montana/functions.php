@@ -40,8 +40,8 @@
 		// movieSchedule_array
 		// movieDays_array
 		// movieDays
-		// movieFutureSchedule
-		// movieFutureSchedule_array
+		// mta_future_schedule
+		// mta_future_schedule_array
 		// movieHoursClosestday
 		// prefix_forDay
 		// listSelOptions
