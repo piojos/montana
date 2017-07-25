@@ -64,7 +64,7 @@
 			<div class="area max_wrap">
 				<h2 class="area_title">Otras fechas y horarios para <?php the_title(); ?></h2>
 				<div class="deck"><?php
-					$schedArray = movieFutureSchedule_array('Ymd');
+					$schedArray = mta_future_schedule_array('Ymd');
 					if($schedArray) {
 						foreach ($schedArray as $key) {
 							$niceday = date_i18n('l F d', strtotime($key[0]));

@@ -60,8 +60,12 @@
 <div class="post_meta">
 	<dl><?php
 
+
+
 	if(is_singular('cineteca')) {
-		echo movieFutureSchedule('F d');
+		echo mta_future_schedule('F d', 'cineteca');
+	} elseif(get_field('dates_options') == 'dates') {
+		echo mta_future_schedule('F d Y', 'agenda');
 
 	} else { ?>
 		<dt class="label">Fechas</dt>
