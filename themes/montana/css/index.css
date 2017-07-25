@@ -1016,6 +1016,8 @@ h2.area_title {
 #agenda .max_wrap {
   padding-left: 1em;
   padding-right: 1em; }
+#agenda h2.area_title {
+  padding: 0 0 0.4em; }
 #agenda form {
   margin: 2em 0; }
 #agenda input, #agenda select {
@@ -1126,13 +1128,30 @@ h2.area_title {
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
   background: transparent;
-  text-align: center; }
+  text-align: center;
+  border-color: white;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  padding-top: 0.35em; }
 
 .ui-datepicker {
   width: 15.3em; }
+  .ui-datepicker .ui-datepicker-title {
+    text-transform: uppercase; }
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
   background: transparent; }
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  border-color: #1d1d1d !important;
+  background-color: #1d1d1d;
+  color: white; }
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  border-color: #f57b20;
+  background-color: #f57b20;
+  color: white; }
 
 .area {
   margin-top: 14vh; }

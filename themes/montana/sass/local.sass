@@ -335,6 +335,8 @@ h2.area_title
 	.max_wrap
 		padding-left: 1em
 		padding-right: 1em
+	h2.area_title
+		padding: 0 0 .4em
 
 	form
 		margin: 2em 0
@@ -453,12 +455,25 @@ h2.area_title
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default
 	background: transparent
 	text-align: center
+	border-color: $white
+	border-radius: 50%
+	width: 2em
+	height: 2em
+	padding-top: .35em
 .ui-datepicker
 	width: 15.3em
+	.ui-datepicker-title
+		text-transform: uppercase
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
 	background: transparent
-
-
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight
+	border-color: $black !important
+	background-color: $black
+	color: $white
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
+	border-color: $orange
+	background-color: $orange
+	color: $white
 
 
 .area
