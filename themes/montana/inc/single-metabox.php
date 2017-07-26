@@ -1,32 +1,24 @@
 <?php
 
+	// Get Hours
+	$schHrs = schedule_hours();
+
+	// Get Presentors
+	$presentor = get_field('presentor');
+
 	// Get Cost
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
 		$finalCost = '<strong>Entrada gratuita</strong> ';
-	} else {
+	} elseif($costOptions) {
 		$finalCost = '<strong>$'.get_field('cost').'</strong> ';
 	}
 	if(get_field('cost_message')) {
 		$finalCost .= get_field('cost_message').'.';
 	}
 
-	// Get Tickets
-	if( $costOptions && in_array('tickets', $costOptions) ) {
-		$ctaButton = '<a href="'.get_field('ticket_url').'" class="button">';
-		if(get_field('ticket_label')) { $ctaButton .= get_field('ticket_label'); }
-		else { $ctaButton .= 'Inscríbete'; }
-		$ctaButton .= '</a>';
-	}
-
 	// Get Place
 	$placeTerm = get_place();
-
-	// Get Presentors
-	$presentor = get_field('presentor');
-
-	// Get Hours
-	$schHrs = schedule_hours();
 
 	// Get Contact
 	if( $costOptions && in_array('showcontact', $costOptions) ) {
@@ -55,18 +47,35 @@
 	if($place_tel && $place_email)$contactTerm .= ', ';
 	$contactTerm .= $place_tel;
 
+	}
+
+	// CallToAction button: Tickets
+	$cnv_btn = get_field('official_options');
+
+	if( $costOptions && in_array('tickets', $costOptions) ) {
+		$ctaButton = '<a href="'.get_field('ticket_url').'" class="button">';
+		if(get_field('ticket_label')) { $ctaButton .= get_field('ticket_label'); }
+		else { $ctaButton .= 'Inscríbete'; }
+		$ctaButton .= '</a>';
+	} elseif($cnv_btn == 'url' || $cnv_btn == 'file') {
+		if($cnv_btn == 'url') {
+			$ctaButton = '<a href="'.get_field('official_url').'" class="button" target="_blank">';
+		} elseif($cnv_btn == 'file') {
+			$ctaButton = '<a href="'.get_field('official_file').'" class="button" target="_blank">';
+		}
+		if(get_field('official_label')) { $ctaButton .= get_field('official_label');
+		} else { $ctaButton .= 'Descarga convocatoria'; }
+		$ctaButton .= '</a>';
 	} ?>
 
 <div class="post_meta">
 	<dl><?php
 
 
-
 	if(is_singular('cineteca')) {
 		echo mta_future_schedule('F d', 'cineteca');
 	} elseif(get_field('dates_options') == 'dates') {
 		echo mta_future_schedule('F d Y', 'agenda');
-
 	} else { ?>
 		<dt class="label">Fechas</dt>
 		<dd><?php echo schedule_days(); ?></dd><?php
