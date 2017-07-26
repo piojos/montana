@@ -139,21 +139,33 @@
 
 
 
-	function list_card() {
+	function list_card($day = false) {
 		$pt = get_post_type( $post->ID ); ?>
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
 				<div class="schedule">
-					<p><?php if($pt != 'convocatorias') echo schedule_hours().' <br>'; ?><?php
-					if( $pt == 'exposiciones' OR $pt == 'convocatorias') {
-						if(have_rows('range_date_picker')) { while(have_rows('range_date_picker')){
-							the_row();
-							echo 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) );
-						}}
-					}
-					if(!empty(movieHoursClosestday())) {
-						echo movieHoursClosestday(true);
-					} ?>
+					<p><?php
+					if($pt == 'cineteca' || $pt == 'agenda') {
+						if(is_singular('colecciones')) {
+							if($day != false) {
+								echo movieHoursClosestday($day, true);
+							}
+						} else {
+							echo movieHoursClosestday(false, true);
+						}
+					} elseif( $pt == 'exposiciones' || $pt == 'convocatorias' || $pt == 'talleres') {
+						if($pt != 'convocatorias') {
+							$lc_sched = schedule_hours();
+							if(!empty($lc_sched)) echo $lc_sched.' <br>';
+						}
+						if(have_rows('range_date_picker')) {
+							while(have_rows('range_date_picker')){
+								the_row();
+								echo 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) ).'.';
+							}
+						}
+					} else {}
+					?>
 					</p>
 				</div>
 				<div class="thumbnail">

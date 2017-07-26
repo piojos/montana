@@ -267,34 +267,41 @@
 	}
 
 
-	function movieHoursClosestday($plain = false) {
+	function movieHoursClosestday($day = false, $plain = false) {
 		$schedArray = movieSchedule_array('Ymd');
-		$today = current_time('Ymd');
-		if($schedArray) {
-			$new = array_filter($schedArray, function ($var) use($today) {
-				return ($var[0] >= $today);
+		if($day == false) $day = current_time('Ymd');
+		if(have_rows('range_date_picker')) {
+			$string = implode('', $schedArray[0][1]);
+		} elseif($schedArray) {
+			$new = array_filter($schedArray, function ($var) use($day) {
+				return ($var[0] >= $day);
 			});
 			$new = array_values($new);
-		}
-		if($new) {
-			foreach ($new[0] as $key) {
-				$gethours[1] = $key;
-			}
-		}
-		if(is_array($gethours[1])){
-			if($plain == true) {
-				$hours .= implode(", ", $gethours[1]);
 
-			} else {
-				$hours = '<ul class="moviehours">';
-				foreach ($gethours[1] as $hour) {
-					$hours .= '<li>'.$hour.'</li>';
+			if($new) {
+				foreach ($new[0] as $key) {
+					$gethours[1] = $key;
 				}
-				$hours .= '</ul>';
 			}
+
+			if(is_array($gethours[1])){
+				if($plain == true) {
+					$hours .= implode(", ", $gethours[1]);
+
+				} else {
+					$hours = '<ul class="moviehours">';
+					foreach ($gethours[1] as $hour) {
+						$hours .= '<li>'.$hour.'</li>';
+					}
+					$hours .= '</ul>';
+				}
+				$string = $hours;
+			}
+		} else {
+			$string = 'error.';
 		}
-		return $hours;
-		// return $new;
+		// print_r($new);
+		return $string;
 	}
 
 

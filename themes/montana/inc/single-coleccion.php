@@ -67,7 +67,7 @@ if($choose == 'auto') {
 			<ul><?php
 				foreach( $post_objects as $post) {
 					setup_postdata($post);
-					list_card('', FALSE, $day);
+					list_card($day);
 				} ?>
 			</ul><?php
 			wp_reset_postdata();
@@ -105,7 +105,7 @@ if($choose == 'auto') {
 						<ul><?php
 						while ($thisQ->have_posts()) {
 							$thisQ->the_post();
-							list_card();
+							list_card($day);
 						} ?>
 					</ul><?php
 						wp_reset_postdata();
