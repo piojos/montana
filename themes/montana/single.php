@@ -40,7 +40,7 @@
 					<?php get_template_part('inc/sharer'); ?>
 				</div>
 			</div><?php
-			if(is_singular(array('agenda', 'cineteca', 'talleres', 'exposiciones'))) {
+			if(is_singular(array('agenda', 'cineteca', 'talleres', 'exposiciones', 'convocatorias'))) {
 				get_template_part('inc/single', 'metabox');
 			} ?>
 		</div>
