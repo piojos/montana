@@ -462,32 +462,30 @@
  */
 
 	/*	COLORS  */
-	// function my_mce4_new_colors( $init ) {
-	// 	$default_colours = '';
-	// 	$custom_colours = ' "d93636", "Red", "00aacd", "Blue", "FFFFFF", "White" ';
-	// 	$init['textcolor_map'] = '['.$custom_colours.','.$default_colours.']';
-	// 	return $init;
-	// }
-	//
-	// add_filter('tiny_mce_before_init', 'my_mce4_new_colors');
+	function my_mce4_new_colors( $init ) {
+		$default_colours = '';
+		$custom_colours = ' "d93636", "Red", "f57b20", "Orange", "00aacd", "Blue", "FFFFFF", "White" ';
+		$init['textcolor_map'] = '['.$custom_colours.','.$default_colours.']';
+		return $init;
+	}
+	add_filter('tiny_mce_before_init', 'my_mce4_new_colors');
 
 
 	/*	ACF  */
-	// add_filter( 'acf/fields/wysiwyg/toolbars' , 'my_toolbars'  );
-	// function my_toolbars( $toolbars ) {
-	//
-	// 	$toolbars['Proyect Basic'][1] = array('forecolor' , 'bold' , 'italic' , 'link' , 'unlink' , 'removeformat' );
-	//
-	// 	// $toolbars['Normal' ] = array();
-	// 	// $toolbars['Normal' ][1] = array('styleselect' , 'bold' , 'forecolor' , 'alignleft aligncenter' , 'bullist' , 'indent' , 'outdent' , 'link' , 'unlink' , 'removeformat');
-	//
-	// 	// remove the 'Full' toolbar completely
-	// 	// unset( $toolbars['Full' ] );
-	// 	// unset( $toolbars['Basic' ] );
-	//
-	// 	// return $toolbars - IMPORTANT!
-	// 	return $toolbars;
-	// }
+	function my_toolbars( $toolbars ) {
+
+		$toolbars['Basic'][1] = array('forecolor' , 'bold' , 'italic' , 'link' , 'unlink' , 'removeformat' );
+
+		// $toolbars['Normal' ] = array();
+		// $toolbars['Normal' ][1] = array('styleselect' , 'bold' , 'forecolor' , 'alignleft aligncenter' , 'bullist' , 'indent' , 'outdent' , 'link' , 'unlink' , 'removeformat');
+
+		// remove the 'Full' toolbar completely
+		// unset( $toolbars['Full' ] );
+		// unset( $toolbars['Basic' ] );
+
+		return $toolbars;
+	}
+	add_filter( 'acf/fields/wysiwyg/toolbars' , 'my_toolbars'  );
 
 
 
