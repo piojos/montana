@@ -82,9 +82,11 @@ function joe_return_basics( $object, $field_name, $request ) {
 	// skills
 	$skillID = $object['j_custom']['skill_picker'];
 	$skillArray = array();
-	foreach ($skillID as $skill) {
-		$skillObject = get_term_by('term_id', $skill, 'disciplinas');
-		$skillArray[] = $skillObject->name;
+	if(is_array($skillID) || is_object($skillID)) {
+		foreach ($skillID as $skill) {
+			$skillObject = get_term_by('term_id', $skill, 'disciplinas');
+			$skillArray[] = $skillObject->name;
+		}
 	}
 	$keyval['category'] = $skillArray;
 
@@ -135,14 +137,16 @@ function joe_return_movie( $object, $field_name, $request ) {
 
 	// program
 	$allMeta = $object['j_custom']['meta'];
-	foreach ($allMeta as $meta) {
-		$keyval['audience'] = $meta['rating']['label'];
-		$keyval['genre'] = $meta['genre']['label'];
-		$keyval['year'] = $meta['year'];
-		$keyval['director'] = $meta['director'];
-		$keyval['cast'] = $meta['cast'];
-		$keyval['runtime'] = $meta['length'];
-		$keyval['rating'] = $meta['rating']['label']; // Movie rating: Does not exist!
+	if(is_array($allMeta) || is_object($allMeta)) {
+		foreach ($allMeta as $meta) {
+			$keyval['audience'] = $meta['rating']['label'];
+			$keyval['genre'] = $meta['genre']['label'];
+			$keyval['year'] = $meta['year'];
+			$keyval['director'] = $meta['director'];
+			$keyval['cast'] = $meta['cast'];
+			$keyval['runtime'] = $meta['length'];
+			$keyval['rating'] = $meta['rating']['label']; // Movie rating: Does not exist!
+		}
 	}
 
 	return $keyval;
@@ -161,9 +165,11 @@ function joe_return_expos_talleres( $object, $field_name, $request ) {
 
 	// program
 	$allWidgets = $object['j_custom']['widgets'];
-	foreach ($allWidgets as $widget) {
-		if($widget['acf_fc_layout'] == 'list_type') {
-			$createProgram = array( 'title' => $widget['title'], 'list' => $widget['list'] );
+	if(is_array($allWidgets) || is_object($allWidgets)) {
+		foreach ($allWidgets as $widget) {
+			if($widget['acf_fc_layout'] == 'list_type') {
+				$createProgram = array( 'title' => $widget['title'], 'list' => $widget['list'] );
+			}
 		}
 	}
 	$keyval['program'] = $createProgram;
