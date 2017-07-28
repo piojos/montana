@@ -61,7 +61,7 @@ input, select, button
 	border: .1rem solid
 	border-radius: 0
 	background: $white
-	min-width: 14em
+	// min-width: 14em
 	padding: 1em 1em .8em
 
 .debugger
@@ -70,7 +70,12 @@ input, select, button
 	background: yellow
 	padding: 1em
 
-
+::selection
+	background: $whitegray
+	color: $lightgray
+::-moz-selection
+	background: $whitegray
+	color: $lightgray
 
 
 // Header

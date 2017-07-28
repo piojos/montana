@@ -16,6 +16,22 @@ a.button
 	font-size: 1.2em
 	padding: .5em 1em
 
+
+a.link
+	border-bottom: .1rem solid rgba(180, 180, 180, 0.2)
+	transition: border .2s
+	&:hover
+		border-color: rgba(180, 180, 180, .7)
+
+.body_content a
+	@extend a.link
+
+.post_head
+	dl, p, .excerpt
+		a
+			@extend a.link
+
+
 .fleft
 	float: left
 	margin-right: 1em
@@ -273,6 +289,9 @@ span
 	&.fours
 		width: 50vw
 		max-width: 22.5em
+		h2
+			height: 4.1em
+			overflow: hidden
 		.details.box
 			@media screen and (min-width: 30rem)
 				min-height: 18em
