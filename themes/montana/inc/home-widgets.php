@@ -8,12 +8,21 @@ function my_posts_where( $where ) {
 add_filter('posts_where', 'my_posts_where');
 
 
+function mta_override_title($fb = false){
+	$or_t = get_sub_field('or_title');
+	if($or_t) { $or_t = get_sub_field('or_title'); }
+	elseif($fb) { $or_t = $fb; }
+	return $or_t;
+}
+
+
 if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales') ) : the_row();
 
 // #queHacerHoy
 	if( get_row_layout() == 'op_today_events' ):
 	// jQuery: contar cards y distribuír de acuerdo al número.
 
+		$or_title = mta_override_title();
 		$today = current_time('Ymd');
 		$selToday = get_sub_field('or_today');
 		if($selToday) {
@@ -28,7 +37,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				$class = ' sixs';
 			} ?>
 		<div class="area max_wrap for_today special">
-			<h2 class="area_title">¿Qué hacer hoy?</h2>
+			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<?php slider_deck($selToday, $class, '', true); ?>
 		</div><?php
 
@@ -56,7 +65,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				$class = ' sixs';
 			} ?>
 		<div class="area max_wrap for_today special">
-			<h2 class="area_title">¿Qué hacer hoy?</h2>
+			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<?php slider_deck($args, $class, ''); ?>
 		</div><?php
 		}
@@ -88,9 +97,10 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 					),
 				)
 			);
-		} ?>
+		}
+		$otm_titles = mta_override_title(); ?>
 		<div class="area max_wrap">
-			<h2 class="area_title"><?php echo $otm_titles; ?></h2>
+			<?php if($otm_titles) echo '<h2 class="area_title">'.$otm_titles.'</h2>'; ?>
 			<?php slider_deck($args, 'fours movie'); ?>
 		</div><?php
 
@@ -99,6 +109,8 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 // esta semana
 	elseif( get_row_layout() == 'op_week_events' ):
+
+		$or_title = mta_override_title();
 
 		$wd0 = date("Ymd", strtotime('today'));
 		$wd1 = date("Ymd", strtotime('+1 day'));
@@ -109,8 +121,9 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		$wd6 = date("Ymd", strtotime('+6 day'));
 		$wd7 = date("Ymd", strtotime('+7 day')); ?>
 
-		<div class="area max_wrap ">
-			<h2 class="area_title">Esta Semana</h2><?php
+		<div class="area max_wrap "><?php
+
+			if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>';
 
 			$ftd_post = get_sub_field('featured');
 			$deckClass = 'this_week';
@@ -167,15 +180,12 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // colecciones
 	elseif( get_row_layout() == 'op_collections' ):
 
-		$col_title = get_sub_field('or_title');
-		if($col_title) { $col_title = get_sub_field('or_title'); }
-		else { $col_title = 'No te pierdas:'; }
-
+		$or_title = mta_override_title();
 		$post_objects = get_sub_field('collections');
 
 		if( $post_objects ): ?>
 		<div class="area max_wrap collections" style="margin-bottom: 6em;">
-			<h2 class="area_title"><?php echo $col_title; ?></h2>
+			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<div class="controls">
 				<ul><?php
 				foreach( $post_objects as $post):
@@ -239,11 +249,12 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // Proximamente
 	elseif( get_row_layout() == 'op_soon' ):
 
+		$or_title = mta_override_title();
 		$post_objects = get_sub_field('select_soon');
 
 		if( $post_objects ): ?>
 		<div class="area max_wrap">
-			<h2 class="area_title">Próximamente</h2>
+			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<div class="deck slider_deck"><?php
 				$count = getClassofQuery($post_objects);
 				foreach( $post_objects as $post):
