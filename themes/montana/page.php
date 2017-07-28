@@ -30,7 +30,7 @@
 
 	<div class="post_body <?php if(!is_singular('colecciones')) echo 'max_wrap'; ?>">
 		<div class="main_content_column">
-			<div class="body_content">
+			<div class="body_content format">
 				<?php the_content(); ?>
 			</div>
 		</div>
