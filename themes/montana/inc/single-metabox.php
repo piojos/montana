@@ -3,6 +3,15 @@
 	// Get Hours
 	$schHrs = schedule_hours();
 
+	// Get Results Hours (convocatoria)
+	if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
+		the_row();
+		$rsltDay = get_sub_field('results_day');
+		$rsltDay = date_i18n('l d \d\e F, Y', strtotime($rsltDay));
+		$rsltUrl = get_sub_field('results_url');
+		if($rsltUrl) $rsltDay = '<a href="'.$rsltUrl.'">'.$rsltDay.'</a>';
+	}}
+
 	// Get Presentors
 	$presentor = get_field('presentor');
 
@@ -21,6 +30,7 @@
 	$placeTerm = get_place();
 
 	// Get Contact
+	$contact_text = get_field('contact_text');
 	if( $costOptions && in_array('showcontact', $costOptions) ) {
 		$place_id = get_field('location_picker');
 		if(in_array('overridecontact', $costOptions)) {
@@ -42,11 +52,13 @@
 		} else {
 			// $contactTerm = 'error';
 		}
-
-	$contactTerm = $place_email;
-	if($place_tel && $place_email)$contactTerm .= ', ';
-	$contactTerm .= $place_tel;
-
+	}
+	if($place_tel && $place_email) {
+		$contactTerm = $place_email;
+		if($place_tel && $place_email)$contactTerm .= ', ';
+		$contactTerm .= $place_tel;
+	} elseif($contact_text) {
+		$contactTerm = '<div style="font-size:.9em;">'. $contact_text.'</div>';
 	}
 
 	// CallToAction button: Tickets
@@ -85,6 +97,11 @@
 		}
 	}
 
+
+	if($rsltDay) { ?>
+		<dt class="label">Publicación de Resultados</dt>
+		<dd><?php echo $rsltDay; ?></dd><?php
+	}
 
 	if($presentor) { ?>
 		<dt class="label">Imparte</dt>
