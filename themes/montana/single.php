@@ -30,7 +30,11 @@
 						}
 						echo movie_meta(false);
 					}
-					the_content();
+					if(is_singular('convocatorias')) {
+						the_field('override_excerpt');
+					} else {
+						the_content();
+					}
 					if(is_singular('colecciones')) {
 						echo '<br>'.mnt_card_status_label();
 					} ?>
@@ -55,6 +59,11 @@
 		} else { ?>
 
 		<div class="main_content_column"><?php
+			if(is_singular('convocatorias')) { ?>
+				<div class="body_content format">
+					<?php the_content(); ?>
+				</div><?php
+			}
 			get_template_part('inc/widgets'); ?>
 		</div><?php
 		}
@@ -84,7 +93,7 @@
 		} ?>
 
 		<div class="area max_wrap">
-			<h2 class="area_title">Mas en <?php echo get_post_type(); ?></h2><?php
+			<h2 class="area_title">Más en <?php echo get_post_type(); ?></h2><?php
 			$args = array(
 				'post_type' => get_post_type(),
 				'posts_per_page' => 4
