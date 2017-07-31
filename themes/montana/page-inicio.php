@@ -73,7 +73,9 @@
 		while ( $latestQuery->have_posts() ) {
 			$latestQuery->the_post(); ?>
 			<a href="<?php the_permalink(); ?>">
-				<?php the_post_thumbnail(); ?>
+				<div class="news_img">
+					<?php the_post_thumbnail(); ?>
+				</div>
 				<div class="title">
 					<div>
 						<p class="label">Noticias</p>
@@ -91,7 +93,9 @@
 				$restQuery->the_post(); ?>
 			<li>
 				<a href="<?php the_permalink(); ?>">
-					<?php the_post_thumbnail(); ?>
+					<div class="news_img">
+						<?php the_post_thumbnail(); ?>
+					</div>
 					<div class="title"><div>
 						<h2><?php the_title(); ?></h2>
 					</div></div>

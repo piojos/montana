@@ -34,7 +34,7 @@
 			margin-bottom: 3em
 			max-height: 8.25em
 			overflow: hidden
-		@media screen and (min-width: 30rem)
+		@media screen and (min-width: 30em)
 			width: 75%
 			max-width: 42em
 
@@ -51,6 +51,7 @@ h2.area_title
 		position: relative
 		top: -1.2em
 		margin-top: -1em
+		margin-left: 1em
 		background: $white
 		border: .1rem solid $black
 		padding: .6em .8em .5em
@@ -62,10 +63,9 @@ h2.area_title
 	position: relative
 	padding: 0 1em
 	top: -3em
-	label
+	.label
+		font-size: .6em
 		line-height: 2em
-	h2
-		+font-smoothing()
 	.latest.story
 		position: relative
 		z-index: 14
@@ -77,7 +77,6 @@ h2.area_title
 			top: 2.5em
 			+border-radius(50%)
 			width: 2.2rem
-			// height: 2.2rem
 			padding-top: .3rem
 			text-align: center
 			+transition(transform .5s)
@@ -85,7 +84,7 @@ h2.area_title
 		position: relative
 		width: 100%
 		display: block
-		margin-top: -6.65em
+		margin-top: -7em
 		margin-bottom: 6em
 		z-index: 13
 		top: 0
@@ -110,19 +109,25 @@ h2.area_title
 		background: $black
 		border-bottom: .1rem solid $lightgray
 		display: block
-		padding: 1em
-		img
+		height: 7em
+		.news_img
 			display: inline-block
+			vertical-align: middle
 			margin-right: 1em
-			vertical-align: top
-			max-height: 6rem
-			width: auto
-			@media screen and (max-width: 30rem)
-				display: none
+			height: inherit
+			img
+				height: 72%
+				width: auto
+				margin-top: 10%
+				margin-left: 1em
+			@media screen and (max-width: 40em)
+				width: 0
+				overflow: hidden
 	a
 		color: $white
 		display: inline-block
 		width: 100%
+		height: inherit
 		&.toggle_button
 			position: absolute
 			top: 1.75em
@@ -132,34 +137,30 @@ h2.area_title
 			z-index: 1
 			cursor: pointer
 	.title
-		width: 60%
+		width: 70%
 		display: inline-block
-		height: 6rem
+		vertical-align: middle
+		+font-smoothing()
 		> div
-			vertical-align: middle
-			display: table-cell
-			height: 6rem
 			font-size: 1.4em
-		@media screen and (max-width: 30rem)
-			width: 80%
 	&.open
 		.latest.story:after
 			transform: rotate(180deg)
 		ul.stories
-			top: 6.6em
+			top: 7em
 			li
 				width: 100%
 				margin-left: 0
 				&:nth-child(2)
-					top: 6.6em
+					top: 7em
 				&:nth-child(3)
-					top: 13.25em
+					top: 14em
 				&:nth-child(4)
-					top: 19.9em
+					top: 21em
 				&:nth-child(5)
-					top: 26.55em
+					top: 28em
 				&:nth-child(6)
-					top: 33.2em
+					top: 35em
 				&:hover
 					background: $white
 					a
@@ -213,7 +214,7 @@ h2.area_title
 		img
 			max-width: 100%
 			height: auto
-	@media screen and (min-width: 30rem)
+	@media screen and (min-width: 30em)
 		.info
 			width: 40%
 		.gallery
@@ -244,13 +245,13 @@ h2.area_title
 	&.no_image
 		min-height: 14em
 		height: 14em
-	@media screen and (min-width: 79rem)
+	@media screen and (min-width: 79em)
 		top: -4em
 
 
 .post_info, .post_meta
 	padding: 1.6em
-	@media screen and (max-width: 50rem)
+	@media screen and (max-width: 50em)
 		height: initial !important
 
 .post_head
@@ -298,7 +299,7 @@ h2.area_title
 		border: .1rem solid $white
 		padding-top: .65em
 
-@media screen and (min-width: 50rem)
+@media screen and (min-width: 50em)
 	.main_content_column
 		width: 55%
 		overflow: auto
@@ -446,7 +447,7 @@ h2.area_title
 				&.title, &.location
 					width: 78%
 					float: right
-				@media screen and (min-width: 50rem)
+				@media screen and (min-width: 50em)
 					&.schedule
 						width: 16%
 					&.thumbnail
