@@ -40,7 +40,7 @@
 	<body <?php body_class(); ?>>
 		<?php get_template_part('img/icons'); ?>
 		<div id="wrapper" class="hfeed">
-			<header id="header" role="banner">
+			<header id="header" role="banner" class="close_menu">
 				<div id="site-title">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
 						<img src="<?php echo get_template_directory_uri(); ?>/img/logo_conarte.svg" alt="">

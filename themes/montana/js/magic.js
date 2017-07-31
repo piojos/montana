@@ -132,10 +132,16 @@ jQuery( function($) {
 	$('header .screen-reader-text').remove();
 	$('header form.searchform input#s').attr('placeholder', 'Busca en todo CONARTE');
 	$('header a#open_search').click(function() {
-		$('header .navigation').addClass('active_search');
+		$('header .navigation, header').addClass('active_search');
 	});
 	$('header a#close_search').click(function() {
-		$('header .navigation').removeClass('active_search');
+		$('header .navigation, header').removeClass('active_search');
+	});
+
+
+// Header: Menu
+	$('header a#nav_toggle_button').click(function() {
+		$('header').toggleClass('open_menu close_menu');
 	});
 
 

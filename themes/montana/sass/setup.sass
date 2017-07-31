@@ -88,6 +88,8 @@ header
 	margin: 0 auto
 	overflow: hidden
 	z-index: 1000
+	+transition(height .5s ease)
+	height: 7.5em
 	.navigation
 		display: none
 		float: right
@@ -97,7 +99,7 @@ header
 		position: absolute
 		font-weight: bold
 		+font-smoothing()
-		@media screen and (min-width:50rem)
+		@media screen and (min-width:50em)
 			display: block
 		a
 			color: $gray
@@ -150,6 +152,37 @@ header
 			opacity: 1
 		hr
 			margin-top: 2.4em
+
+	@media screen and (max-width:50em)
+		&.open_menu
+			height: 27.5em
+			.navigation
+				display: block
+				padding: 0 2em
+				left: 0
+				top: 8em
+				z-index: -1
+				li
+					line-height: 1.6em
+					display: block
+				.submenu li
+					line-height: 1.8em
+			nav#menu ul
+				display: block
+
+	@media screen and (max-width:30em)
+		form#searchform input#s
+			width: 100%
+			margin: 0em 0 1.5em
+		.active_search form#searchform
+			padding: 0 2.5em
+		.active_search hr
+			margin-top: -5em
+		&.active_search
+			height: 15em
+
+
+
 
 form#searchform
 	position: absolute
@@ -208,7 +241,7 @@ a#nav_toggle_button
 		border-top: .25em solid $white
 		width: 100%
 		display: block
-	@media screen and (min-width:50rem)
+	@media screen and (min-width:50em)
 		display: none
 
 
@@ -228,7 +261,8 @@ footer
 			display: inline-block
 		input
 			-webkit-appearance: none
-			padding: 1em 1.5em
+			padding: 1em
+			height: 3.5em
 			&[type="text"]
 				font-family: $Helvetica
 				min-width: 18em
@@ -241,7 +275,7 @@ footer
 		li
 			display: inline-block
 			margin: 2em 1em
-		@media screen and (min-width: 50rem)
+		@media screen and (min-width: 50em)
 			padding: 2em
 			// overflow: auto
 			form
@@ -271,7 +305,7 @@ footer
 		ul
 			display: flex
 			justify-content: space-between
-		@media screen and (min-width: 50rem)
+		@media screen and (min-width: 50em)
 			display: block
 
 
@@ -282,7 +316,7 @@ footer
 	text-align: center
 	+font-smoothing()
 	font-weight: bold
-	@media screen and (min-width: 50rem)
+	@media screen and (min-width: 50em)
 		overflow: auto
 	.links, #copyright
 		width: 50%
@@ -298,7 +332,7 @@ footer
 		color: $whitegray
 	.legal_note
 		color: #4c4c4c
-	@media screen and (min-width: 50rem)
+	@media screen and (min-width: 50em)
 		.links, #copyright
 			width: 25%
 			margin-left: 1.4em
