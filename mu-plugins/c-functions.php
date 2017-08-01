@@ -262,7 +262,7 @@
 				'menu_name'           => __( 'Colecciones'/* , 'montana' */ ),
 				// 'parent_item_colon'   => __( 'Colección Contenedor' ),
 				'all_items'           => __( 'Todas las colecciones'/* , 'montana' */ ),
-				'view_item'           => __( 'Ver colecciones'/* , 'montana' */ ),
+				'view_item'           => __( 'Ver colección'/* , 'montana' */ ),
 				'add_new_item'        => __( 'Agregar nueva colección'/* , 'montana' */ ),
 				'add_new'             => __( 'Agregar nueva'/* , 'montana' */ ),
 				'edit_item'           => __( 'Editar colección'/* , 'montana' */ ),
