@@ -49,6 +49,7 @@
 		// get_skills
 		// result_list
 		// logo_or_title
+		// mtn_cleanString
 
 	}
 	add_action( 'after_setup_theme', 'montana_fun' );

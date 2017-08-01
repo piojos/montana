@@ -414,3 +414,11 @@
 			// the_title();
 		}
 	}
+
+
+
+	// Cleans out any string
+	function mtn_cleanString($string) {
+		$string = str_replace(' ', '-', $string);
+		return preg_replace('/[^A-Za-z0-9\-]/', '', $string); 
+	}
