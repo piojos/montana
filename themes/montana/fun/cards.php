@@ -140,7 +140,8 @@
 
 
 	function list_card($day = false) {
-		$pt = get_post_type( $post->ID ); ?>
+		$pt = get_post_type( $post->ID );
+		$date_ops = get_field('dates_options'); ?>
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
 				<div class="schedule">
@@ -150,8 +151,14 @@
 							if($day != false) {
 								echo movieHoursClosestday($day, true);
 							}
-						} else {
+						} elseif($pt == 'cineteca') {
 							echo movieHoursClosestday(false, true);
+						} else {
+							if($date_ops == 'dates') {
+								echo movieHoursClosestday(false, true);
+							} else {
+								echo schedule_hours();
+							}
 						}
 					} elseif( $pt == 'exposiciones' || $pt == 'convocatorias' || $pt == 'talleres') {
 						if($pt != 'convocatorias') {
