@@ -17,12 +17,15 @@
 	<div class="big slider"><?php
 		foreach( $sliderPosts as $post) {
 			setup_postdata($post);
+			$pt = get_post_type( $post->ID );
 			$sl_ops = get_field('slider_options'); ?>
 			<div class="slide">
 				<a href="<?php the_permalink(); ?>">
 					<div class="bg_img <?php if($sl_ops && in_array('blur_img', $sl_ops)) echo 'blur'; ?>" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>);"></div>
 				</a>
-				<div class="max_wrap">
+				<div class="max_wrap"><?php
+
+					if($sl_ops && in_array('show_box', $sl_ops)) { ?>
 					<div class="details box">
 						<a href="<?php the_permalink(); ?>">
 							<?php echo keyword_box();
@@ -40,14 +43,25 @@
 										the_content();
 									}
 								}
-								if($sl_ops && in_array('show_location', $sl_ops)) echo '<p>Lugar</p>';
-								if($sl_ops && in_array('show_duration', $sl_ops)) echo '<p>Duración</p>'; ?>
+								if($sl_ops && in_array('show_duration', $sl_ops)) {
+									if($pt == 'colecciones') { $fpDates = get_field('coll_dates'); }
+									else { $fpDates = 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) ).'.'; }
+									// Missing single dates
+									// $string = '<p><strong>'. schedule_days('F j Y', true, true) .'</strong></p>';
+									echo '<p><strong>'.$fpDates.'</strong></p>';
+								}
+								if($sl_ops && in_array('show_location', $sl_ops)){
+									if($pt == 'colecciones') { $fpLocations = the_field('coll_locations'); }
+									else { $fpLocations = get_place(); }
+									echo '<p>'.$fpLocations.'</p>';
+								} ?>
 							</div>
 						</a>
 						<div class="status_label">
 							<?php get_template_part('inc/sharer'); ?>
 						</div>
-					</div>
+					</div><?php
+					} ?>
 				</div>
 			</div><?php
 		} ?>
