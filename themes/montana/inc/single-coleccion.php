@@ -117,14 +117,29 @@ if($choose == 'auto') {
 	}
 
 } else {
-	echo 'Error.';
+	// echo 'Error.';
 }
 
 
-$ranged_args = get_field('all_ranged');
-if(!empty($ranged_args)) { ?>
-<div class="area max_wrap" style="padding: 3em 0 4em;">
-	<h2 class="area_title">Exposiciones y Talleres</h2>
-	<?php slider_deck($ranged_args, 'fours', '', TRUE); ?>
+$rangeIDs = get_field('all_ranged');
+if(!empty($rangeIDs)) {
+	$range_args = array(
+		'post_type' => array('exposiciones', 'talleres'),
+		'post__in' => $rangeIDs
+	);
+	$rangeQ = new WP_Query($range_args); ?>
+<div class="area" style="padding: 3em 0 4em;">
+	<div class="max_wrap"><h2 class="area_title">Exposiciones y Talleres</h2></div><?php
+	if($rangeQ->have_posts()) { ?>
+	<ul class="ag_results">
+		<ul><?php
+		while ($rangeQ->have_posts()) {
+			$rangeQ->the_post();
+			list_card($day);
+		} ?>
+		</ul>
+	</ul><?php
+		wp_reset_postdata();
+	} ?>
 </div><?php
 } ?>
