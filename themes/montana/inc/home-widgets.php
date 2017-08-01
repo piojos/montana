@@ -36,7 +36,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			} else {
 				$class = ' sixs';
 			} ?>
-		<div class="area max_wrap for_today special">
+		<div class="area max_wrap for_today">
 			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<?php slider_deck($selToday, $class, '', true); ?>
 		</div><?php
@@ -64,7 +64,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			} else {
 				$class = ' sixs';
 			} ?>
-		<div class="area max_wrap for_today special">
+		<div class="area max_wrap for_today">
 			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
 			<?php slider_deck($args, $class, ''); ?>
 		</div><?php
@@ -170,6 +170,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			);
 
 			// NOTA: Agregar aparte query de exposiciones y talleres y usar merge_array en funcion de slider_deck()
+			// NOTA: Falta if(custom week)
 
 			slider_deck($args, 'sixs', $deckClass); ?>
 		</div><?php
@@ -182,10 +183,12 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		$or_title = mta_override_title();
 		$post_objects = get_sub_field('collections');
-
+		$count_objects = count($post_objects);
 		if( $post_objects ): ?>
-		<div class="area max_wrap collections" style="margin-bottom: 6em;">
-			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>'; ?>
+		<div class="area max_wrap collections" style="margin-bottom: 6em;" id="<?php echo mtn_cleanString($or_title); ?>">
+			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>';
+
+			if($count_objects > 1) { ?>
 			<div class="controls">
 				<ul><?php
 				foreach( $post_objects as $post):
@@ -195,11 +198,12 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				wp_reset_postdata(); ?>
 				</ul>
 			</div><?php
+			}
 
 			foreach( $post_objects as $post):
 				setup_postdata($post); ?>
 				<div class="details_container" id="slide_<?php the_ID(); ?>">
-					<a class="close"></a>
+					<?php if($count_objects >= 2) echo '<a class="close"></a>'; ?>
 					<div class="info column">
 						<a href="<?php the_permalink(); ?>">
 							<h1><?php the_title(); ?></h1>

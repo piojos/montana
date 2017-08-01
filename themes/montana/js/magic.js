@@ -36,27 +36,35 @@ jQuery( function($) {
 
 
 // Home: Today's events Special formation
-	// if()
-	var gS = $('.area.special .slick-track > .card').length;
-	if(gS == 3) {
-		$('.area.special .slick-track .card:nth-child(3)').removeClass('fours').addClass('twos');
+	var gS = $('.area.for_today .slick-track > .card').length;
+	if(gS === 3) {
+		$('.area.for_today').addClass('special');
+		$('.area.for_today .slick-track .card:nth-child(3)').removeClass('fours').addClass('twos');
 	}
 
 
 // Home: Collections Switcher
 	$('.collections li:nth-child(1) a.trig').addClass('current');
-	$('.details_container').first().show();
+	$('.area.collections').each(function(){
+		$(this).find('.details_container:first').show();
+	});
+
 
 	$('.collections a.trig').click(function(e) {
-		$('.collections a.trig').removeClass('current');
-		$(this).addClass('current');
 		e.preventDefault();
+		var pID = $(this).closest('.area.collections').attr('id');
 		var slideID = $(this).attr("href");
-		$('.details_container').hide();
-		$(slideID).show();
+
+		$('#'+pID).find('a.trig').removeClass('current');
+		$(this).addClass('current');
+		$('#'+pID).find('.details_container').hide();
+
+		$('#'+pID).find(slideID).show();
 	});
+
 	$('.collections a.close').click(function() {
-		$('.details_container').hide();
+		var pID = $(this).closest('.area.collections').attr('id');
+		$('#'+pID).find('.details_container').hide();
 	});
 
 
