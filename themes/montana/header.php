@@ -38,6 +38,7 @@
 	</head>
 
 	<body <?php body_class(); ?>>
+		<?php // include_once("inc/analyticstracking.php"); ?>
 		<?php get_template_part('img/icons'); ?>
 		<div id="wrapper" class="hfeed">
 			<header id="header" role="banner" class="close_menu">
