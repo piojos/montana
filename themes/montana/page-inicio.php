@@ -18,10 +18,16 @@
 		foreach( $sliderPosts as $post) {
 			setup_postdata($post);
 			$pt = get_post_type( $post->ID );
-			$sl_ops = get_field('slider_options'); ?>
+			$sl_ops = get_field('slider_options');
+			$diff_img = get_field('home_img');
+			if(!empty($diff_img)) { $ftd_img = wp_get_attachment_url($diff_img); }
+			else { $ftd_img = get_the_post_thumbnail_url('huge');} ?>
 			<div class="slide">
 				<a href="<?php the_permalink(); ?>">
-					<div class="bg_img <?php if($sl_ops && in_array('blur_img', $sl_ops)) echo 'blur'; ?>" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>);"></div>
+					<div class="bg_img <?php if($sl_ops && in_array('blur_img', $sl_ops)) echo 'blur'; ?>" style="background-image:url(<?php
+					if(!empty($diff_img)) { echo wp_get_attachment_url($diff_img); }
+					else { the_post_thumbnail_url('huge'); }
+					 ?>);"></div>
 				</a>
 				<div class="max_wrap"><?php
 
