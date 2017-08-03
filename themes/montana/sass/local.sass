@@ -51,7 +51,6 @@ h2.area_title
 		position: relative
 		top: -1.2em
 		margin-top: -1em
-		margin-left: 1em
 		background: $white
 		border: .1rem solid $black
 		padding: .6em .8em .5em
@@ -196,6 +195,8 @@ h2.area_title
 		position: relative
 	.column
 		padding: 4em 1em 2em
+	&.single .column
+		padding: 2em 1em
 	.info
 		float: left
 		.status_label
@@ -426,6 +427,7 @@ h2.area_title
 					border: none
 
 		.max_wrap
+			padding-left: 1em
 			border-bottom: .1rem solid $black
 			overflow: auto
 			> div
@@ -505,12 +507,14 @@ h2.area_title
 	color: $white
 
 
+
+
 .area
-	margin-top: 14vh
+	margin-top: 10vh
 	&.for_today
-		margin-top: 20vh
+		margin-top: 10vh
 	&.conarte_tv
-		margin-top: 20vh
+		margin-top: 10vh
 		padding: 2em 0 4em
 		background: $black
 		color: $white
@@ -556,3 +560,15 @@ h2.area_title
 	img
 		max-width: 100%
 		height: auto
+
+
+
+
+
+// 404
+.error404 .area
+	padding: 2em 1em
+	h1
+		font-size: 2em
+		font-weight: bold
+		margin-bottom: 1em
