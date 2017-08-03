@@ -15,6 +15,13 @@ jQuery( function($) {
 		infinite: false,
 		swipeToSlide: true
 	});
+	$('.autoslider').slick({
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 2000,
+		arrows : false,
+		adaptiveHeight: true
+	});
 
 	var wfp = $('.row.ftd_row');
 	$('.slider_deck.this_week').slick('slickAdd', wfp,0,1);
