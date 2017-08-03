@@ -175,3 +175,22 @@
 	}
 
 	add_action('acf/save_post', 'my_acf_save_post', 20);
+
+
+
+
+
+
+
+
+
+/* Options Page */
+	if( function_exists('acf_add_options_page') ) {
+		acf_add_options_page(array(
+			'page_title' 	=> 'Opciones Generales',
+			'menu_title'	=> 'Opciones',
+			'menu_slug' 	=> 'general-options',
+			'capability'	=> 'edit_posts',
+			'redirect'		=> false
+		));
+	}
