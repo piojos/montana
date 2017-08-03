@@ -98,9 +98,11 @@
 	}
 
 
-	if($rsltDay) { ?>
-		<dt class="label">Publicación de Resultados</dt>
-		<dd><?php echo $rsltDay; ?></dd><?php
+	if(is_singular('convocatorias')) {
+		if($rsltDay) { ?>
+			<dt class="label">Publicación de Resultados</dt>
+			<dd><?php echo $rsltDay; ?></dd><?php
+		}
 	}
 
 	if($presentor) { ?>
