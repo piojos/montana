@@ -16,8 +16,8 @@
 		// 1. movie_meta	– Generates movie meta snippet
 		// 2. get_place		– Gets Location Name from ACF'location_picker'
 		// 3. cards			– Generates a card
-		// 4. montana_ftdimg	–
-		// 5. montana_post_thumbnail	–
+		// 4. mta_ftdimg	–
+		// 5. mta_post_thumbnail	–
 		// 6. list_card 		– Generates a "listed card"
 		// 7. deck 			– Generates a 'deck' of 'card's
 		// 8. findIn			– Find in Array or String (used in slider_deck)
