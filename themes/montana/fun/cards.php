@@ -60,7 +60,7 @@
 			<a href="<?php the_permalink(); ?>">
 			<div class="img_container"><?php
 
-				montana_ftdimg($class);
+				mta_ftdimg($class);
 				echo keyword_box($class); ?>
 			</div>
 			<div class="wrap">
@@ -85,10 +85,14 @@
 			if($dates) { $string = '<p><strong>'.$dates.'</strong></p>'; }
 			if($locations) { $string .= '<p>'.$locations.'</p>'; }
 		} elseif(get_post_type() == 'cineteca') {
-			$string = movie_meta();
+			$placeTerm = get_place();
+			$string = '<p><strong>'. mta_next_movie('F j') .'</strong></p>';
+			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
+			$string .= '<br>'.movie_meta();
 		} else {
 			$placeTerm = get_place();
-			$string = '<p><strong>'. schedule_days('F j Y', true, true) .'</strong></p>';
+			$string = '<p>'.schedule_hours().'</p>';
+			$string .= '<p><strong>'. schedule_days('F j Y', true, true) .'</strong></p>';
 			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
 		}
 		return $string;
@@ -96,19 +100,20 @@
 
 
 
-	function montana_ftdimg($class) {
+	function mta_ftdimg($class) {
 		// if(!strpos($class, 'no-image')) {
 			if(strpos($class, 'week_ftd_post')) {
 			} else {
-				montana_post_thumbnail($class);
+				mta_post_thumbnail($class);
 			}
 		// }
 	}
 
-	function montana_post_thumbnail($class, $size = 'medium') {
+	function mta_post_thumbnail($class, $size = 'medium') {
 		$place_id = get_field('location_picker');
 		$taxonomy = get_term_by('id', $place_id, 'lugares');
 		$myterms = get_terms( array( 'lugares' => $taxonomy->slug, 'parent' => 0 ) );
+		$coll_obj = get_field('collection_picker');
 
 
 		if(strpos($class, 'movie')) {
@@ -118,7 +123,10 @@
 			}
 		} elseif(has_post_thumbnail()) {
 			the_post_thumbnail($size);
-		// } elseif() {			// In collection
+
+		} elseif($coll_obj) {			// Get Collection's image
+			$coll_thumb = get_the_post_thumbnail($coll_obj, $size);
+			echo $coll_thumb;
 
 		} elseif($place_id) {			// Get lugar's image
 
@@ -132,7 +140,10 @@
 				}
 			}
 		} else {
-			// no-image class. Add with js?
+			$image = get_field('main_fallback_img', 'option');
+			if( !empty($image) ){ ?>
+	<img src="<?php echo $image['sizes'][$size]; ?>" alt="<?php echo $image['alt']; ?>" /><?php
+			}
 		}
 	}
 
@@ -168,7 +179,7 @@
 						if(have_rows('range_date_picker')) {
 							while(have_rows('range_date_picker')){
 								the_row();
-								echo 'Hasta '.date_i18n( 'F d', strtotime( get_sub_field('end_day') ) ).'.';
+								echo 'Hasta '.date_i18n( 'F j', strtotime( get_sub_field('end_day') ) ).'.';
 							}
 						}
 					} else {}
@@ -176,7 +187,7 @@
 					</p>
 				</div>
 				<div class="thumbnail">
-					<?php the_post_thumbnail(); ?>
+					<?php mta_post_thumbnail(); ?>
 				</div>
 				<div class="title">
 					<h2><strong><?php the_title(); ?></strong></h2>
