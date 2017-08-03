@@ -135,13 +135,13 @@
 			if($short == false AND $weekdays) {
 				$string = createRangeWeekdays($weekdays).'<br>';
 			}
-			$start_day = date_i18n('d \d\e F', strtotime($start_day));
+			$start_day = date_i18n('j \d\e F', strtotime($start_day));
 			if($short == true) {
 				$end_day = date_i18n('F d', strtotime($end_day));
 				$end_day = ucfirst(strtolower($end_day));
 				$string = 'Hasta '. $end_day;
 			} else {
-				$end_day = date_i18n('d \d\e F Y', strtotime($end_day));
+				$end_day = date_i18n('j \d\e F Y', strtotime($end_day));
 				$string .= 'Del '. $start_day .' al '. $end_day;
 				if($notes) {
 					$string .= '<br>'.$notes;
@@ -236,7 +236,7 @@
 			foreach ($schedArray as $key) {
 				$m = date_i18n('F', strtotime($key[0]));
 				if($m != $nm) $month = ' <strong> de '.ucfirst($m).'</strong>';
-				$niceday = date_i18n('l d', strtotime($key[0]));
+				$niceday = date_i18n('l j', strtotime($key[0]));
 				$string .= prefix_forDay($key[0], '', ', ');
 				$string .= $niceday.$month.': ';
 				$string .= implode(", ", $key[1]);
@@ -250,8 +250,6 @@
 		}
 		$string .= '</dd>';
 
-
-
 		return $string;
 		// print_r($stDays);
 	}
@@ -264,6 +262,23 @@
 		});
 		$new = array_values($new);
 		return $new;
+	}
+
+
+	function mta_next_movie($format = 'F j Y', $pt_labels = 'cineteca') {
+		$la_no_results = 'No disponible.';
+
+		$schedArray = mta_future_schedule_array('Ymd');
+		$schedArray = $schedArray[0];
+
+		$m = date_i18n('F', strtotime($schedArray[0]));
+		if($m != $nm) $month = ' <strong> de '.ucfirst($m).'</strong>';
+		$niceday = date_i18n('j', strtotime($schedArray[0]));
+		$string = prefix_forDay($schedArray[0], '', ', ');
+		$string .= $niceday.$month.': ';
+		$string .= implode(", ", $schedArray[1]);
+
+		return $string;
 	}
 
 
@@ -410,8 +425,6 @@
 			<img src="<?php echo $imgLogo['sizes']['large']; ?>" alt="<?php echo $imgLogo['alt']; ?>" class="event_logo" /><?php
 		} else {
 			echo '<'.$hValue.'>'.get_the_title().'</'.$hValue.'>';
-			// echo '<h1>'.get_the_title().'</h1>';
-			// the_title();
 		}
 	}
 
@@ -420,5 +433,5 @@
 	// Cleans out any string
 	function mtn_cleanString($string) {
 		$string = str_replace(' ', '-', $string);
-		return preg_replace('/[^A-Za-z0-9\-]/', '', $string); 
+		return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
 	}
