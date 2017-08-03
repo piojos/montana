@@ -20,7 +20,17 @@
 		} ?>
 		<div class="max_wrap post_head loading">
 			<div class="post_info main_content_column">
-				<p class="label"><?php $pt = get_post_type(); echo keyword_gen($pt, true); ?></p><?php
+				<p class="label"><?php
+				$pt = get_post_type();
+				echo keyword_gen($pt, true);
+				$coll = get_field('collection_picker');
+				if( $coll ) {
+					$post = $coll;
+					setup_postdata( $post );
+							echo ' • <a href="'.get_the_permalink().'">'.get_the_title().'</a>';
+					wp_reset_postdata();
+				} ?>
+				</p><?php
 
 				logo_or_title();
 				if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>';
