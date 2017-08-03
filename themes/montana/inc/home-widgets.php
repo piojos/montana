@@ -15,6 +15,16 @@ function mta_override_title($fb = false){
 	return $or_t;
 }
 
+	$today = current_time('Ymd');
+	$wd0 = date("Ymd", strtotime('today'));
+	$wd1 = date("Ymd", strtotime('+1 day'));
+	$wd2 = date("Ymd", strtotime('+2 day'));
+	$wd3 = date("Ymd", strtotime('+3 day'));
+	$wd4 = date("Ymd", strtotime('+4 day'));
+	$wd5 = date("Ymd", strtotime('+5 day'));
+	$wd6 = date("Ymd", strtotime('+6 day'));
+	$wd7 = date("Ymd", strtotime('+7 day'));
+
 
 if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales') ) : the_row();
 
@@ -23,7 +33,6 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 	// jQuery: contar cards y distribuír de acuerdo al número.
 
 		$or_title = mta_override_title();
-		$today = current_time('Ymd');
 		$selToday = get_sub_field('or_today');
 		if($selToday) {
 			$count = count($selToday);
@@ -46,12 +55,14 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 				'post_type' => array('agenda', 'exposiciones', 'talleres'),
 				'posts_per_page' => 3,
 				'meta_query' => array(
+					'relation' => 'OR',
 					array(
 						'key' => 'everyday',
 						'value' => $today,
 						'compare' => 'LIKE',
-					),
-				)
+					)
+				),
+				'orderby' => 'rand'
 			);
 			$qu = new WP_Query( $args );
 			$count = $qu->post_count;
@@ -79,23 +90,24 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 		$selMovies = get_sub_field('or_movies');
 		if($selMovies) {
-			$otm_titles = 'Hoy en Cineteca';
+			$otm_titles = 'Hoy en Cartelera';
 			$args = array(
 				'post_type' => 'cineteca',
 				'post__in' => $selMovies
 			);
 		} else {
-			$otm_titles = 'En Cineteca';
+			$otm_titles = 'En Cartelera';
 			$args = array(
 				'post_type' => 'cineteca',
-				'posts_per_page' => 4,
-				'meta_query' => array (
-					array(
-						'key' => 'everyday',
-						'value' => $today,
-						'compare' => 'LIKE',
-					),
-				)
+				'posts_per_page' => 6,
+				'meta_query' => array(
+					'relation' => 'OR',
+					array('key' => 'everyday', 'value' => $wd0, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
+					'orderby' => 'meta_value'
+				),
+				'order' => 'ASC'
 			);
 		}
 		$otm_titles = mta_override_title(); ?>
@@ -110,16 +122,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 // esta semana
 	elseif( get_row_layout() == 'op_week_events' ):
 
-		$or_title = mta_override_title();
-
-		$wd0 = date("Ymd", strtotime('today'));
-		$wd1 = date("Ymd", strtotime('+1 day'));
-		$wd2 = date("Ymd", strtotime('+2 day'));
-		$wd3 = date("Ymd", strtotime('+3 day'));
-		$wd4 = date("Ymd", strtotime('+4 day'));
-		$wd5 = date("Ymd", strtotime('+5 day'));
-		$wd6 = date("Ymd", strtotime('+6 day'));
-		$wd7 = date("Ymd", strtotime('+7 day')); ?>
+		$or_title = mta_override_title(); ?>
 
 		<div class="area max_wrap "><?php
 
@@ -185,7 +188,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		$post_objects = get_sub_field('collections');
 		$count_objects = count($post_objects);
 		if( $post_objects ): ?>
-		<div class="area max_wrap collections" style="margin-bottom: 6em;" id="<?php echo mtn_cleanString($or_title); ?>">
+		<div class="area max_wrap collections <?php if($count_objects >= 2) echo 'single'; ?>" style="margin-bottom: 6em;" id="<?php echo mtn_cleanString($or_title); ?>">
 			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>';
 
 			if($count_objects > 1) { ?>
@@ -217,8 +220,22 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 							</div>
 						</a>
 					</div>
-					<div class="gallery column">
-						<?php the_post_thumbnail('large'); ?>
+					<div class="gallery column"><?php
+						$image = get_field('home_img');
+						$gallery = get_field('home_gallery');
+						if( $gallery ) { ?>
+						<div class="autoslider"><?php
+							foreach( $gallery as $image ): ?>
+							<div>
+								<img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>" />
+							</div><?php
+						endforeach; ?>
+						</div><?php
+						} elseif( $image ) {
+							echo wp_get_attachment_image( $image, 'large' );
+						} else {
+							the_post_thumbnail('large');
+						} ?>
 					</div>
 				</div><?php
 			endforeach;
@@ -232,10 +249,9 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 	elseif( get_row_layout() == 'op_tv' ):
 
 			if( have_rows('video_list') ): ?>
-			<div class="area conarte_tv">
-				<div class="max_wrap">
-					<h2 class="area_title boxed">CON<strong>ARTE TV</strong></h2>
-					<div class="deck slider_deck"><?php
+			<div class="area max_wrap conarte_tv">
+				<h2 class="area_title boxed">CON<strong>ARTE TV</strong></h2>
+				<div class="deck slider_deck"><?php
 				while (have_rows('video_list')) {
 					the_row();
 					echo '<div class="card tv fours">';
@@ -244,7 +260,6 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 					}
 					echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
 				} ?>
-					</div>
 				</div>
 			</div><?php
 			endif;
