@@ -103,6 +103,8 @@
 	function mta_ftdimg($class) {
 		// if(!strpos($class, 'no-image')) {
 			if(strpos($class, 'week_ftd_post')) {
+			} elseif(strpos($class, 'twos')) {
+				mta_post_thumbnail($class, 'large');
 			} else {
 				mta_post_thumbnail($class);
 			}
