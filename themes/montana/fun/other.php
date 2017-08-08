@@ -105,6 +105,7 @@
 				foreach($allDaysArray as $row) {
 					$originalDate = $row;
 					$newDate = date_i18n($format, strtotime($originalDate));
+					$newDate = ucfirst(strtolower($newDate));
 					$today = current_time('Ymd');
 					if($showToday == true AND $today == $originalDate) {
 						$days[] = 'Hoy, '.$newDate;}
