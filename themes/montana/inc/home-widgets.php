@@ -2,7 +2,9 @@
 
 // filter
 function my_posts_where( $where ) {
-	$where = str_replace("meta_key = 'range_date_picker_%", "meta_key LIKE 'range_date_picker_%", $where);
+	$s = array("meta_key = 'dates_picker_%", "meta_key = 'range_date_picker_%");
+	$r = array("meta_key LIKE 'dates_picker_%", "meta_key LIKE 'range_date_picker_%");
+	$where = str_replace($s, $r, $where);
 	return $where;
 }
 add_filter('posts_where', 'my_posts_where');
@@ -15,16 +17,14 @@ function mta_override_title($fb = false){
 	return $or_t;
 }
 
-	$today = current_time('Ymd');
-	$wd0 = date("Ymd", strtotime('today'));
-	$wd1 = date("Ymd", strtotime('+1 day'));
-	$wd2 = date("Ymd", strtotime('+2 day'));
-	$wd3 = date("Ymd", strtotime('+3 day'));
-	$wd4 = date("Ymd", strtotime('+4 day'));
-	$wd5 = date("Ymd", strtotime('+5 day'));
-	$wd6 = date("Ymd", strtotime('+6 day'));
-	$wd7 = date("Ymd", strtotime('+7 day'));
-
+$today = current_time('Ymd');
+$wd1 = $today + 1;
+$wd2 = $wd1 + 1;
+$wd3 = $wd2 + 1;
+$wd4 = $wd3 + 1;
+$wd5 = $wd4 + 1;
+$wd6 = $wd5 + 1;
+$wd7 = $wd6 + 1;
 
 if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales') ) : the_row();
 
@@ -53,7 +53,7 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		} else {
 			$args = array(
 				'post_type' => array('agenda', 'exposiciones', 'talleres'),
-				'posts_per_page' => 3,
+				'posts_per_page' => 12,
 				'meta_query' => array(
 					'relation' => 'OR',
 					array(
@@ -99,14 +99,21 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			$otm_titles = 'En Cartelera';
 			$args = array(
 				'post_type' => 'cineteca',
-				'posts_per_page' => 6,
+				'posts_per_page' => 12,
 				'meta_query' => array(
 					'relation' => 'OR',
-					array('key' => 'everyday', 'value' => $wd0, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
-					'orderby' => 'meta_value'
+					array(
+						'key'		=> 'dates_picker_%_day',
+						'compare'	=> 'IN',
+						'value'		=> $today,
+					),
+					array(
+						'key'		=> 'dates_picker_%_day',
+						'compare'	=> 'IN',
+						'value'		=> $wd1,
+					)
 				),
+				'orderby' => 'meta_value_num',
 				'order' => 'ASC'
 			);
 		}
@@ -146,11 +153,11 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 
 			$args = array(
 				'post_type' => array('agenda'),
-				'posts_per_page' => 10,
+				'posts_per_page' => 12,
 				'post__not_in' => $exclude_ftd_post,
 				'meta_query' => array(
 					'relation' => 'OR',
-					array('key' => 'everyday', 'value' => $wd0, 'compare' => 'LIKE',),
+					array('key' => 'everyday', 'value' => $today, 'compare' => 'LIKE',),
 					array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
 					array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
 					array('key' => 'everyday', 'value' => $wd3, 'compare' => 'LIKE',),
@@ -159,14 +166,9 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 					array('key' => 'everyday', 'value' => $wd6, 'compare' => 'LIKE',),
 					array('key' => 'everyday', 'value' => $wd7, 'compare' => 'LIKE',),
 					array(
-						'key'		=> 'range_date_picker_%_start_day',
-						'compare'	=> '<=',
-						'value'		=> $wd0,
-					),
-					array(
-						'key'		=> 'range_date_picker_%_end_day',
+						'key'		=> 'range_date_picker_0_start_day',
 						'compare'	=> '>=',
-						'value'		=> $wd7,
+						'value'		=> $today,
 					)
 				),
 				'orderby' => 'rand',
