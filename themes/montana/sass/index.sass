@@ -6,3 +6,64 @@
 @import setup
 @import modules
 @import local
+
+// Shame
+@media screen and (max-width:60em)
+	.slider .slide
+		height: 65vh
+		min-height: 20em
+		.bg_img
+			min-height: 30em
+			height: 60vh
+	.big.slider
+		margin-top: 0
+
+@media screen and (max-width:40em)
+	.slider .slide
+		height: 45vh
+		min-height: 20em
+		.bg_img
+			min-height: 20em
+			height: 40vh
+
+@media screen and (max-width:30em)
+	.slider .slide
+		height: 40vh
+		min-height: 20em
+		.bg_img
+			min-height: 10em
+			height: 35vh
+
+
+.wpcf7-form
+	> p
+		margin-bottom: 1em
+	textarea
+		border-color: black
+		width: 100%
+	input[type="checkbox"],
+	input[type="radio"]
+		border-radius: 50%
+		width: 2.5rem
+		height: 2.5rem
+		display: inline-block
+		font-size: 1rem
+		vertical-align: bottom
+		&:checked
+			background: $orange
+	input[type="radio"]
+		border-radius: 10%
+	select
+		width: 100%
+		position: relative
+		&:after
+			content: '•'
+			display: inline-block
+			position: absolute
+			top: .5em
+			right: .5em
+			color: $orange
+			width: 1em
+			height: 1em
+	.wpcf7-list-item.first
+		margin-left: 0
