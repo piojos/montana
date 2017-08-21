@@ -12,10 +12,13 @@
 				$mGenre = get_sub_field('genre');
 				$mLength = get_sub_field('length');
 				$mRating = get_sub_field('rating');
+				$mRating = get_sub_field('rating');
 			}
 		}
 		$string = '<p class="moviemeta">';
-		$string .= '<strong>'.$mYear.' '.$mDirector.'</strong><br>';
+		$string .= '<strong>'.$mYear;
+		if($mCountry) $string .= ' '.$mCountry;
+		$string .= '. '.$mDirector.'</strong><br>';
 		if($mGenre) $string .= $mGenre['label'].' <span>•</span> ';
 		if($mLength) $string .= $mLength.' <span>•</span> ';
 		$string .= $mRating['label'].'<br>';
