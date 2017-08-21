@@ -36,7 +36,13 @@
 				if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>';
 
 				if(is_singular('cineteca')) {
-					the_tags('<p class="subtitle">',', ','</p>');
+					if(have_rows('meta')) { while (have_rows('meta')) { the_row();
+						$og_title = get_sub_field('original_title');
+						$mCast = get_sub_field('cast');
+						if($og_title) {
+							echo '<p class="subtitle">'.$og_title.'</p>';
+						}
+					}}
 				} ?>
 
 				<div class="excerpt"><?php
@@ -45,7 +51,10 @@
 						if( !empty($image) ){ ?>
 							<img src="<?php echo $image['sizes']['poster']; ?>" class="poster" alt="<?php echo $image['alt']; ?>" /><?php
 						}
-						echo movie_meta(false);
+						echo movie_meta(false).'<br>';
+						if($mCast) {
+							echo '<p><strong>REPARTO</strong><p><p>'.$mCast.'</p><br>';
+						}
 					}
 					if(is_singular('convocatorias')) {
 						the_field('override_excerpt');
