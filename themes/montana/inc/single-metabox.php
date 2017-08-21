@@ -7,9 +7,11 @@
 	if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
 		the_row();
 		$rsltDay = get_sub_field('results_day');
-		$rsltDay = date_i18n('l d \d\e F, Y', strtotime($rsltDay));
 		$rsltUrl = get_sub_field('results_url');
-		if($rsltUrl) $rsltDay = '<a href="'.$rsltUrl.'">'.$rsltDay.'</a>';
+		if($rsltDay) {
+			$rsltDay = date_i18n('l d \d\e F, Y', strtotime($rsltDay));
+			if($rsltUrl) $rsltDay = '<a href="'.$rsltUrl.'">'.$rsltDay.'</a>';
+		}
 	}}
 
 	// Get Presentors
@@ -62,18 +64,21 @@
 	}
 
 	// CallToAction button: Tickets
-	$cnv_btn = get_field('official_options');
 
 	if( $costOptions && in_array('tickets', $costOptions) ) {
 		$ctaButton = '<a href="'.get_field('ticket_url').'" class="button">';
 		if(get_field('ticket_label')) { $ctaButton .= get_field('ticket_label'); }
 		else { $ctaButton .= 'Inscríbete'; }
 		$ctaButton .= '</a>';
-	} elseif($cnv_btn == 'url' || $cnv_btn == 'file') {
+	}
+
+	$cnv_btn = get_field('official_options');
+	if($cnv_btn == 'url' || $cnv_btn == 'file') {
+		$file = get_field('official_file');
 		if($cnv_btn == 'url') {
 			$ctaButton = '<a href="'.get_field('official_url').'" class="button" target="_blank">';
 		} elseif($cnv_btn == 'file') {
-			$ctaButton = '<a href="'.get_field('official_file').'" class="button" target="_blank">';
+			$ctaButton = '<a href="'.$file['url'].'" class="button" target="_blank">';
 		}
 		if(get_field('official_label')) { $ctaButton .= get_field('official_label');
 		} else { $ctaButton .= 'Descarga convocatoria'; }
