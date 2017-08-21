@@ -125,16 +125,14 @@
 
 // SETUP : Rules for ACF
 	function my_acf_admin_head() { ?>
-		<style type="text/css">
+<style type="text/css">
+	.acf-field.disabled input { opacity: .1; cursor: not-allowed;}
+</style>
+<script type="text/javascript">
+	(function($){
 
-		</style>
-
-		<script type="text/javascript">
-		(function($){
-
-		})(jQuery);
-		</script>
-		<?php
+	})(jQuery);
+</script><?php
 	}
 
 	add_action('acf/input/admin_head', 'my_acf_admin_head');
