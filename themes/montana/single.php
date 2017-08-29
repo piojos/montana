@@ -1,12 +1,5 @@
 <?php
 
-	// filter
-	function my_posts_where( $where ) {
-		$where = str_replace("meta_key = 'range_date_picker_%", "meta_key LIKE 'range_date_picker_%", $where);
-		return $where;
-	}
-	add_filter('posts_where', 'my_posts_where');
-
 	get_header();
 	if(have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -118,61 +111,7 @@
 			</div><?php
 		}
 
-
-
-
-		// More...
-		if(is_singular('colecciones')) {
-			$args = array(
-				'post_type' => get_post_type(),
-				'posts_per_page' => 8,
-				'orderby' => 'rand',
-			);
-		} else {
-			$wd0 = date("Ymd", strtotime('today'));
-			$wd1 = date("Ymd", strtotime('+1 day'));
-			$wd2 = date("Ymd", strtotime('+2 day'));
-			$wd3 = date("Ymd", strtotime('+3 day'));
-			$wd4 = date("Ymd", strtotime('+4 day'));
-			$wd5 = date("Ymd", strtotime('+5 day'));
-			$wd6 = date("Ymd", strtotime('+6 day'));
-			$wd7 = date("Ymd", strtotime('+7 day'));
-
-			$args = array(
-				'post_type' => get_post_type(),
-				'posts_per_page' => 8,
-				// 'post__not_in' => $exclude_ftd_post,
-				'meta_query' => array(
-					'relation' => 'OR',
-					array('key' => 'everyday', 'value' => $wd0, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd3, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd4, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd5, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd6, 'compare' => 'LIKE',),
-					array('key' => 'everyday', 'value' => $wd7, 'compare' => 'LIKE',),
-					array(
-						'key'		=> 'range_date_picker_%_start_day',
-						'compare'	=> '<=',
-						'value'		=> $wd0,
-					),
-					array(
-						'key'		=> 'range_date_picker_%_end_day',
-						'compare'	=> '>=',
-						'value'		=> $wd7,
-					)
-				),
-				// 'orderby' => 'rand',
-			);
-		}
-
-		if($args) { ?>
-			<div class="area max_wrap">
-				<h2 class="area_title">Más en <?php echo get_post_type(); ?></h2>
-				<?php slider_deck($args, 'fours'); ?>
-			</div><?php
-		} ?>
+		get_template_part('inc/single', 'more'); ?>
 
 	</div>
 </section>
