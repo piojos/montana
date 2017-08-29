@@ -20,17 +20,36 @@
 			$pt = get_post_type( $post->ID );
 			$sl_ops = get_field('slider_options');
 			$diff_img = get_field('home_img');
+
+			$tempid = $post->post_name;
+			$tab_size = get_field('img_tablet');
+			$mob_size = get_field('img_mobile');
+
 			if(!empty($diff_img)) { $ftd_img = wp_get_attachment_url($diff_img); }
 			else { $ftd_img = get_the_post_thumbnail_url('huge');} ?>
 			<div class="slide">
 				<a href="<?php the_permalink(); ?>">
-					<div class="bg_img <?php if($sl_ops && in_array('blur_img', $sl_ops)) echo 'blur'; ?>" style="background-image:url(<?php
+					<div id="<?php echo $tempid; ?>" class="bg_img <?php if($sl_ops && in_array('blur_img', $sl_ops)) echo 'blur'; ?>" style="background-image:url(<?php
 					if(!empty($diff_img)) { echo wp_get_attachment_url($diff_img); }
 					else { the_post_thumbnail_url('huge'); }
 					 ?>);"></div>
 				</a>
-				<div class="max_wrap"><?php
 
+				<?php
+					if($tab_size || $mob_size) {
+						$gen_style = '<style>';
+						if($tab_size) {
+							$gen_style .= '@media screen and (max-width: 60em) { #'.$tempid.'.bg_img { background-image:url('.$tab_size['url'].') !important; } }';
+						}
+						if($mob_size) {
+							$gen_style .= '@media screen and (max-width: 40em) { #'.$tempid.'.bg_img { background-image:url('.$mob_size['url'].') !important; } }';
+						}
+						$gen_style .= '</style>';
+					}
+					echo $gen_style;
+					?>
+
+				<div class="max_wrap"><?php
 					if($sl_ops && in_array('show_box', $sl_ops)) { ?>
 					<div class="details box">
 						<a href="<?php the_permalink(); ?>">
