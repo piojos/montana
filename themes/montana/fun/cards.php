@@ -16,9 +16,12 @@
 			}
 		}
 		$string = '<p class="moviemeta">';
-		$string .= '<strong>'.$mYear;
-		if($mCountry) $string .= ' '.$mCountry;
-		$string .= '. '.$mDirector.'</strong><br>';
+		if($mCountry || $mYear || $mDirector) {
+			$string .= '<strong>'.$mYear;
+			if($mCountry) $string .= ' '.$mCountry;
+			if($mDirector) $string .= '. '.$mDirector;
+			$string .= '</strong><br>';
+		}
 		if($mGenre) $string .= $mGenre['label'].' <span>•</span> ';
 		if($mLength) $string .= $mLength.' <span>•</span> ';
 		$string .= $mRating['label'].'<br>';
