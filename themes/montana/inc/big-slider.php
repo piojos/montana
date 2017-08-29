@@ -20,10 +20,7 @@
 								<?php the_excerpt(); ?>
 							</div>
 						</a>
-						<div class="status_label"><?php
-							// <p><strong>Hasta Marzo 14</strong></p>
-							// <p>Location Taxonomy</p>
-							get_template_part('inc/sharer'); ?>
+						<div class="status_label"><?php get_template_part('inc/sharer'); ?>
 						</div>
 					</div>
 				</div>
