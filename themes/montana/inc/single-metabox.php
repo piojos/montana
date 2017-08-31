@@ -21,7 +21,7 @@
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
 		$finalCost = '<strong>Entrada gratuita</strong> ';
-	} elseif($costOptions) {
+	} else {
 		$finalCost = '<strong>$'.get_field('cost').'</strong> ';
 	}
 	if(get_field('cost_message')) {
@@ -115,10 +115,12 @@
 		<dd><?php echo $presentor; ?></dd><?php
 	}
 
-
-	if($finalCost) { ?>
-		<dt class="label">Costo</dt>
-		<dd><?php echo $finalCost; ?></dd><?php
+	if(is_singular('convocatorias')) {}
+	else {
+		if($finalCost) { ?>
+			<dt class="label">Costo</dt>
+			<dd><?php echo $finalCost; ?></dd><?php
+		}
 	}
 
 
