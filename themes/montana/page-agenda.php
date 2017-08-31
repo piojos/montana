@@ -6,6 +6,13 @@
 
 // First(Empty) Query ( .../eventos )
 	$today = current_time('Ymd');
+	$wd1 = $today + 1;
+	$wd2 = $wd1 + 1;
+	$wd3 = $wd2 + 1;
+	$wd4 = $wd3 + 1;
+	$wd5 = $wd4 + 1;
+	$wd6 = $wd5 + 1;
+	$wd7 = $wd6 + 1;
 	$todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
 
 	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
@@ -101,7 +108,19 @@
 
 		$args = array(
 			'post_type' => 'agenda',
-			'posts_per_page' => 8
+			'posts_per_page' => -1,
+			'meta_query' => array(
+				'relation' => 'OR',
+				array('key' => 'everyday', 'value' => $today, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd1, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd2, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd3, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd4, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd5, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd6, 'compare' => 'LIKE',),
+				array('key' => 'everyday', 'value' => $wd7, 'compare' => 'LIKE',)
+			),
+			'orderby' => 'rand',
 		); ?>
 		<div class="area explore">
 			<div class="max_wrap">
