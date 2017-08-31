@@ -120,7 +120,7 @@
 					$string = rtrim(implode(', ', $days), ',');
 				} else {
 					$lastDay = end($days);
-					$string = 'Hasta '.$dayCount;
+					$string = 'Hasta '.$lastDay;
 					// $firstDay = $days[1]; WRONG: debe ser next date
 					// $string = $firstDay.' </strong>('.$dayCount.' eventos más)<strong>'; // Anounces following dates
 				}
