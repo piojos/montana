@@ -10,6 +10,20 @@ Author URI: http://raidho.mx
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+// Route para Agenda
+add_action( 'rest_api_init', 'jf_register_api_hooks' );
+function jf_register_api_hooks() {
+	register_rest_route( 'masconarte/v1', '/current_agenda/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_current_agenda',
+	) );
+}
+function jf_get_current_agenda() {
+	$currentAgenda = get_field('monthly_agenda', 'options');
+	$all_post_ids = array('url' => $currentAgenda);
+	return $all_post_ids;
+}
+
 // Get dates array
 	function jf_datesSchedule_array() {
 		$format = 'Y-m-d H:i:s';
