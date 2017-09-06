@@ -60,6 +60,12 @@
 			),
 			'orderby' => 'rand',
 		);
+	} elseif(is_singular('post')) {
+		$more_title = 'Más Noticias';
+		$args = array(
+			'post_type' => get_post_type(),
+			'posts_per_page' => 8
+		);
 	} else {
 		$args = array(
 			'post_type' => get_post_type(),

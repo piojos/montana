@@ -95,6 +95,8 @@
 			$string = '<p><strong>'. mta_next_movie('F j') .'</strong></p>';
 			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
 			$string .= '<br>'.movie_meta();
+		} elseif(get_post_type() == 'post') {
+			$string = '<p style="text-transform: capitalize;"><strong>'.get_the_date('F j ').'</strong> '.get_the_date('Y').'</p>';
 		} else {
 			$placeTerm = get_place();
 			$string = '<p>'.schedule_hours().'</p>';
