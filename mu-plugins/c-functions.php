@@ -15,15 +15,14 @@
 /*
  *	Hide Menu OPTS
  */
-	function hide_menu() {
-		global $current_user;
-		$user_id = get_current_user_id();
-		if($user_id != '1') {
-			remove_menu_page( 'edit-comments.php' );          	//Comments
-		}
-	}
-
-	add_action('admin_head', 'hide_menu');
+	// function hide_menu() {
+	// 	global $current_user;
+	// 	$user_id = get_current_user_id();
+	// 	if($user_id != '1') {
+	// 		remove_menu_page( 'edit-comments.php' );          	//Comments
+	// 	}
+	// }
+	// add_action('admin_head', 'hide_menu');
 
 	// Remove Customize from admin bar
 	function montana_edit_admin_bar() {
