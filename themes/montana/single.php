@@ -83,7 +83,12 @@
 					<?php the_content(); ?>
 				</div><?php
 			}
-			get_template_part('inc/widgets'); ?>
+			get_template_part('inc/widgets');
+
+			// Test comments
+			if(get_current_user_id() == 1) {
+				comments_template();
+			} ?>
 		</div><?php
 		}
 
@@ -110,6 +115,7 @@
 				</div>
 			</div><?php
 		}
+
 
 		get_template_part('inc/single', 'more'); ?>
 
