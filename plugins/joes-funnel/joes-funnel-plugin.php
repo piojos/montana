@@ -280,3 +280,10 @@ function joe_return_expos_talleres( $object, $field_name, $request ) {
 
 	return $keyval;
 }
+
+
+// Allow comments from POST
+function filter_rest_allow_anonymous_comments() {
+	return true;
+}
+add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
