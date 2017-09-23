@@ -141,6 +141,12 @@ function joe_return_basics( $object, $field_name, $request ) {
 	// id
 	$keyval = array('id' => $object['id']);
 
+	// Order day
+	$order_day = $object['j_custom']['order_day'];
+	if($order_day) {
+		$keyval['order_num'] = $order_day;
+	}
+
 	// title
 	$title = strip_tags( html_entity_decode( $object['title']['rendered'] ) );
 	$keyval['title'] = $title;
