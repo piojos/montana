@@ -50,7 +50,7 @@
 		// NOTES: add if $field else ⬇
 		$chosenOne = get_field('dates_options');
 		$status = $chosenOne;
-		if(!empty($chosenOne)) {$status = 'field: ok';} else {$status = 'field: ERROR';}
+		if(!empty($chosenOne)) {$status = 'field: '.$chosenOne;} else {$status = 'field: ERROR';}
 
 		if($chosenOne == 'dates') {
 
@@ -74,18 +74,22 @@
 				$startDate = get_sub_field('start_day');
 				$endDate = get_sub_field('end_day');
 				$weekdays = get_sub_field('weekdays');
+				$wdString = implode(', ', $weekdays);
 			}}
 
+			$status .= '[ start: '.$startDate.'. end: '.$endDate.'. wdays: '.$wdString.' ]';
 			// loop per selected weekday
 			if($weekdays) {
-				foreach($weekdays as $row) {
-					for($i = strtotime($row, strtotime($startDate)); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
+				$days = array();
+				foreach($weekdays as $day) {
+					// $days[] = $day;
+					for($i = strtotime($row, $startDate); $i <= strtotime($endDate); $i = strtotime('+1 week', $i)) {
 						$days[] = current_time('Ymd', $i);
 					}
 				}
 			}
 
-			$status .= $days;
+			$status .= implode(', ', $days);
 			$result = $days;
 
 		} else {
