@@ -489,57 +489,59 @@
 
 
 
+/*
+ * API Request in order
+ */
+	/* Add meta_key + meta_value_num to API */
+	add_filter('rest_endpoints', function ($routes) {
 
+		// I'm modifying multiple types here, you won't need the loop if you're just doing posts
+		foreach (['agenda', 'cineteca', 'exposiciones', 'talleres'] as $type) {
+			if (!($route =& $routes['/wp/v2/' . $type])) {
+				continue;
+			}
 
+			// Allow ordering by my meta value
+			$route[0]['args']['orderby']['enum'][] = 'meta_value_num';
 
+			// Allow only the meta keys that I want
+			$route[0]['args']['meta_key'] = array(
+				'description'       => 'The meta key to query.',
+				'type'              => 'string',
+				'enum'              => ['order_day'],
+				'validate_callback' => 'rest_validate_request_arg',
+			);
+		}
+		return $routes;
+	});
 
-	/**
-	 * Grab latest post title by an author!
-	 *
-	 * @param array $data Options for the function.
-	 * @return string|null Post title for the latest,  * or null if none.
-	 */
-	// function my_awesome_func( $data ) {
-	// 	$posts = get_posts( array(
-	// 		'author' => $data['id'],
-	// 	) );
-	//
-	// 	if ( empty( $posts ) ) {
-	// 		return null;
-	// 	}
-	//
-	// 	return $posts[0]->post_title;
-	// }
-	//
-	//
-	// add_action( 'rest_api_init', function () {
-	// 	register_rest_route( 'fun/v1', '/cine/(?P<id>\d+)', array(
-	// 		'methods' => 'GET',
-	// 		'callback' => 'cine',
-	// 	) );
-	// } );
-	//
-	// function my_awesome_func( WP_REST_Request $request ) {
-	// 	// You can access parameters via direct array access on the object:
-	// 	$param = $request['some_param'];
-	//
-	// 	// Or via the helper method:
-	// 	$param = $request->get_param( 'some_param' );
-	//
-	// 	// You can get the combined, merged set of parameters:
-	// 	$parameters = $request->get_params();
-	//
-	// 	// The individual sets of parameters are also available, if needed:
-	// 	$parameters = $request->get_url_params();
-	// 	$parameters = $request->get_query_params();
-	// 	$parameters = $request->get_body_params();
-	// 	$parameters = $request->get_json_params();
-	// 	$parameters = $request->get_default_params();
-	//
-	// 	// Uploads aren't merged in, but can be accessed separately:
-	// 	$parameters = $request->get_file_params();
-	// }
+	add_filter('rest_agenda_query', function ($args, $request) {
+		if ($key = $request->get_param('meta_key')) {
+			$args['meta_key'] = $key;
+		}
+		return $args;
+	}, 10, 2);
 
+	add_filter('rest_cineteca_query', function ($args, $request) {
+		if ($key = $request->get_param('meta_key')) {
+			$args['meta_key'] = $key;
+		}
+		return $args;
+	}, 10, 2);
+
+	add_filter('rest_exposiciones_query', function ($args, $request) {
+		if ($key = $request->get_param('meta_key')) {
+			$args['meta_key'] = $key;
+		}
+		return $args;
+	}, 10, 2);
+
+	add_filter('rest_talleres_query', function ($args, $request) {
+		if ($key = $request->get_param('meta_key')) {
+			$args['meta_key'] = $key;
+		}
+		return $args;
+	}, 10, 2);
 
 
 
