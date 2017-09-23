@@ -126,11 +126,11 @@
 // SETUP : Rules for ACF
 	function my_acf_admin_head() { ?>
 <style type="text/css">
-	.acf-field.disabled input { opacity: .1; cursor: not-allowed;}
+	.acf-field.disabled input { opacity: .5; cursor: not-allowed;}
 </style>
 <script type="text/javascript">
 	(function($){
-
+		$('.acf-field.disabled input[type="text"]').prop('disabled', true);
 	})(jQuery);
 </script><?php
 	}
@@ -160,24 +160,249 @@
 	function everydayGen() {
 		$post_type = get_post_type($post_id);
 		if ($post_type == 'agenda') {
-			$result = schedule_days_array();
+			$selDateInput = get_field('dates_options');
+			if($selDateInput == 'dates') {
+				$allDays = schedule_days_array();
+				$result = $allDays;
+			} elseif($selDateInput == 'range') {
+				$rDates = array();
+				if(have_rows('range_date_picker')){ while (have_rows('range_date_picker')) { the_row();
+					$rDates[] = get_sub_field('start_day');
+					$rDates[] = get_sub_field('end_day');
+				}}
+				$result = $rDates;
+			} else {
+				$result = 'Error';
+			}
 		} elseif ($post_type == 'cineteca') {
 			$result = movieDays_array();
 		} else {}
 		return $result;
 	}
 
-	function my_acf_save_post( $post_id ) {
-		$value = get_field('everyday');
-		update_field('everyday', everydayGen());
+	function get_range_start_day() {
+		if(have_rows('range_date_picker')){ while (have_rows('range_date_picker')) { the_row();
+			$startDate = get_sub_field('start_day');
+		}}
+		return $startDate;
 	}
 
-	add_action('acf/save_post', 'my_acf_save_post', 20);
+// Get dates array
+	function montana_jf_dates_firstSchedule() {
+		$format = 'YmdHi';
+		$sched_array = movieSchedule_array();
+
+		$rows = get_field('dates_picker'); // get all the rows
+		$first_row = $rows[0]; // get the first row
+		$stday = $first_row['day']; // get the sub field value
+
+		$second_row = $first_row['schedules'];
+		$first_hour = $second_row[0]; // get the sub field value
+		$sthour = $first_hour['hour']; // get the sub field value
+		$strHour = date('H:i', strtotime($sthour)); // Turn to hour
+
+		$stDate = date_i18n($format, strtotime($stday.$strHour));
+
+		return $stDate;
+	}
+
+
+// Get range
+	function montana_jf_range_firstSchedule($object) {
+		$format = 'YmdHi';
+
+		$d_rows = get_field('range_date_picker'); // get all the rows
+		$d_first_row = $d_rows[0]; // get the first row
+		$stday = $d_first_row['start_day']; // get the sub field value
+
+		$h_rows = get_field('schedules'); // get all the rows
+		$h_first_row = $h_rows[0]; // get the first row
+		$sthour = $h_first_row['hour']; // get the sub field value
+		$strHour = date('H:i', strtotime($sthour)); // Turn to hour
+
+		$stDate = date_i18n($format, strtotime($stday.$strHour));
+
+		return $stDate;
+	}
+
+// Get range for Expos & Talleres
+	function montana_jf_exporange_firstSchedule($object) {
+		$format = 'YmdHi';
+
+		$d_rows = get_field('range_date_picker'); // get all the rows
+		$d_first_row = $d_rows[0]; // get the first row
+		$stday = $d_first_row['start_day']; // get the sub field value
+
+		$h_rows = get_field('schedules'); // get all the rows
+		$h_first_row = $h_rows[0]; // get the first row
+		$sthour = $h_first_row['hour-start']; // get the sub field value
+		$strHour = date('H:i', strtotime($sthour)); // Turn to hour
+
+		$stDate = date_i18n($format, strtotime($stday.$strHour));
+
+		return $stDate;
+	}
+
+
+	function orderDayGen() {
+		$post_type = get_post_type($post_id);
+		if ($post_type == 'agenda') {
+			$selDateInput = get_field('dates_options');
+			if($selDateInput == 'dates') {
+				$result = montana_jf_dates_firstSchedule();
+			} elseif($selDateInput == 'range') {
+				$result = montana_jf_range_firstSchedule();
+			} else {
+				$result = 'Error';
+			}
+		} elseif ($post_type == 'cineteca') {
+			$result = montana_jf_dates_firstSchedule();
+		} else {
+			$result = montana_jf_exporange_firstSchedule();
+		}
+		return $result;
+	}
+
+	function montana_acf_save_post( $post_id ) {
+		$value = get_field('everyday');
+		update_field('everyday', everydayGen());
+		$valueOrd = get_field('order_day');
+		update_field('order_day', orderDayGen());
+	}
+
+	add_action('acf/save_post', 'montana_acf_save_post', 20);
+
+
+/*
+ *	Sortable Order column
+ */
+// Agenda
+	function montana_agenda_modify_columns( $columns ) {
+		$new_columns = array(
+			'order_day' => __( 'Orden Monitor', 'montana' ),
+		);
+		$filtered_columns = array_merge( $columns, $new_columns );
+		return $filtered_columns;
+	}
+	add_filter('manage_agenda_posts_columns' , 'montana_agenda_modify_columns');
+
+	function montana_agenda_custom_column_content( $column ) {
+		global $post;
+		switch ( $column ) {
+			case 'order_day' :
+			$start = get_post_meta( $post->ID, 'order_day', true );
+			echo $start;
+		break;
+		}
+	}
+	add_action( 'manage_agenda_posts_custom_column', 'montana_agenda_custom_column_content' );
+
+	function montana_agenda_custom_columns_sortable( $columns ) {
+		$columns['order_day'] = 'order_day';
+		// unset( $columns['date'] );
+		return $columns;
+	}
+	add_filter( 'manage_edit-agenda_sortable_columns', 'montana_agenda_custom_columns_sortable' );
+
+
+// Cineteca
+	function montana_cineteca_modify_columns( $columns ) {
+		$new_columns = array(
+			'order_day' => __( 'Orden Monitor', 'montana' ),
+		);
+		$filtered_columns = array_merge( $columns, $new_columns );
+		return $filtered_columns;
+	}
+	add_filter('manage_cineteca_posts_columns' , 'montana_cineteca_modify_columns');
+
+	function montana_cineteca_custom_column_content( $column ) {
+		global $post;
+		switch ( $column ) {
+			case 'order_day' :
+			$start = get_post_meta( $post->ID, 'order_day', true );
+			echo $start;
+		break;
+		}
+	}
+	add_action( 'manage_cineteca_posts_custom_column', 'montana_cineteca_custom_column_content' );
+
+	function montana_cineteca_custom_columns_sortable( $columns ) {
+		$columns['order_day'] = 'order_day';
+		// unset( $columns['date'] );
+		return $columns;
+	}
+	add_filter( 'manage_edit-cineteca_sortable_columns', 'montana_cineteca_custom_columns_sortable' );
+
+
+// exposiciones
+function montana_exposiciones_modify_columns( $columns ) {
+	$new_columns = array(
+		'order_day' => __( 'Orden Monitor', 'montana' ),
+	);
+	$filtered_columns = array_merge( $columns, $new_columns );
+	return $filtered_columns;
+}
+add_filter('manage_exposiciones_posts_columns' , 'montana_exposiciones_modify_columns');
+
+function montana_exposiciones_custom_column_content( $column ) {
+	global $post;
+	switch ( $column ) {
+		case 'order_day' :
+		$start = get_post_meta( $post->ID, 'order_day', true );
+		echo $start;
+	break;
+	}
+}
+add_action( 'manage_exposiciones_posts_custom_column', 'montana_exposiciones_custom_column_content' );
+
+function montana_exposiciones_custom_columns_sortable( $columns ) {
+	$columns['order_day'] = 'order_day';
+	// unset( $columns['date'] );
+	return $columns;
+}
+add_filter( 'manage_edit-exposiciones_sortable_columns', 'montana_exposiciones_custom_columns_sortable' );
+
+// Talleres
+	function montana_talleres_modify_columns( $columns ) {
+		$new_columns = array(
+			'order_day' => __( 'Orden Monitor', 'montana' ),
+		);
+		$filtered_columns = array_merge( $columns, $new_columns );
+		return $filtered_columns;
+	}
+	add_filter('manage_talleres_posts_columns' , 'montana_talleres_modify_columns');
+
+	function montana_talleres_custom_column_content( $column ) {
+		global $post;
+		switch ( $column ) {
+			case 'order_day' :
+			$start = get_post_meta( $post->ID, 'order_day', true );
+			echo $start;
+		break;
+		}
+	}
+	add_action( 'manage_talleres_posts_custom_column', 'montana_talleres_custom_column_content' );
+
+	function montana_talleres_custom_columns_sortable( $columns ) {
+		$columns['order_day'] = 'order_day';
+		// unset( $columns['date'] );
+		return $columns;
+	}
+	add_filter( 'manage_edit-talleres_sortable_columns', 'montana_talleres_custom_columns_sortable' );
 
 
 
 
 
+// Ordenar por meta_value_num
+	function montana_customer_post_order ($query) {
+		if( $query->is_home() && $query->is_main_query() ) {
+			$query->set('meta_key', 'order_day');
+			$query->set('orderby', 'meta_value_num');
+			$query->set('order', 'DESC');
+		}
+	}
+	add_action('pre_get_posts', 'montana_customer_post_order');
 
 
 
