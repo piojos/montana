@@ -61,6 +61,8 @@
 		$contactTerm .= $place_tel;
 	} elseif($contact_text) {
 		$contactTerm = '<div style="font-size:.9em;">'. $contact_text.'</div>';
+	} else {
+		$contactTerm = false;
 	}
 
 	// CallToAction button: Tickets
