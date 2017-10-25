@@ -288,6 +288,48 @@ function joe_return_expos_talleres( $object, $field_name, $request ) {
 }
 
 
+
+
+
+// Comments & Ratings
+
+add_action( 'rest_api_init', 'myplugin_add_karma' );
+function myplugin_add_karma() {
+	register_rest_field( 'comment', 'rating', array(
+		'get_callback' => function( $comment_arr ) {
+		$comment_obj = get_comment( $comment_arr['id'] );
+		return (int) $comment_obj->comment_karma;
+		},
+		'update_callback' => function( $karma, $comment_obj ) {
+		$ret = wp_update_comment( array(
+		'comment_ID'    => $comment_obj->comment_ID,
+		'comment_karma' => $karma
+		) );
+		if ( false === $ret ) {
+			return new WP_Error(
+				'rest_comment_karma_failed',
+				__( 'Failed to update comment karma.' ),
+				array( 'status' => 500 )
+			);
+		}
+			return true;
+		},
+		'schema' => array(
+			'description' => __( 'Comment karma.' ),
+			'type'        => 'integer'
+		),
+	) );
+}
+
+
+
+
+
+
+
+
+
+
 // Allow comments from POST
 function filter_rest_allow_anonymous_comments() {
 	return true;
