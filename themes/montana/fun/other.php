@@ -164,7 +164,7 @@
 
 
 
-	function createRangeWeekdays($weekdays = '') {
+	function createRangeWeekdays($weekdays = false) {
 		if($weekdays) {
 			$wdString = implode(", ", $weekdays);
 			$codex = array("mon", "tue", "wed", "thu", "fri", "sat", "sun");
@@ -181,8 +181,7 @@
  *	MOVIES: Make array from days & hours
  */
 
-	function movieSchedule_array($format) {
-		if(empty($format)) $format = 'Ymd';
+	function movieSchedule_array($format = 'Ymd') {
 		$status = 'online';
 		if(have_rows('dates_picker')){ while (have_rows('dates_picker')) { the_row();
 			$day = date_i18n($format, strtotime(get_sub_field('day')));
@@ -242,6 +241,7 @@
 		if($schedArray) {
 			foreach ($schedArray as $key) {
 				$m = date_i18n('F', strtotime($key[0]));
+				$nm = '';
 				if($m != $nm) $month = ' <strong> de '.ucfirst($m).'</strong>';
 				$niceday = date_i18n('l j', strtotime($key[0]));
 				$string .= prefix_forDay($key[0], '', ', ');
@@ -344,7 +344,7 @@
 *	Generate option list for Select dropdown
 */
 
-	function listSelOptions($term) {
+	function listSelOptions($term = false) {
 		$terms = get_terms( $term );
 		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){ foreach ( $terms as $term ) {
 			$string .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
@@ -402,7 +402,7 @@
 
 
 // List for search results
-	function result_list($query = '', $keyword) {
+	function result_list($query = false, $keyword) {
 		if ( $query->have_posts() ) { ?>
 		<ul><?php
 			while ( $query->have_posts() ) {
@@ -438,7 +438,7 @@
 
 
 	// Cleans out any string
-	function mtn_cleanString($string) {
+	function mtn_cleanString($string = false) {
 		$string = str_replace(' ', '-', $string);
 		return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
 	}
