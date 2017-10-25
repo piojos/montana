@@ -108,7 +108,7 @@
 
 
 
-	function mta_ftdimg($class) {
+	function mta_ftdimg($class = false) {
 		// if(!strpos($class, 'no-image')) {
 			if(strpos($class, 'week_ftd_post')) {
 			} elseif(strpos($class, 'twos')) {
@@ -119,7 +119,7 @@
 		// }
 	}
 
-	function mta_post_thumbnail($class, $size = 'medium') {
+	function mta_post_thumbnail($class = false, $size = 'medium') {
 		$place_id = get_field('location_picker');
 		$taxonomy = get_term_by('id', $place_id, 'lugares');
 		$myterms = get_terms( array( 'lugares' => $taxonomy->slug, 'parent' => 0 ) );
@@ -217,7 +217,7 @@
 
 
 
-	function deck($args, $class = '', $deckClass = '') {
+	function deck($args = false, $class = false, $deckClass = false) {
 
 		$the_query = new WP_Query( $args );
 		if ( $the_query->have_posts() ) { ?>
@@ -232,7 +232,7 @@
 	}
 
 
-	function findIn($haystack = FALSE, $needle = FALSE) {
+	function findIn($haystack = false, $needle = false) {
 		// EXISTS. is exactly OR in array. MISSING: OR in string
 		if($haystack && $needle) {
 			if($haystack == $needle) {
@@ -256,13 +256,13 @@
 	}
 
 
-	function checkOddNum($num){
+	function checkOddNum($num = false){
 		return ($num%2) ? TRUE : FALSE;
 	}
 
 
 
-	function slider_deck($args, $class = '', $deckClass = '', $post_objects = FALSE) {
+	function slider_deck($args = '', $class = '', $deckClass = '', $post_objects = FALSE) {
 		$checkWeek = strpos($deckClass, 'this_week');
 		$checkFtd = strpos($deckClass, 'has_ftd_post');
 		if($checkWeek !== FALSE) { $isThisWeek = TRUE; } // Valid for Home: .area.this_week
@@ -320,7 +320,7 @@
 
 
 
-	function getClassofQuery($args) {
+	function getClassofQuery($args = false) {
 		// if WP LOOP
 		// $custom_posts = new WP_Query($args);
 		// $count = $custom_posts->post_count;
