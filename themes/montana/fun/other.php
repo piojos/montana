@@ -293,36 +293,30 @@
 		$schedArray = movieSchedule_array('Ymd');
 		if($day == false) $day = current_time('Ymd');
 		if(have_rows('range_date_picker')) {
-			$string = implode('', $schedArray[0][1]);
+			$string = implode(', ', $schedArray[0][1]);
 		} elseif($schedArray) {
-			$new = array_filter($schedArray, function ($var) use($day) {
-				return ($var[0] >= $day);
-			});
-			$new = array_values($new);
 
-			if($new) {
-				foreach ($new[0] as $key) {
-					$gethours[1] = $key;
-				}
-			}
-
-			if(is_array($gethours[1])){
-				if($plain == true) {
-					$hours .= implode(", ", $gethours[1]);
-
-				} else {
-					$hours = '<ul class="moviehours">';
-					foreach ($gethours[1] as $hour) {
-						$hours .= '<li>'.$hour.'</li>';
+			// 1 Look for $day
+			$days_e = array();
+			if($day) {
+				foreach ($schedArray as $key => $val) {
+					if($val[0] == $day) {
+						$days_e[] = $val[1];
+					} elseif($val[0] >= $day) {
+						$new[] = $val[1];
 					}
-					$hours .= '</ul>';
 				}
-				$string = $hours;
 			}
+			$days_sep = implode(', ', $days_e[0]);
+			$string = $days_sep;
+
 		} else {
 			$string = 'error.';
 		}
-		// print_r($new);
+
+		// DEBUG
+
+		// RETURN
 		return $string;
 	}
 
@@ -402,12 +396,14 @@
 
 
 // List for search results
-	function result_list($query = false, $keyword) {
+	function result_list($query = false, $keyword = false, $day = false) {
+		echo $day.': day';
+		echo 'query : '. $query;
 		if ( $query->have_posts() ) { ?>
 		<ul><?php
 			while ( $query->have_posts() ) {
 				$query->the_post();
-				list_card();
+				list_card($day);
 			} ?>
 		</ul><?php
 		} else { ?>
