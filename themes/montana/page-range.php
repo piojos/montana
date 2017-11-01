@@ -5,11 +5,11 @@
 
 
 	// filter
-	function my_posts_where( $where ) {
-		$where = str_replace("meta_key = 'range_date_picker_%", "meta_key LIKE 'range_date_picker_%", $where);
-		return $where;
-	}
-	add_filter('posts_where', 'my_posts_where');
+	// function my_posts_where( $where ) {
+	// 	$where = str_replace("meta_key = 'range_date_picker_%", "meta_key LIKE 'range_date_picker_%", $where);
+	// 	return $where;
+	// }
+	// add_filter('posts_where', 'my_posts_where');
 
 
 // First(Empty)
@@ -27,14 +27,14 @@
 	$args = array(
 		'post_type' => $post_slug,
 		'meta_query' => array(
-			'relation'		=> 'AND',
+			// 'relation'		=> 'OR',
 			array(
-				'key'		=> 'range_date_picker_%_start_day',
+				'key'		=> 'range_date_picker_0_start_day',
 				'compare'	=> '<=',
 				'value'		=> $queryDay,
 			),
 			array(
-				'key'		=> 'range_date_picker_%_end_day',
+				'key'		=> 'range_date_picker_0_end_day',
 				'compare'	=> '>=',
 				'value'		=> $queryDay,
 			)
@@ -66,7 +66,27 @@
 
 			<div id="result_area" class="ag_results">
 				<div class="internal">
-					<?php result_list($query, get_the_title()); ?>
+					<?php // result_list($query, get_the_title(), $queryDay);
+
+					if ( $query->have_posts() ) { ?>
+					<ul><?php
+						while ( $query->have_posts() ) {
+							$query->the_post();
+							list_card($day);
+						} ?>
+					</ul><?php
+					} else { ?>
+						<ul>
+							<li>
+								<div class="max_wrap">
+									<div class="no-events">
+										<h2>No hay <?php echo get_the_title(); ?> en esta fecha.</h2>
+									</div>
+								</div>
+							</li>
+						</ul><?php
+					}
+					wp_reset_query(); ?>
 				</div>
 			</div>
 		</div>

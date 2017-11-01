@@ -173,15 +173,15 @@
 								echo movieHoursClosestday($day, true);
 							}
 						} elseif($pt == 'cineteca') {
-							echo movieHoursClosestday(false, true);
+							echo movieHoursClosestday($day, true);
 						} else {
 							if($date_ops == 'dates') {
-								echo movieHoursClosestday(false, true);
+								echo movieHoursClosestday($day, true);
 							} else {
 								echo schedule_hours();
 							}
 						}
-					} elseif( $pt == 'exposiciones' || $pt == 'convocatorias' || $pt == 'talleres') {
+					} elseif( $pt == 'exposiciones' ) {
 						if($pt != 'convocatorias') {
 							$lc_sched = schedule_hours();
 							if(!empty($lc_sched)) echo $lc_sched.' <br>';
@@ -190,6 +190,23 @@
 							while(have_rows('range_date_picker')){
 								the_row();
 								echo 'Hasta '.date_i18n( 'F j', strtotime( get_sub_field('end_day') ) ).'.';
+							}
+						}
+					} elseif( $pt == 'talleres' || $pt == 'convocatorias' ) {
+						if($pt != 'convocatorias') {
+							$lc_sched = schedule_hours();
+							if(!empty($lc_sched)) echo $lc_sched.' <br>';
+						}
+						if(have_rows('range_date_picker')) {
+							while(have_rows('range_date_picker')){
+								the_row();
+								if(get_sub_field('start_day') == get_sub_field('end_day')) {
+									$fromto = '<span style="text-transform: capitalize;">'.date_i18n( 'F j', strtotime( get_sub_field('start_day') ) ).'</span>';
+								} else {
+									$fromto = date_i18n( 'M j', strtotime( get_sub_field('start_day') ) ).' → ';
+									$fromto .= date_i18n( 'M j', strtotime( get_sub_field('end_day') ) );
+								}
+								echo $fromto;
 							}
 						}
 					} else {}

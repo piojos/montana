@@ -16,14 +16,13 @@
 
 	$args = array(
 		'post_type'		=> 'cineteca',
-		'numberposts'	=> 1,
-		'meta_query' => array (
+		'meta_query'	=> array (
 			array(
 				'key'       => 'everyday',
 				'value'     => $queryDay,
 				'compare'   => 'LIKE',
-			),
-		)
+			)
+		),
 	);
 
 	$query = new WP_Query( $args ); ?>
@@ -75,7 +74,7 @@
 					<ul><?php
 						while ( $query->have_posts() ) {
 							$query->the_post();
-							list_card();
+							list_card($queryDay);
 						} ?>
 					</ul><?php
 					} else { ?>

@@ -25,28 +25,39 @@
 
 	$iArgs = array(
 		'post_type'		=> 'agenda',
-		'numberposts'	=> 1,
-		'meta_key'		=> 'type',
-		'meta_value'	=> 'int',
+		// 'numberposts'	=> 1,
+		'meta_key'		=> 'dates_picker_0_schedules_0_hour',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
 		'meta_query' => array (
+			'relation' => 'AND',
 			array(
 				'key'       => 'everyday',
 				'value'     => $queryDay,
 				'compare'   => 'LIKE',
+			),
+			array(
+				'key'       => 'type',
+				'value'     => 'int',
 			),
 		),
 	);
 
 	$eArgs = array(
 		'post_type'		=> 'agenda',
-		'numberposts'	=> 1,
-		'meta_key'		=> 'type',
-		'meta_value'	=> 'ext',
+		'meta_key'		=> 'dates_picker_0_schedules_0_hour',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
 		'meta_query' => array (
+			'relation' => 'AND',
 			array(
 				'key'       => 'everyday',
 				'value'     => $queryDay,
 				'compare'   => 'LIKE',
+			),
+			array(
+				'key'       => 'type',
+				'value'     => 'ext',
 			),
 		),
 	);
@@ -173,7 +184,7 @@
 					<ul><?php
 						while ( $int_query->have_posts() ) {
 							$int_query->the_post();
-							list_card();
+							list_card($queryDay);
 						} ?>
 					</ul><?php
 					} else { ?>
@@ -189,18 +200,19 @@
 						</ul><?php
 					}
 					wp_reset_query(); ?>
-				</div>
-				<div class="external">
-					<h3 class="max_wrap">Eventos Externos</h3><?php
+				</div><?php
 
 					if ( $ext_query->have_posts() ) { ?>
+				<div class="external">
+					<h3 class="max_wrap">Eventos Externos</h3>
 					<ul><?php
 						while ( $ext_query->have_posts() ) {
 							$ext_query->the_post();
-							list_card();
+							list_card($queryDay);
 						} ?>
-					</ul><?php
-					} else { ?>
+					</ul>
+				</div><?php
+				} else { /* ?>
 						<ul>
 							<li>
 								<div class="max_wrap">
@@ -210,10 +222,9 @@
 									</div>
 								</div>
 							</li>
-						</ul><?php
+						</ul><?php */
 					}
 					wp_reset_query(); ?>
-				</div>
 			</div>
 		</div>
 	</section>
