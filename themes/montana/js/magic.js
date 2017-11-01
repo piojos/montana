@@ -169,4 +169,32 @@ jQuery( function($) {
 
 
 
+
+// Arrange by hours
+	$('.ag_results li .schedule p').each(function() {
+		var hoursString = $(this).html();
+		var n = hoursString.indexOf(',');
+		hoursString = hoursString.substring(0, n != -1 ? n : hoursString.length);
+		$(this).closest('li').attr('data-position', $.trim(hoursString));
+	});
+
+	$('.ag_results ul').each(function() {
+		var childLi = $(this).find('li');
+		// var parentUl = $(this).find('ul');
+		// var thisID = $(this).attr('id');
+		console.log('id '+childLi);
+		$(childLi).sort(sort_li).appendTo($(this));
+		function sort_li(a, b) {
+			return ($(b).data('position')) < ($(a).data('position')) ? 1 : -1;
+		}
+	});
+
+	// $(".ag_results li").sort(sort_li).appendTo($(this).parent('ul'));
+	// $(".ag_results li").sort(sort_li).appendTo($(this).closest('ul'));
+	// function sort_li(a, b) {
+	// 	return ($(b).data('position')) < ($(a).data('position')) ? 1 : -1;
+	// }
+
+
+
 });
