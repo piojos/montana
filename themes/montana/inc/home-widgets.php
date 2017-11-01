@@ -98,23 +98,24 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 		} else {
 			$otm_titles = 'En Cartelera';
 			$args = array(
-				'post_type' => 'cineteca',
-				'posts_per_page' => 12,
-				'meta_query' => array(
-					'relation' => 'OR',
+				'post_type'		=> 'cineteca',
+				'meta_query'	=> array (
+					'relation' 	=> 'OR',
 					array(
-						'key'		=> 'dates_picker_%_day',
-						'compare'	=> 'IN',
-						'value'		=> $today,
+						'key'       => 'everyday',
+						'value'     => $wd1,
+						'compare'   => 'LIKE',
 					),
 					array(
-						'key'		=> 'dates_picker_%_day',
-						'compare'	=> 'IN',
-						'value'		=> $wd1,
+						'key'       => 'everyday',
+						'value'     => $today,
+						'compare'   => 'LIKE',
 					)
 				),
-				'orderby' => 'meta_value_num',
-				'order' => 'ASC'
+				'posts_per_page' 	=> 12,
+				'meta_key'		=> 'dates_picker_0_day',
+				'orderby' 		=> 'meta_value_num',
+				'order' 		=> 'ASC'
 			);
 		}
 		$otm_titles = mta_override_title(); ?>
