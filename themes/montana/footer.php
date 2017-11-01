@@ -6,13 +6,27 @@
 					<form class="" action="index.html" method="post">
 						<input type="text" name="" value="" placeholder="Suscríbete a nuestro Newsletter">
 						<input type="submit" name="" value="Enviar">
-					</form>
-					<ul class="sm_tray">
-						<li><a href="#"><svg class="icon facebook"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-facebook"></use></svg></a></li>
-						<li><a href="#"><svg class="icon twitter"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg></a></li>
-						<li><a href="#"><svg class="icon instagram"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-instagram"></use></svg></a></li>
-						<li><a href="#"><svg class="icon youtube-play"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-youtube-play"></use></svg></a></li>
-					</ul>
+					</form><?php
+
+					if( have_rows('social_media', 'options') ): ?>
+					<ul class="sm_tray"><?php
+
+						while ( have_rows('social_media', 'options') ) : the_row();
+
+						$selected = get_sub_field('select_sm'); ?>
+						<li>
+							<a href="<?php the_sub_field('sm_url'); ?>" target="_blank">
+								<svg class="icon <?php echo $selected; ?>">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-<?php echo $selected; ?>"></use>
+								</svg>
+							</a>
+						</li><?php
+
+						endwhile; ?>
+
+					</ul><?php
+					endif; ?>
+
 					<div id="foot_nav">
 						<?php wp_nav_menu( array( 'theme_location' => 'main-menu' ) ); ?>
 					</div>
