@@ -1,0 +1,342 @@
+// Fonts
+
+// +font-face("NewJune", font-files("NewJune-Book.ttf", "truetype"))
+// +font-face("NewJune Bold", font-files("NewJune-Bold.ttf" "truetype"))
+
+
+
+*,
+*:after,
+*:before
+	+box-sizing(border-box)
+	padding: 0
+	margin: 0
+*:focus
+	outline: none
+
+
+html, body
+	font-size: 10px
+	line-height: inherit
+
+body
+	background: $whitegray
+	font-family: $NewJune
+	font-size: 1.4em
+	font-weight: 300
+	color: $black
+	// overflow: scroll
+	// overflow-x: hidden
+
+a
+	color: inherit
+	text-decoration: none
+
+hr
+	position: relative
+	clear: both
+	width: 100%
+	border: none
+	border-top: .1rem solid $gray
+	margin: .5em 0 .75em
+
+.max_wrap
+	max-width: 126rem
+	margin: 0 auto
+	width: 100%
+	// overflow: auto
+a.max_wrap
+	display: block
+
+ol
+	list-style: decimal
+	padding-left: 1.2em
+
+strong
+	font-weight: 700
+
+input, select, button
+	font: inherit
+	+appearance(none)
+	border: .1rem solid
+	border-radius: 0
+	background: $white
+	// min-width: 14em
+	padding: 1em 1em .8em
+
+.debugger
+	width: 100%
+	min-height: 1em
+	background: yellow
+	padding: 1em
+
+::selection
+	background: $whitegray
+	color: $lightgray
+::-moz-selection
+	background: $whitegray
+	color: $lightgray
+
+
+// Header
+
+header
+	background: $black
+	padding: 2em
+	max-width: 126rem
+	position: relative
+	margin: 0 auto
+	overflow: hidden
+	z-index: 1000
+	+transition(height .5s ease)
+	height: 7.5em
+	.navigation
+		display: none
+		float: right
+		width: 100%
+		padding-left: 10.5em
+		padding-right: 4em
+		position: absolute
+		font-weight: bold
+		+font-smoothing()
+		@media screen and (min-width:50em)
+			display: block
+		a
+			color: $gray
+		li
+			display: inline-block
+
+	#site-title
+		float: left
+		&, a
+			display: inline-block
+			line-height: 0
+			position: relative
+			z-index: 100
+		img
+			max-width: 12rem
+
+	#search
+		display: inline-block
+		float: right
+		font-size: .8em
+		text-transform: uppercase
+
+	.submenu
+		display: inline-block
+		font-size: .8em
+		text-transform: uppercase
+		li
+			margin-right: 1.5em
+
+	nav#menu
+		font-size: 1.2em
+		a
+			color: $white
+		ul
+			display: flex
+			justify-content: space-between
+
+	.current-menu-item a
+		color: $orange !important
+	.submenu, nav#menu, a#open_search, form#searchform
+		+transition(opacity .5s)
+	hr
+		+transition(margin-top .5s ease)
+	.active_search
+		.submenu, nav#menu, a#open_search
+			pointer-events: none
+			opacity: 0
+		form#searchform
+			display: block
+			opacity: 1
+		hr
+			margin-top: 2.4em
+
+	@media screen and (max-width:50em)
+		&.open_menu
+			height: 27.5em
+			.navigation
+				display: block
+				padding: 0 2em
+				left: 0
+				top: 8em
+				z-index: -1
+				li
+					line-height: 1.6em
+					display: block
+				.submenu li
+					line-height: 1.8em
+			nav#menu ul
+				display: block
+
+	@media screen and (max-width:30em)
+		form#searchform input#s
+			width: 100%
+			margin: 0em 0 1.5em
+		.active_search form#searchform
+			padding: 0 2.5em
+		.active_search hr
+			margin-top: -5em
+		&.active_search
+			height: 15em
+
+
+
+
+form#searchform
+	position: absolute
+	width: 100%
+	right: 0
+	top: 0em
+	padding: 0 5em 0 13em
+	display: none
+	opacity: 0
+	input#s
+		padding: 0
+		background: none
+		border: none
+		font-size: 1.6em
+		min-width: 20em
+		color: $white
+		width: 60%
+		margin-top: .8em
+	input#searchsubmit
+		background: none
+		color: $white
+		min-width: 7em
+		float: right
+		cursor: pointer
+	a#close_search
+		float: right
+		border: .1rem solid
+		border-radius: 50%
+		width: 1.4em
+		height: 1.4em
+		text-align: center
+		font-size: 1.6em
+		line-height: 1.3em
+		margin-left: 1em
+		margin-top: .3em
+		cursor: pointer
+
+
+
+
+
+
+
+
+a#nav_toggle_button
+	border-top: .25em solid $white
+	border-bottom: .25em solid $white
+	width: 2.5em
+	display: block
+	float: right
+	position: relative
+	padding: .7em 0
+	top: 1em
+	&:before
+		content: ''
+		border-top: .25em solid $white
+		width: 100%
+		display: block
+	@media screen and (min-width:50em)
+		display: none
+
+
+
+
+footer
+	margin-top: 6em
+	.social
+		background-color: $darkgray
+		text-align: center
+		padding-top: 8em
+		background-image: url(../img/logo_conarte.svg)
+		background-size: 12rem
+		background-repeat: no-repeat
+		background-position: center top 3rem
+		form
+			display: inline-block
+		input
+			-webkit-appearance: none
+			padding: 1em
+			height: 3.5em
+			&[type="text"]
+				font-family: $Helvetica
+				min-width: 18em
+				float: left
+			&[type="submit"]
+				min-width: initial
+				border-left: none
+				font-weight: bold
+				padding-top: 1.5rem
+		li
+			display: inline-block
+			margin: 2em 1em
+		@media screen and (min-width: 50em)
+			padding: 2em
+			// overflow: auto
+			form
+				float: left
+			ul.sm_tray
+				display: inline-block
+				float: right
+				padding-top: 1em
+			li
+				margin: 0 1em
+
+	ul.sm_tray svg.icon
+		fill: $white
+	#foot_nav
+		clear: both
+		border-top: .1rem solid $gray
+		position: relative
+		padding-top: 1.4em
+		top: 2em
+		margin-bottom: 2em
+		display: none
+		font-weight: bold
+		+font-smoothing()
+		font-size: 1.2em
+		a
+			color: $white
+		ul
+			display: flex
+			justify-content: space-between
+		@media screen and (min-width: 50em)
+			display: block
+
+
+.sitemap
+	background: $black
+	color: $lightgray
+	padding: 2em
+	text-align: center
+	+font-smoothing()
+	font-weight: bold
+	@media screen and (min-width: 50em)
+		overflow: auto
+	.links, #copyright
+		width: 50%
+		float: left
+		text-align: left
+		font-size: .8em
+		line-height: 1.6em
+	a#logo_nl
+		padding-top: 2em
+		display: block
+		clear: both
+	h3
+		color: $whitegray
+	.legal_note
+		color: #4c4c4c
+	@media screen and (min-width: 50em)
+		.links, #copyright
+			width: 25%
+			margin-left: 1.4em
+		a#logo_nl
+			padding: 1em 1.4em 0 0
+			float: right
+			clear: none

@@ -1,0 +1,579 @@
+// General
+
+.label
+	text-transform: uppercase
+	font-size: .8em
+
+
+
+
+// Home
+
+.big.slider
+	margin-top: -4em
+	.slide .bg_img
+		max-width: 166rem
+		margin: 0 auto
+		&.blur
+			-webkit-filter: blur(1em)
+			filter: blur(1em)
+	.details.box
+		bottom: 6em
+		width: 90%
+		padding: 1.4em
+		h2
+			font-size: 2em
+		// .subtitle
+		// 	font-family: $Helvetica
+		img
+			display: inline-block
+		.event_logo
+			max-width: 100%
+			max-height: 10em
+		.excerpt
+			margin-bottom: 3em
+			max-height: 8.25em
+			overflow: hidden
+		@media screen and (min-width: 30em)
+			width: 75%
+			max-width: 42em
+
+
+
+
+h2.area_title
+	font-size: 2em
+	font-weight: bold
+	margin: .5em 0
+	padding: 0 1.2em .4em
+	&.boxed
+		display: inline-block
+		position: relative
+		top: -1.2em
+		margin-top: -1em
+		background: $white
+		border: .1rem solid $black
+		padding: .6em .8em .5em
+		color: $black
+		font-weight: initial
+
+
+.dropdown
+	position: relative
+	padding: 0 1em
+	top: -3em
+	.label
+		font-size: .6em
+		line-height: 2em
+	.latest.story
+		position: relative
+		z-index: 14
+		&:after
+			content: url(../img/arr_down.svg)
+			border: .2rem solid $white
+			position: absolute
+			right: 2em
+			top: 2.5em
+			+border-radius(50%)
+			width: 2.2rem
+			padding-top: .3rem
+			text-align: center
+			+transition(transform .5s)
+	ul.stories
+		position: relative
+		width: 100%
+		display: block
+		margin-top: -7em
+		margin-bottom: 6em
+		z-index: 13
+		top: 0
+		+transition(top .5s)
+		li
+			position: absolute
+			width: 100%
+			// margin-left: .5%
+			top: 0
+			+transition(all .5s ease)
+			&:nth-child(1)
+				z-index: 5
+			&:nth-child(2)
+				z-index: 4
+			&:nth-child(3)
+				z-index: 3
+			&:nth-child(4)
+				z-index: 2
+			&:nth-child(5)
+				z-index: 1
+	.stories li, .story
+		background: $black
+		border-bottom: .1rem solid $lightgray
+		display: block
+		height: 7em
+		.news_img
+			display: inline-block
+			vertical-align: middle
+			margin-right: 1em
+			height: inherit
+			img
+				height: 72%
+				width: auto
+				margin-top: 10%
+				margin-left: 1em
+			@media screen and (max-width: 40em)
+				width: 0
+				overflow: hidden
+	a
+		color: $white
+		display: inline-block
+		width: 100%
+		height: inherit
+		&.toggle_button
+			position: absolute
+			top: 1.75em
+			right: 1.25em
+			width: 3em
+			height: 3em
+			z-index: 1
+			cursor: pointer
+	.title
+		width: 70%
+		display: inline-block
+		vertical-align: middle
+		+font-smoothing()
+		> div
+			font-size: 1.4em
+	&.open
+		.latest.story:after
+			transform: rotate(180deg)
+		ul.stories
+			top: 7em
+			li
+				width: 100%
+				margin-left: 0
+				&:nth-child(2)
+					top: 7em
+				&:nth-child(3)
+					top: 14em
+				&:nth-child(4)
+					top: 21em
+				&:nth-child(5)
+					top: 28em
+				&:nth-child(6)
+					top: 35em
+				&:hover
+					background: $white
+					a
+						color: $orange
+
+
+.collections
+	.controls
+		background: $white
+		border: 0.1rem solid $black
+		overflow: auto
+		padding: .5em
+		margin: 1em 1em 0 1em
+		ul > li a
+			border: .1rem solid
+			display: inline
+			float: left
+			margin: .5em
+			padding: .7em .75em .5em
+			&.current
+				color: $white
+				background: $black
+				font-weight: bold
+				+font-smoothing()
+	.details_container
+		background: $black
+		color: white
+		margin: 0 1em
+		padding: 1em
+		clear: both
+		overflow: auto
+		display: none
+		position: relative
+	.column
+		padding: 4em 1em 2em
+	&.single .column
+		padding: 2em 1em
+	.info
+		float: left
+		.status_label
+			margin-top: 6em
+			font-size: 1em
+			color: $white
+		.subtitle
+			font-family: $Helvetica
+			margin-top: .2em
+		h1
+			font-size: 3em
+		h1, .subtitle, .status_label
+			+font-smoothing()
+	.gallery
+		float: right
+		img
+			max-width: 100%
+			height: auto
+	@media screen and (min-width: 30em)
+		.info
+			width: 40%
+		.gallery
+			width: 60%
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// SINGLE
+
+.bg_featured_banner
+	position: relative
+	width: 100%
+	height: 85vh
+	min-height: 40em
+	max-height: 60em
+	background-size: cover
+	background-position: center
+	&.no_image
+		min-height: 14em
+		height: 14em
+	@media screen and (min-width: 79em)
+		top: -4em
+
+
+.post_info, .post_meta
+	padding: 1.6em
+	@media screen and (max-width: 50em)
+		height: initial !important
+
+.post_head
+	padding: 0 1em
+	margin-top: -8em
+	margin-bottom: 4em
+	position: relative
+	overflow: auto
+	top: -1em
+	+transition(all .25s ease)
+	&.loading
+		top: 6em
+		opacity: 0
+
+.post_info
+	background: $white
+	border: .1rem solid $black
+	position: relative
+	h1
+		font-size: 2em
+	.label
+		color: $orange
+		margin-bottom: .5em
+	.subtitle
+		font-family: $Helvetica
+		margin: 0.4em 0 2em
+	.status_label
+		margin-top: 2em
+		&.stick
+			position: absolute
+			bottom: 1.5em
+
+.post_meta
+	background: $black
+	color: $white
+	+font-smoothing()
+	dt
+		font-weight: bold
+		color: $gray
+	dd
+		font-family: $Helvetica
+		line-height: 1.4em
+		margin-bottom: 1em
+	a.button
+		border: .1rem solid $white
+		padding-top: .65em
+
+
+.main_content_column img
+	max-width: 100%
+	height: auto
+
+@media screen and (min-width: 50em)
+	.main_content_column
+		width: 55%
+		overflow: auto
+	.post_meta
+		width: 45%
+	.single .post_meta, .single .post_info
+		float: left
+	.page
+		.post_info
+			margin-left: 20%
+		.main_content_column
+			margin-left: 20%
+			width: 60%
+
+.widget
+	padding: 1em
+	h3
+		font-size: 1.2em
+		font-weight: bold
+	iframe
+		width: 100%
+		min-height: 26em
+	ol
+		li
+			border-bottom: .1rem solid rgba(255, 255, 255, 0)
+			&:hover
+				border-bottom: .1rem dotted $lightgray
+		span
+			float: right
+	.body_content
+		font-family: $Helvetica
+		color: $gray
+		padding: 1em 0
+		font-size: 0.9em
+		line-height: 1.6em
+
+
+
+
+
+// Agenda
+
+#agenda
+	.max_wrap
+		padding-left: 1em
+		padding-right: 1em
+	h2.area_title
+		padding: 0 0 .4em
+
+	form
+		margin: 2em 0
+
+	input[type="text"], select
+		width: 17em
+		margin-right: .8em
+		margin-bottom: 1em
+		// @media screen and (max-width:600px)
+		// 	width: 48%
+
+	.input_wrap
+		position: relative
+		display: inline-block
+		&.hoy
+			&:before
+				content: 'HOY'
+				font-family: Helvetica
+				font-weight: bold
+				position: absolute
+				z-index: 1
+				left: 1em
+				top: .85em
+				border-right: .1rem solid
+				padding: 0.1em .4em 0 0
+			input
+				padding-left: 4em
+	input[type="submit"]
+		min-width: 8em
+	input.disabled
+		color: $lightgray
+		pointer-events: none
+	img.loader
+		vertical-align: bottom
+		height: 2em
+		position: relative
+		top: -1.5em
+		left: .5em
+		display: none
+
+
+.ag_results
+	h3
+		font-size: 1.4em
+		font-family: $Helvetica
+		font-weight: normal
+		padding-right: 1em
+		padding-left: 1em
+		span
+			font-family: $NewJune
+			color: $orange
+			font-weight: bold
+			margin-right: .5em
+	.kicker
+		font-family: $Helvetica
+		font-size: .9em
+		color: $gray
+		margin-top: 0.2em
+		width: 80%
+	ul
+		border-top: .1rem solid
+		margin: 1em 0 4em
+		li
+			background: $white
+			padding-right: .4em
+			padding-left: .4em
+			&:hover
+				background: $black
+				color: $white
+				border-top: .1rem solid
+				position: relative
+				top: -.1rem
+			&:last-child
+				border-bottom: 0.1rem solid
+				.max_wrap
+					border: none
+
+		.max_wrap
+			padding-left: 1em
+			border-bottom: .1rem solid $black
+			overflow: auto
+			> div
+				display: inline-block
+				// float: left
+				vertical-align: middle
+				padding: 1.5em 1em 1.4em 0
+				&.schedule
+					width: 22%
+					font-family: $Helvetica
+					font-size: .9em
+					color: $gray
+				&.thumbnail
+					display: none
+					border: .1rem solid
+					padding: 0
+					margin-top: 1.5em
+					margin-bottom: 1.4em
+				&.title, &.location
+					width: 78%
+					float: right
+				@media screen and (min-width: 50em)
+					&.schedule
+						width: 16%
+					&.thumbnail
+						display: inline-block
+						width: 16%
+						min-height: 4em
+					&.location
+						width: 18%
+						float: inherit
+					&.title
+						width: 48%
+						float: inherit
+						padding-left: 1em
+		img
+			display: block
+			width: 100%
+			height: auto
+		h2, .location
+			font-size: 1.2em
+
+
+
+// Calendar
+.ui-widget-header
+	background: transparent
+	border: none
+.ui-corner-all
+	border-radius: 0
+	border-color: $black
+.ui-widget
+	font-family: $Helvetica
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default
+	background: transparent
+	text-align: center
+	border-color: $white
+	border-radius: 50%
+	width: 2em
+	height: 2em
+	padding-top: .35em
+.ui-datepicker
+	width: 15.3em
+	+font-smoothing()
+	.ui-datepicker-title
+		text-transform: uppercase
+		font-size: .9em
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
+	background: transparent
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight
+	border-color: $black !important
+	background-color: $black
+	color: $white
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
+	border-color: $orange
+	background-color: $orange
+	color: $white
+
+
+
+
+.area
+	margin-top: 10vh
+	&.for_today
+		margin-top: 10vh
+	&.conarte_tv
+		margin-top: 10vh
+		padding: 2em 0 4em
+		background: $black
+		color: $white
+	&.special h2.area_title
+		margin-bottom: -1em
+		position: relative
+		top: 1em
+	&.head_blur
+		margin-top: -8em
+		padding-top: 12em
+		padding-bottom: 2em
+		background-image: url(../img/bg_fancy_a.jpg)
+		background-position: top
+		background-size: cover
+		border-bottom: .1rem solid $white
+	&.explore
+		margin-top: 0
+		padding-top: 10vh
+		padding-bottom: 6vh
+		background: $white
+
+
+
+
+
+
+.body_content.format
+	+Helvetica
+	font-size: 1.2em
+	padding-left: 2em
+	padding-right: 2em
+	line-height: 1.6em
+	margin-bottom: 4em
+	h2, h3
+		font-family: $NewJune
+		font-weight: bold
+	h2
+		font-size: 1.4em
+	pre
+		color: $darkgray
+		font-size: .8em
+		margin-top: .2em
+	img
+		max-width: 100%
+		height: auto
+
+
+
+
+
+// 404
+.error404 .area
+	padding: 2em 1em
+	h1
+		font-size: 2em
+		font-weight: bold
+		margin-bottom: 1em

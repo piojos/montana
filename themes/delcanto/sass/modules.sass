@@ -1,0 +1,409 @@
+// General
+
+.label
+	text-transform: uppercase
+	font-size: .8em
+	font-weight: bold
+	+font-smoothing()
+
+.actions_tray
+	text-align: center
+
+a.button
+	display: inline-block
+	background: $black
+	color: $white
+	font-size: 1.2em
+	padding: .5em 1em
+
+
+a.link
+	border-bottom: .1rem solid rgba(180, 180, 180, 0.2)
+	transition: border .2s
+	&:hover
+		border-color: rgba(180, 180, 180, .7)
+
+.body_content a
+	@extend a.link
+
+.post_head
+	dl, p, .excerpt
+		a
+			@extend a.link
+
+
+.fleft
+	float: left
+	margin-right: 1em
+
+.excerpt
+	+Helvetica
+	line-height: 1.6em
+	color: $gray
+	margin-top: 1em
+	img.poster
+		@extend .fleft
+		max-width: 10em
+
+.status_label
+	font-size: .85em
+	font-family: $Helvetica
+	color: $gray
+	letter-spacing: .02em
+	width: 80%
+
+.clear
+	clear: both
+
+.embed-container
+	position: relative
+	padding-bottom: 56.25%
+	height: 0
+	overflow: hidden
+	max-width: 100%
+	height: auto
+	iframe, object, embed
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+
+svg.icon
+	fill: $gray
+	width: 1.6em
+	height: 1.6em
+	&.facebook
+		fill: #3b5998
+	&.twitter
+		fill: #1DA1F2
+
+
+ul.moviehours li
+	display: inline-block
+	&:before
+		content: '•'
+		display: inline-block
+		margin: 0 .8em
+		color: $gray
+	&:first-child:before
+		content: ''
+		margin: 0
+
+a.close
+	position: absolute
+	width: 1.5em
+	height: 1.5em
+	display: block
+	top: 1.5em
+	right: 1em
+	cursor: pointer
+	&:before, &:after
+		content: ''
+		border-top: .3rem solid white
+		width: 100%
+		display: block
+		transform: rotate(45deg)
+		position: absolute
+		top: .65em
+	&:before
+		transform: rotate(-45deg)
+
+
+.embed-container
+	position: relative
+	padding-bottom: 56.25%
+	height: 0
+	overflow: hidden
+	max-width: 100%
+	height: auto
+	iframe, object, embed
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+
+
+nav.pagination
+	text-align: center
+	font-family: $Helvetica
+.page-numbers
+	border: .1rem solid
+	vertical-align: middle
+	display: inline-block
+	width: 2em
+	height: 2em
+	padding-top: .35em
+	margin: 0 0.2em
+	background: $white
+	&.prev, &.next
+		border-radius: 50%
+		padding-top: .2em
+	&.dots
+		border: none
+		background: none
+	&.current
+		background: $orange
+		border-color: $orange
+		color: $white
+
+span
+	&.box
+		border: .1rem solid
+		border-radius: .3em
+		margin: .2em
+		padding: .15em .4em .1em
+		text-align: center
+
+
+
+// Home
+.slider
+	position: relative
+	z-index: 0
+	.slide
+		position: relative
+		height: 85vh
+		min-height: 40em
+		max-height: 60em
+		> img
+			max-width: 100%
+			min-height: 20em
+		.bg_img
+			width: 100%
+			height: 85vh
+			min-height: 40em
+			background-size: cover
+			background-position: center
+			position: relative
+
+
+
+
+.slick-dots
+	position: absolute
+	bottom: 3em
+	margin-left: 2.4em
+	display: block
+	width: 100%
+	max-width: 14em
+	padding: 0
+	li
+		position: relative
+		display: inline-block
+		margin-right: .5em
+		button
+			display: block
+			cursor: pointer
+			color: transparent
+			border: 0
+			outline: none
+			background: transparent
+			min-width: initial
+			padding: 0
+			&:hover:before,
+			&:focus:before
+				opacity: 1
+			&:before
+				width: 1em
+				height: 1em
+				display: block
+				content: ' '
+				background-color: $white
+				border: .1rem solid $black
+				border-radius: 50%
+		&.slick-active button:before
+			background: $orange
+			border: none
+
+
+
+
+.details.box
+	background: $white
+	border: 1px solid
+	display: block
+	min-width: 20em
+	position: absolute
+	margin: 0 1em
+	bottom: 1em
+	padding: 1em
+	min-height: 14em
+	.parent_label
+		position: absolute
+		top: -1em
+		display: inline-block
+		background: $white
+		border: .1rem solid $black
+		font-size: .8em
+		font-weight: bold
+		+font-smoothing()
+		padding: .4em .5em .2em
+		+ellipsis
+		max-width: 80%
+	h2
+		font-size: 1.4em
+		line-height: 1.4em
+	.status_label
+		position: absolute
+		bottom: 1em
+		width: 80%
+		span
+			opacity: .3
+
+.deck
+	overflow: auto
+	.row
+		display: inline-block !important
+		width: 50vw
+		// max-width: 22.5em
+		&.fours
+			width: 50vw
+			max-width: 22.5em
+		&.threes
+			width: 90vw
+			max-width: 30.15em
+			// @media screen and (min-width: 30em)
+			// 	max-width: 31em
+			// 	min-width: inherit
+		&.sixs
+			max-width: 15em
+
+
+
+.card
+	position: relative
+	padding: 1.5rem 1.5rem 1.5rem 3rem
+	// float: left
+	display: inline-block !important
+	vertical-align: bottom
+	float: initial
+	h2
+		margin-top: .2em
+		margin-bottom: 2em
+	&.twos
+		width: 100vw
+		max-width: 45em
+		h2
+			font-size: 2.4em
+		&.no-image .details.box
+			min-height: 16em
+	&.fours
+		width: 50vw
+		max-width: 22.5em
+		h2
+			height: 4.1em
+			overflow: hidden
+		.details.box
+			@media screen and (min-width: 30em)
+				min-height: 18em
+	&.sixs
+		// width: 33.33vw
+		max-width: 15em
+		h2
+			font-size: 1em
+			height: 4em
+			overflow: hidden
+			margin-bottom: 3em
+		img
+			max-height: 6em
+	.status_label p
+		+ellipsis()
+	@media screen and (max-width: 30em)
+		&.fours, &.sixs
+			width: 15em
+		&.fours h2
+			font-size: 1em
+	&.movie
+		h2
+			margin-bottom: 4em
+		.details.box
+			margin-top: 20em
+			@media screen and (min-width: 30em)
+				margin-top: 12em
+		img
+			margin-top: -12em
+			max-height: 27.5em
+		@media screen and (max-width: 30em)
+			width: 20em
+			img
+				margin-top: -20em
+	&.tv
+		min-height: 10em
+		vertical-align: top
+		padding: 1.5rem
+		h3
+			font-weight: bold
+			margin-top: 1em
+		.about
+			font-family: $Helvetica
+			margin-top: .4em
+			color: $gray
+	&.schedule
+		font-family: $Helvetica
+		.details.box
+			min-height: inherit
+		li
+			display: inline-block
+			color: $gray
+			&:before
+				content: '•'
+				margin: 0 .5em
+				color: $lightgray
+			&:nth-child(1):before
+				content: ''
+				margin: 0
+		br
+			content: ''
+			display: block
+			margin-bottom: .5em
+	img
+		width: 100%
+		height: auto
+		display: block
+	.details.box
+		min-height: 14em
+		min-width: inherit
+		width: 100%
+		position: relative
+		margin-left: -1em
+		margin-top: 2em
+		padding: 0
+		.wrap
+			padding: 1em
+		.parent_label
+			top: inherit
+			bottom: -1em
+	.img_container
+		position: relative
+		right: -1em
+		margin-top: -1em
+
+	&.no-image
+		padding-right: 0
+		.details.box
+			min-height: 0
+		.img_container
+			margin-top: 1.5em
+			&.sixs .img_container
+				margin-top: 0
+
+	&.week_ftd_post
+		width: 100%
+		.img_background
+			min-height: 30em
+			width: 100%
+			overflow: hidden
+			position: relative
+			left: -1em
+			img
+				// height: 30em
+				width: auto
+		.details.box
+			position: absolute
+			width: 80%
+			left: 3.4em
+			bottom: 2.4em
+		&.no-image .img_container
+			margin-top: 0
