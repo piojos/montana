@@ -58,168 +58,279 @@ h2.area_title
 		font-weight: initial
 
 
+
+
 .dropdown
 	position: relative
 	padding: 0 1em
 	top: -3em
+	background: $black
+	+font-smoothing()
+	height: 13em
+	margin-bottom: 0
+	overflow: hidden
+	z-index: 1
+	+box-shadow(0 0 2em rgba(0, 0, 0, 0))
+	+transition(height .5s ease, margin .5s ease, box-shadow .5s ease)
+	// +transition(height .5s ease, margin .5s ease, box-shadow .5s ease, transform .5s ease)  -- XTRANIMATION
+	&.open
+		height: 47em
+		margin-bottom: -34em
+		+box-shadow(0 0 3em rgba(0, 0, 0, 0.5))
+		// transform: scale(1.005)  -- XTRANIMATION
+		@media screen and (max-width: 30em)
+			height: 41em
+		.latest.story:after
+			transform: rotate(180deg)
 	.label
-		font-size: .6em
-		line-height: 2em
-	.latest.story
-		position: relative
-		z-index: 14
-		&:after
-			content: url(../img/arr_down.svg)
-			border: .2rem solid $white
-			position: absolute
-			right: 2em
-			top: 2.5em
-			+border-radius(50%)
-			width: 2.2rem
-			padding-top: .3rem
-			text-align: center
-			+transition(transform .5s)
-	ul.stories
-		position: relative
-		width: 100%
-		display: block
-		margin-top: -7em
-		margin-bottom: 6em
-		z-index: 13
-		top: 0
-		+transition(top .5s)
-		li
-			position: absolute
-			width: 100%
-			// margin-left: .5%
-			top: 0
-			+transition(all .5s ease)
-			&:nth-child(1)
-				z-index: 5
-			&:nth-child(2)
-				z-index: 4
-			&:nth-child(3)
-				z-index: 3
-			&:nth-child(4)
-				z-index: 2
-			&:nth-child(5)
-				z-index: 1
-	.stories li, .story
-		background: $black
-		border-bottom: .1rem solid $lightgray
-		display: block
-		height: 7em
-		.news_img
-			display: inline-block
-			vertical-align: middle
-			margin-right: 1em
-			height: inherit
-			img
-				height: 72%
-				width: auto
-				margin-top: 10%
-				margin-left: 1em
-			@media screen and (max-width: 40em)
-				width: 0
-				overflow: hidden
+		display: inline-block
+		padding: .6em .8em .4em
+		background: $white
+		color: $black
+		margin-bottom: 2em
+	.title
+		font-weight: bold
+		h2
+			font-size: 1.24em
+			line-height: 1.36em
+		.published
+			+Helvetica()
+			color: $gray
 	a
 		color: $white
-		display: inline-block
-		width: 100%
-		height: inherit
+		overflow: auto
+		display: block
 		&.toggle_button
 			position: absolute
 			top: 1.75em
 			right: 1.25em
 			width: 3em
-			height: 3em
+			height: 4em
 			z-index: 1
 			cursor: pointer
-	.title
-		width: 70%
-		display: inline-block
-		vertical-align: middle
-		+font-smoothing()
-		> div
-			font-size: 1.4em
-	&.open
-		.latest.story:after
-			transform: rotate(180deg)
-		ul.stories
-			top: 7em
-			li
+	.news_img
+		overflow: hidden
+		width: 20%
+		float: left
+		display: block
+		margin-right: 2em
+		img
+			width: auto
+			height: 9em
+			display: block
+
+	.latest.story
+		position: relative
+		h2
+			font-size: 1.72em
+			@media screen and (max-width: 50em)
+				font-size: 1.36em
+		&:after
+			content: ''
+			background: url(../img/arrow_w.png) center no-repeat
+			background-size: 50%
+			border: .2rem solid $white
+			position: absolute
+			right: 2em
+			top: 2.5em
+			+border-radius(50%)
+			width: 3.2rem
+			height: 3.2rem
+			padding-top: .3rem
+			text-align: center
+			+transition(transform .5s)
+		> a
+			padding: 2em 2em 0
+		.news_img
+			@media screen and (max-width: 30em)
+				display: none
+
+
+
+	ul.stories
+		background: $black
+		overflow: auto
+		padding: 3em 1em 2em
+		li
+			width: 50%
+			height: 8em
+			float: left
+			padding: 1em
+			overflow: hidden
+			@media screen and (max-width: 30em)
 				width: 100%
-				margin-left: 0
-				&:nth-child(2)
-					top: 7em
-				&:nth-child(3)
-					top: 14em
-				&:nth-child(4)
-					top: 21em
-				&:nth-child(5)
-					top: 28em
-				&:nth-child(6)
-					top: 35em
-				&:hover
-					background: $white
-					a
-						color: $orange
+				&:nth-child(1n+4)
+					display: none
+		.news_img
+			margin-right: 1em
+			img
+				height: 5em
+			@media screen and (max-width: 50em)
+				display: none
+
+	// .latest.story, ul.stories li
+	// 	overflow: auto
+
+	.cta_area
+		padding: 2em 0 2em
+		font-size: 1.4em
+		font-weight: bold
+		text-align: center
+		border-top: 1px solid $white
+		margin: 0 1.4em
+		a
+			display: inline-block
+			border-bottom: 1px solid
+
+
+
+
+
+	// .stories li, .story
+	// 	display: block
+	// 	height: 7em
+	// 	.news_img
+	// 		display: inline-block
+	// 		vertical-align: middle
+	// 		margin-right: 1em
+	// 		height: inherit
+	// 		img
+	// 			height: 72%
+	// 			width: auto
+	// 			margin-top: 10%
+	// 			margin-left: 1em
+	// 		@media screen and (max-width: 40em)
+	// 			width: 0
+	// 			overflow: hidden
+	// a
+	// 	color: $white
+	// 	display: inline-block
+	// 	width: 100%
+	// 	height: inherit
+	// 	&.toggle_button
+	// 		position: absolute
+	// 		top: 1.75em
+	// 		right: 1.25em
+	// 		width: 3em
+	// 		height: 3em
+	// 		z-index: 1
+	// 		cursor: pointer
+	// .title
+	// 	width: 70%
+	// 	display: inline-block
+	// 	vertical-align: middle
+	// 	+font-smoothing()
+	// 	> div
+	// 		font-size: 1.4em
+	// &.open
+	// 	.latest.story:after
+	// 		transform: rotate(180deg)
+	// 	ul.stories
+	// 		li:hover
+	// 			background: $white
+	// 			a
+	// 				color: $orange
+
+
+
+
 
 
 .collections
-	.controls
-		background: $white
-		border: 0.1rem solid $black
-		overflow: auto
-		padding: .5em
-		margin: 1em 1em 0 1em
-		ul > li a
-			border: .1rem solid
-			display: inline
-			float: left
-			margin: .5em
-			padding: .7em .75em .5em
-			&.current
-				color: $white
-				background: $black
-				font-weight: bold
-				+font-smoothing()
-	.details_container
-		background: $black
-		color: white
-		margin: 0 1em
-		padding: 1em
-		clear: both
-		overflow: auto
-		display: none
+	ul.collection-controls,
+	.collection-slides
+		width: 95%
+		margin: 0 auto
+		@media screen and (max-width: 60em)
+			width: 90%
+
+	ul.collection-controls
+		border-left: 1px solid $black
+		border-right: 1px solid $black
 		position: relative
-	.column
-		padding: 4em 1em 2em
-	&.single .column
-		padding: 2em 1em
-	.info
-		float: left
-		.status_label
-			margin-top: 6em
-			font-size: 1em
-			color: $white
-		.subtitle
-			font-family: $Helvetica
-			margin-top: .2em
-		h1
-			font-size: 3em
-		h1, .subtitle, .status_label
-			+font-smoothing()
-	.gallery
-		float: right
-		img
-			max-width: 100%
+		li
+			width: 16em
+			height: 5em
+			border: 1px solid $black
+			border-right: none
+			background: $white
+			display: inline-block
+			padding: 1em
+			position: relative
+			&.slick-active
+				color: $orange
+				font-weight: bold
+				border: 1px solid $orange
+				+font-smoothing()
+				& + li
+					border-left: none
+			&:last-child
+				border-right: 1px solid $black
+		&:before, &:after
+			content: ''
+			display: block
+			width: 100%
+			height: 1px
+			background: $black
+			position: absolute
+			z-index: -1
+		&:after
+			bottom: 0
+
+	.collection-slides
+		.slick-list
+			border: 1px solid $black
+			border-top: none
+		.slide img
+			width: 100%
 			height: auto
-	@media screen and (min-width: 30em)
-		.info
-			width: 40%
-		.gallery
-			width: 60%
+
+
+.slick-prev,
+.slick-next
+	font-size: 0
+	line-height: 0
+	position: absolute
+	top: 50%
+	display: block
+	width: 20px
+	height: 20px
+	margin-top: -10px
+	padding: 0
+	cursor: pointer
+	color: transparent
+	border: none
+	outline: none
+	background: url(../img/arrow.png) center no-repeat
+	background-size: 60%
+	&:before
+		font-size: 20px
+		line-height: 1
+		opacity: .75
+		color: $black
+		+font-smoothing()
+.slick-prev
+	left: -30px
+	transform: rotate(180deg)
+	&:before
+		content: ''
+.slick-next
+	right: -30px
+	&:before
+		content: ''
+
+@media screen and (max-width: 40em)
+	.collections .collection-slides .img-large
+		display: none
+	.slick-prev, .slick-next
+		display: none !important
+@media screen and (min-width: 40em)
+	.collections .collection-slides .img-mobile
+		display: none
+
+
+
+
 
 //
 //
@@ -513,16 +624,59 @@ h2.area_title
 
 
 
+form#local_searchform
+	position: relative
+	input#searchsubmit
+		color: transparent
+		position: absolute
+		right: 0
+		bottom: 1px
+		background: url(../img/icon_search) center right no-repeat
+		background-size: 50%
+		width: 3em
+		opacity: .4
+		+transition(opacity .5s ease)
+	input.inlineSearch
+		width: 100%
+		background: none
+		border: none
+		border-bottom: 1px solid $gray
+		padding: 1em 3em .6em 0
+		&:focus + input#searchsubmit
+			opacity: 1
+
 
 .area
 	margin-top: 10vh
+	&.head
+		h2
+			+fnt_newj()
+			font-weight: bold
+			font-size: 2em
+			line-height: 2em
+		.subtitle
+			+fnt_helv()
+			color: $gray
+		.action
+			width: 30%
+			display: inline-block
+			overflow: auto
+			padding-right: 1em
+		.titles
+			width: 69%
+			display: inline-block
+			padding-left: 1em
+	&.white
+		background: $white
+		padding: 4em 0
+		margin-top: 2em
+		nav.pagination
+			margin: 4em 0 2em
 	&.for_today
 		margin-top: 10vh
 	&.conarte_tv
 		margin-top: 10vh
 		padding: 2em 0 4em
-		background: $black
-		color: $white
 	&.special h2.area_title
 		margin-bottom: -1em
 		position: relative

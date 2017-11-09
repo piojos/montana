@@ -96,14 +96,14 @@
 
 
 
-
+	$adc_date_three = 'M j, Y.';
 
 
 
 // Noticias
 
 	$latestQuery = new WP_Query( array('post_type' => 'post', 'posts_per_page' => 1 ) );
-	$restQuery = new WP_Query( array('post_type' => 'post', 'post__not_in' => $newsExcIDs, 'offset' => 1, 'posts_per_page' => 5) );
+	$restQuery = new WP_Query( array('post_type' => 'post', 'post__not_in' => $newsExcIDs, 'offset' => 1, 'posts_per_page' => 6) );
 
 
 	if ( $latestQuery->have_posts() ) { ?>
@@ -116,10 +116,9 @@
 					<?php the_post_thumbnail(); ?>
 				</div>
 				<div class="title">
-					<div>
-						<p class="label">Noticias</p>
-						<h2><?php the_title(); ?></h2>
-					</div>
+					<p class="label">Noticias</p>
+					<h2><?php the_title(); ?></h2>
+					<p class="published">Publicada: <?php the_time($adc_date_three); ?></p>
 				</div>
 			</a><?php
 		}
@@ -135,15 +134,19 @@
 					<div class="news_img">
 						<?php the_post_thumbnail(); ?>
 					</div>
-					<div class="title"><div>
+					<div class="title">
 						<h2><?php the_title(); ?></h2>
-					</div></div>
+						<p class="published"><?php the_time($adc_date_three); ?></p>
+					</div>
 				</a>
 			</li><?php
 			} ?>
 		</ul><?php
 		wp_reset_postdata();
 		} ?>
+		<div class="cta_area">
+			<a href="<?php echo home_url('/noticias'); ?>" id="cta_newsarchive">Ver todas las noticias</a>
+		</div>
 	</div><?php
 	}
 

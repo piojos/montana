@@ -195,54 +195,40 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 			<?php if($or_title) echo '<h2 class="area_title">'.$or_title.'</h2>';
 
 			if($count_objects > 1) { ?>
-			<div class="controls">
-				<ul><?php
+			<ul class="collection-controls"><?php
 				foreach( $post_objects as $post):
-					setup_postdata($post); ?>
-					<li><a href="#slide_<?php the_ID(); ?>" class="trig"><?php the_title(); ?></a></li><?php
+					setup_postdata($post);
+					$in = get_the_title();
+					$Title = strlen($in) > 50 ? substr($in,0,50)."..." : $in; ?>
+				<li><?php echo $Title; ?></li><?php
 				endforeach;
 				wp_reset_postdata(); ?>
-				</ul>
-			</div><?php
-			}
 
+			</ul><?php
+			} ?>
+
+			<div class="collection-slides"><?php
 			foreach( $post_objects as $post):
 				setup_postdata($post); ?>
-				<div class="details_container" id="slide_<?php the_ID(); ?>">
-					<?php if($count_objects >= 2) echo '<a class="close"></a>'; ?>
-					<div class="info column">
-						<a href="<?php the_permalink(); ?>">
-							<h1><?php the_title(); ?></h1>
-							<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
-							<div class="excerpt">
-								<?php the_content(); ?>
-							</div>
+				<div class="slide" id="slide_<?php the_ID(); ?>">
+					<a href="<?php the_permalink(); ?>"><?php
 
-							<div class="status_label">
-								<?php echo '<br>'.mnt_card_status_label(); ?>
-							</div>
-						</a>
-					</div>
-					<div class="gallery column"><?php
-						$image = get_field('home_img');
-						$gallery = get_field('home_gallery');
-						if( $gallery ) { ?>
-						<div class="autoslider"><?php
-							foreach( $gallery as $image ): ?>
-							<div>
-								<img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $image['alt']; ?>" />
-							</div><?php
-						endforeach; ?>
-						</div><?php
-						} elseif( $image ) {
-							echo wp_get_attachment_image( $image, 'large' );
+						// ACF: Get image IDs
+						$sizeM = get_field('coll_img_large');
+						$sizeS = get_field('coll_img_mobile');
+
+						if($sizeM || $sizeS) {
+							if( $sizeM ) { echo wp_get_attachment_image( $sizeM, 'large', '', array( 'class' => 'img-large' ) ); }
+							else { the_post_thumbnail('large', array( 'class' => 'img-large' ) ); }
+							if( $sizeS ) echo wp_get_attachment_image( $sizeS, 'large', '', array( 'class' => 'img-mobile' ) );
 						} else {
 							the_post_thumbnail('large');
 						} ?>
-					</div>
+					</a>
 				</div><?php
 			endforeach;
 			wp_reset_postdata(); ?>
+			</div>
 		</div><?php
 		endif;
 
@@ -252,17 +238,19 @@ if( have_rows('bloques_principales') ): while ( have_rows('bloques_principales')
 	elseif( get_row_layout() == 'op_tv' ):
 
 			if( have_rows('video_list') ): ?>
-			<div class="area max_wrap conarte_tv">
-				<h2 class="area_title boxed">CON<strong>ARTE TV</strong></h2>
-				<div class="deck slider_deck"><?php
-				while (have_rows('video_list')) {
-					the_row();
-					echo '<div class="card tv fours">';
-					if(get_sub_field('embed')) { ?>
+			<div class="white area conarte_tv">
+				<div class="max_wrap">
+					<h2 class="area_title boxed">CON<strong>ARTE TV</strong></h2>
+					<div class="deck slider_deck"><?php
+					while (have_rows('video_list')) {
+						the_row();
+						echo '<div class="card tv fours">';
+						if(get_sub_field('embed')) { ?>
 						<div class="embed-container"><?php the_sub_field('embed'); ?></div><?php
-					}
-					echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
-				} ?>
+						}
+						echo '<h3>'.get_sub_field('title').'</h3><div class="about">'.get_sub_field('about').'</div></div>';
+					} ?>
+					</div>
 				</div>
 			</div><?php
 			endif;

@@ -51,27 +51,49 @@ jQuery( function($) {
 
 
 // Home: Collections Switcher
-	$('.collections li:nth-child(1) a.trig').addClass('current');
-	$('.area.collections').each(function(){
-		$(this).find('.details_container:first').show();
+	// $('.collections li:nth-child(1) a.trig').addClass('current');
+	// $('.area.collections').each(function(){
+	// 	$(this).find('.details_container:first').show();
+	// });
+	//
+	//
+	// $('.collections a.trig').click(function(e) {
+	// 	e.preventDefault();
+	// 	var pID = $(this).closest('.area.collections').attr('id');
+	// 	var slideID = $(this).attr("href");
+	//
+	// 	$('#'+pID).find('a.trig').removeClass('current');
+	// 	$(this).addClass('current');
+	// 	$('#'+pID).find('.details_container').hide();
+	//
+	// 	$('#'+pID).find(slideID).show();
+	// });
+	//
+	// $('.collections a.close').click(function() {
+	// 	var pID = $(this).closest('.area.collections').attr('id');
+	// 	$('#'+pID).find('.details_container').hide();
+	// });
+
+	$('ul.collection-controls').slick({
+		// slidesToShow: 5,
+		variableWidth: true,
+		slidesToScroll: 1,
+		arrows: true,
+		infinite: true,
+		swipeToSlide: true,
+		centerMode: true,
+		asNavFor: '.collection-slides',
+		focusOnSelect: true,
+		autoplay: true,
+		autoplaySpeed: 4000,
 	});
-
-
-	$('.collections a.trig').click(function(e) {
-		e.preventDefault();
-		var pID = $(this).closest('.area.collections').attr('id');
-		var slideID = $(this).attr("href");
-
-		$('#'+pID).find('a.trig').removeClass('current');
-		$(this).addClass('current');
-		$('#'+pID).find('.details_container').hide();
-
-		$('#'+pID).find(slideID).show();
-	});
-
-	$('.collections a.close').click(function() {
-		var pID = $(this).closest('.area.collections').attr('id');
-		$('#'+pID).find('.details_container').hide();
+	$('.collection-slides').slick({
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		asNavFor: 'ul.collection-controls',
+		focusOnSelect: true,
+		arrows : false,
+		adaptiveHeight: true
 	});
 
 
