@@ -1,11 +1,13 @@
-<?php get_header(); ?>
+<?php
+
+	get_header(); ?>
 
 <section id="content" role="main">
 
 	<div class="area">
 		<div class="max_wrap">
-			<h2 class="area_title"><?php the_archive_title(); ?></h2>
-			<p><?php
+			<h2><?php the_archive_title(); ?></h2>
+			<p class="subtitle"><?php
 
 			$postNum = $wp_query->found_posts;
 			if($postNum == 0) {
@@ -14,7 +16,10 @@
 				if($postNum >= 2) { $plural = 's'; }
 				echo 'Encontramos '.$postNum.' resultado'.$plural.'.';
 			} ?></p>
-
+		</div>
+	</div>
+	<div class="white area">
+		<div class="max_wrap">
 			<div class="deck "><?php
 
 			if ( have_posts() ) :
