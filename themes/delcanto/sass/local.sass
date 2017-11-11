@@ -466,44 +466,112 @@ h2.area_title
 	h2.area_title
 		padding: 0 0 .4em
 
-	form
+	.agenda_controls
+		position: relative
 		margin: 2em 0
+		&.loading
+			.loader
+				width: 15% !important
+				padding: 1em !important
+			form
+				width: 85%
 
-	input[type="text"], select
-		width: 17em
-		margin-right: .8em
-		margin-bottom: 1em
+	// input[type="text"], select
+		// flex-grow: 1
+		// margin-right: .8em
+		// margin-bottom: 1em
 		// @media screen and (max-width:600px)
 		// 	width: 48%
 
-	.input_wrap
+	.input.wrap
 		position: relative
-		display: inline-block
-		&.hoy
-			&:before
-				content: 'HOY'
-				font-family: Helvetica
-				font-weight: bold
-				position: absolute
-				z-index: 1
-				left: 1em
-				top: .85em
-				border-right: .1rem solid
-				padding: 0.1em .4em 0 0
-			input
-				padding-left: 4em
+		// &.hoy
+		// 	&:before
+		// 		content: 'HOY'
+		// 		font-family: Helvetica
+		// 		font-weight: bold
+		// 		position: absolute
+		// 		z-index: 1
+		// 		left: 1em
+		// 		top: .85em
+		// 		border-right: .1rem solid
+		// 		padding: 0.1em .4em 0 0
+		// 	input
+		// 		padding-left: 4em
 	input[type="submit"]
 		min-width: 8em
 	input.disabled
 		color: $lightgray
 		pointer-events: none
-	img.loader
+	.loader
 		vertical-align: bottom
-		height: 2em
-		position: relative
-		top: -1.5em
-		left: .5em
-		display: none
+		width: 0
+		height: 100%
+		position: absolute
+		top: 0
+		right: 0
+		padding: 0
+		overflow: hidden
+		text-align: center
+		background: $white
+		border: 1px solid
+		border-left: none
+		+transition(width .2s ease, padding .2s ease)
+		img
+			height: 100%
+	form
+		width: 100%
+		+transition(width .2s ease)
+
+
+#searchfilter
+	input, select
+		width: 100%
+		height: 100%
+		border-top: none
+		border-left: none
+	input#visibleFecha
+		border-left: 1px solid
+
+
+.big.input
+	position: relative
+	font-size: 1.42em
+	height: 4em
+	+font-smoothing()
+	label
+		position: absolute
+		top: 1.7em
+		left: 2em
+		color: $gray
+		+fnt_helv()
+		font-size: .5em
+		font-weight: bold
+		text-transform: uppercase
+	input, select
+		padding-top: 2em
+		padding-right: 2em
+		font-weight: bold
+		color: $gray
+		+ellipsis()
+	&:after
+		content: ''
+		background: url('../img/arrow.png') no-repeat
+		background-size: 50%
+		opacity: .6
+		position: absolute
+		top: 1em
+		right: 1em
+		width: 1em
+		height: 1em
+		transform: rotate(90deg)
+	&.active
+		input, select
+			color: $orange
+			border-color: $gray !important
+
+
+
 
 
 .ag_results

@@ -243,7 +243,7 @@ span
 		font-weight: bold
 		+font-smoothing()
 		padding: .4em .5em .2em
-		+ellipsis
+		+ellipsis()
 		max-width: 80%
 	h2
 		font-size: 1.4em
@@ -410,3 +410,40 @@ span
 			bottom: 2.4em
 		&.no-image .img_container
 			margin-top: 0
+
+
+
+
+
+
+// Flex buttons
+
+.flexbuttons
+	position: relative
+	display: flex
+	align-content: stretch
+	button
+		flex-grow: 1
+		border-right: none
+		text-align: left
+		&:hover
+			border: 1px solid $orange
+			background: $orange
+			color: $white
+			& + button
+				border-left: none
+		&:last-child
+			border-right: 1px solid
+		&.past
+			border-color: $lightgray
+			color: $lightgray
+			background: $whitegray
+			&:hover
+				background: $lightgray
+				color: $whitegray
+		&.today
+			border: 1px solid $orange
+			& + button
+				border-left: none
+	.input.wrap
+		flex: 1

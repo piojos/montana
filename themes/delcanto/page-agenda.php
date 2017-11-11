@@ -6,6 +6,7 @@
 
 // First(Empty) Query ( .../eventos )
 	$today = current_time('Ymd');
+	$wdp1 = $today - 1;
 	$wd1 = $today + 1;
 	$wd2 = $wd1 + 1;
 	$wd3 = $wd2 + 1;
@@ -93,7 +94,7 @@
 	$ext_query = new WP_Query( $eArgs ); ?>
 
 	<section id="content" role="main"><?php
-
+/*
 		$ftd_events = get_field('ftd_events');
 
 		if( $ftd_events ): ?>
@@ -151,28 +152,63 @@
 					slider_deck($args, 'sixs', 'max_wrap');
 				}  ?>
 			</div>
-		</div>
+		</div> */ ?>
 
 		<div class="area" id="agenda">
 			<div class="max_wrap">
 				<h2 class="area_title">o Busca Eventos por Fecha y Disciplina</h2>
 				<p class="label">Estas viendo eventos de:</p>
-				<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
-					<div class="input_wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
-						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
-						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
+				<div class="agenda_controls">
+					<form role="search" method="get" id="top_day_controls" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
+						<div class="day_control flexbuttons"><?php
+
+							// Agenda Day controls
+							function agenda_dc_item($day) {
+								$today = current_time('Ymd');
+								$dc_format = 'D \<\s\t\r\o\n\g\> j \<\/\s\t\r\o\n\g\>';
+								if( $day < $today ) {
+									$class = ' class="past"';
+								} elseif( $day == $today ) {
+									$class = ' class="today"';
+								}
+								$string = '<button type="submit" name="fecha" value="'. $day .'"'.$class.'>'. date_i18n( $dc_format, strtotime( $day ) ) .'</button>';
+								return $string;
+							}
+
+							echo agenda_dc_item($wdp1);
+							echo agenda_dc_item($today);
+							echo agenda_dc_item($wd1);
+							echo agenda_dc_item($wd2);
+							echo agenda_dc_item($wd3);
+							echo agenda_dc_item($wd4);
+							echo agenda_dc_item($wd5); ?>
+						</div>
+					</form>
+					<form role="search" method="get" id="searchfilter" class="searchform ag_filter flexbuttons" action="<?php echo esc_url( home_url('agenda')); ?>">
+						<div class="big input wrap <?php if($queryDay == $today) echo ' hoy'; ?> active">
+							<label for="fecha">Fecha</label>
+							<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>" onchange="this.form.submit()">
+							<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
+						</div>
+						<div class="big input wrap">
+							<label for="disciplina">Disciplina</label>
+							<select name="disciplina" id="disciplina">
+								<option value="">Todas</option>
+								<?php echo listSelOptions('disciplinas'); ?>
+							</select>
+						</div>
+						<div class="big input wrap">
+							<label for="lugar">Espacio</label>
+							<select name="lugar" id="lugar">
+								<option value="">Todos</option>
+								<?php echo listSelOptions('lugares'); ?>
+							</select>
+						</div>
+					</form>
+					<div class="loader">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
 					</div>
-					<select name="disciplina" id="disciplina">
-						<option value="">Todas las Disciplinas</option>
-						<?php echo listSelOptions('disciplinas'); ?>
-					</select>
-					<select name="lugar" id="lugar">
-						<option value="">Todos las Espacios</option>
-						<?php echo listSelOptions('lugares'); ?>
-					</select>
-					<input type="submit" value="Actualizar">
-					<img class="loader" src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
-				</form>
+				</div>
 			</div>
 
 			<div id="result_area" class="ag_results">

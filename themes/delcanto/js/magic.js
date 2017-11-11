@@ -133,20 +133,21 @@ jQuery( function($) {
 	$('input#visibleFecha').datepicker({
 		dateFormat: 'M d yy',
 		altField: 'input#fecha',
-		altFormat: 'yymmdd'
+		altFormat: 'yymmdd',
+		onSelect : function (dateText, inst) {
+			$('form#searchfilter').submit();
+		}
 	});
-	// DEPR! Url doesn't change now
-	// var valT = location.href.match(/[?&]disciplina=(.*?)[$&]/)[1];
-	// $('select#disciplina').val(valT);
-	//
-	// var valL = location.href.match(/[?&]lugar=(.*?)$/)[1];
-	// $('select#lugar').val(valL);
 
+	$( 'select#disciplina, select#lugar' ).change(function() {
+		$('form#searchfilter').submit();
+	});
 
 // Agenda: Ajax filtering
-	$('form#searchfilter').on('submit',function(e){
+	$('form#searchfilter, form#upper_day_controls').on('submit',function(e){
 		e.preventDefault();
-		$('img.loader').show();
+		// $('img.loader').show();
+		$('.agenda_controls').addClass('loading');
 		$('#agenda input[type="submit"]').addClass('disabled');
 		var action = $(this).attr('action');
 		var serial = $(this).serialize();
@@ -157,7 +158,8 @@ jQuery( function($) {
 			data     : serial,
 			success  : function(data) {
 				$('.ag_results').html($('#result_area', data).html());
-				$('img.loader').fadeOut();
+				// $('img.loader').fadeOut();
+				$('.agenda_controls').removeClass('loading');
 				$('#agenda input[type="submit"]').removeClass('disabled');
 			}
 		});
