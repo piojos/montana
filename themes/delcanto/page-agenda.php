@@ -159,29 +159,37 @@
 				<h2 class="area_title">o Busca Eventos por Fecha y Disciplina</h2>
 				<p class="label">Estas viendo eventos de:</p>
 				<div class="agenda_controls">
-					<form role="search" method="get" id="top_day_controls" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
+					<form role="search" method="get" id="top_day_controls" class="td_controls searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
 						<div class="day_control flexbuttons"><?php
 
+							$q_wdp1 = $queryDay - 1;
+							$q_wd1 = $queryDay + 1;
+							$q_wd2 = $q_wd1 + 1;
+							$q_wd3 = $q_wd2 + 1;
+							$q_wd4 = $q_wd3 + 1;
+							$q_wd5 = $q_wd4 + 1;
+
 							// Agenda Day controls
-							function agenda_dc_item($day) {
+							function agenda_dc_item($day = '', $class = '') {
 								$today = current_time('Ymd');
 								$dc_format = 'D \<\s\t\r\o\n\g\> j \<\/\s\t\r\o\n\g\>';
 								if( $day < $today ) {
-									$class = ' class="past"';
+									$class .= ' past';
 								} elseif( $day == $today ) {
-									$class = ' class="today"';
+									$class .= ' today';
 								}
+								$class = ' class="'.$class.'"';
 								$string = '<button type="submit" name="fecha" value="'. $day .'"'.$class.'>'. date_i18n( $dc_format, strtotime( $day ) ) .'</button>';
 								return $string;
 							}
 
-							echo agenda_dc_item($wdp1);
-							echo agenda_dc_item($today);
-							echo agenda_dc_item($wd1);
-							echo agenda_dc_item($wd2);
-							echo agenda_dc_item($wd3);
-							echo agenda_dc_item($wd4);
-							echo agenda_dc_item($wd5); ?>
+							echo agenda_dc_item($q_wdp1);
+							echo agenda_dc_item($queryDay, 'active');
+							echo agenda_dc_item($q_wd1);
+							echo agenda_dc_item($q_wd2);
+							echo agenda_dc_item($q_wd3);
+							echo agenda_dc_item($q_wd4);
+							echo agenda_dc_item($q_wd5); ?>
 						</div>
 					</form>
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter flexbuttons" action="<?php echo esc_url( home_url('agenda')); ?>">

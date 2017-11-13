@@ -139,16 +139,16 @@ jQuery( function($) {
 		}
 	});
 
-	$( 'select#disciplina, select#lugar' ).change(function() {
+	$( 'select#disciplina, select#lugar, form#top_day_controls input' ).change(function() {
 		$('form#searchfilter').submit();
 	});
 
 // Agenda: Ajax filtering
-	$('form#searchfilter, form#upper_day_controls').on('submit',function(e){
+	$('form#searchfilter, form#top_day_controls').on('submit',function(e){
 		e.preventDefault();
 		// $('img.loader').show();
 		$('.agenda_controls').addClass('loading');
-		$('#agenda input[type="submit"]').addClass('disabled');
+		// $('#agenda input[type="submit"]').addClass('disabled');
 		var action = $(this).attr('action');
 		var serial = $(this).serialize();
 		$.ajax({
@@ -157,13 +157,69 @@ jQuery( function($) {
 			url      : action,
 			data     : serial,
 			success  : function(data) {
+				console.log('act: '+action+' ser: '+serial);
 				$('.ag_results').html($('#result_area', data).html());
+				$('.td_controls').html($('#top_day_controls', data).html());
 				// $('img.loader').fadeOut();
 				$('.agenda_controls').removeClass('loading');
-				$('#agenda input[type="submit"]').removeClass('disabled');
+				// $('#agenda input[type="submit"]').removeClass('disabled');
 			}
 		});
 	});
+
+	// $("form#top_day_controls button").click(function (e) {
+	//     e.preventDefault();
+	//
+	//     var button = $(e.target);
+	// 	var action = $(this).parents('form').attr('action');
+	//     var serial = button.parents('form').serialize()
+	//         + '&'
+	//         + encodeURI(button.attr('name'))
+	//         + '='
+	//         + encodeURI(button.attr('value'))
+	//     ;
+	// 	// Pass action to #searchfilter > #fecha, #visibleFecha
+	//
+	// 	$('.agenda_controls').addClass('loading');
+	// 	// $('#agenda input[type="submit"]').addClass('disabled');
+	// 	// var serial = $(this).serialize();
+	// 	$.ajax({
+	// 		type     : "GET",
+	// 		cache    : false,
+	// 		url      : action,
+	// 		data     : serial,
+	// 		success  : function(data) {
+	// 			$('.ag_results').html($('#result_area', data).html());
+	// 			console.log('act: '+action+' ser: '+serial);
+	// 			$('.td_controls').html($('#top_day_controls', data).html());
+	// 			$('.agenda_controls').removeClass('loading');
+	// 			// $('#agenda input[type="submit"]').removeClass('disabled');
+	// 		}
+	// 	});
+	//
+	//     console.log(result);
+	// });
+
+	// $('form#top_day_controls').on('submit',function(e){
+	// 	e.preventDefault();
+	// 	$('.agenda_controls').addClass('loading');
+	// 	// $('#agenda input[type="submit"]').addClass('disabled');
+	// 	var action = $(this).attr('action');
+	// 	var serial = $(this).serialize();
+	// 	$.ajax({
+	// 		type     : "GET",
+	// 		cache    : false,
+	// 		url      : action,
+	// 		data     : serial,
+	// 		success  : function(data) {
+	// 			$('.ag_results').html($('#result_area', data).html());
+	// 			console.log('act: '+action+' ser: '+serial);
+	// 			// $('.td_controls').html($('#top_day_controls', data).html());
+	// 			$('.agenda_controls').removeClass('loading');
+	// 			// $('#agenda input[type="submit"]').removeClass('disabled');
+	// 		}
+	// 	});
+	// });
 
 
 // Header: Searchbar
@@ -206,7 +262,7 @@ jQuery( function($) {
 		var childLi = $(this).find('li');
 		// var parentUl = $(this).find('ul');
 		// var thisID = $(this).attr('id');
-		console.log('id '+childLi);
+		// console.log('id '+childLi);
 		$(childLi).sort(sort_li).appendTo($(this));
 		function sort_li(a, b) {
 			return ($(b).data('position')) < ($(a).data('position')) ? 1 : -1;
