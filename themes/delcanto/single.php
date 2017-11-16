@@ -87,7 +87,7 @@
 
 			// Test comments
 			if(get_current_user_id() == 1) {
-				comments_template();
+				// comments_template();
 			} ?>
 		</div><?php
 		}
