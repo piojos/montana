@@ -101,9 +101,11 @@
 			if($dates) { $string = '<p><strong>'.$dates.'</strong></p>'; }
 			if($locations) { $string .= '<p>'.$locations.'</p>'; }
 		} elseif(get_post_type() == 'cineteca') {
-			$placeTerm = get_place();
-			$string = '<p><strong>'. mta_next_movie('F j') .'</strong></p>';
-			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
+			if(!is_search()) {
+				$placeTerm = get_place();
+				$string = '<p><strong>'. mta_next_movie('F j') .'</strong></p>';
+				if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
+			}
 			$string .= '<br>'.movie_meta();
 		} elseif(get_post_type() == 'post') {
 			$string = '<p style="text-transform: capitalize;"><strong>'.get_the_date('F j ').'</strong> '.get_the_date('Y').'</p>';
@@ -384,7 +386,7 @@
 		if($pt == 'exposiciones') {
 			$costOpts = get_field('cost_options');
 			if($costOpts && in_array('free', $costOpts)) {
-				$string .= $sep.'Gratuita';
+				$string .= $sep.'Libre';
 			} else {
 				$string .= get_skills();
 			}
