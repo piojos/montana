@@ -53,22 +53,52 @@
 			}  ?>
 		</div>
 
-		<div class="area" id="agenda">
+		<div class="head area" id="agenda">
 			<div class="max_wrap">
-				<h2 class="area_title">Películas por día</h2>
-				<p class="label">Estas viendo las funciones de:</p>
-				<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
-					<div class="input_wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
-						<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>">
-						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
+				<div class="titles">
+					<h2><strong>Cineteca</strong> CON<strong>ARTE</strong></h2>
+					<p class="subtitle">Costos regulares: $40 General | $25 Preferente.</p>
+				</div>
+				<div class="action"></div>
+				<div class="search_controls">
+					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
+						<div class="dates_control flexbuttons"><?php
+							echo adc_searcher_day_item($queryDay - 1);
+							echo adc_searcher_day_item($queryDay, 'active');
+							echo adc_searcher_day_item($queryDay + 1);
+							echo adc_searcher_day_item($queryDay + 2);
+							echo adc_searcher_day_item($queryDay + 3);
+							echo adc_searcher_day_item($queryDay + 4);
+							echo adc_searcher_day_item($queryDay + 5); ?>
+						</div>
+						<div class="flexbuttons">
+							<div class="big input wrap select <?php if($queryDay == $today) echo ' hoy'; ?>">
+								<label for="fecha">Fecha</label>
+								<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>" onchange="this.form.submit()">
+								<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
+							</div>
+					</form>
+							<div class="big input wrap submit_button">
+								<form id="searchmovies" action="<?php echo home_url(); ?>" method="get">
+									<label for="fecha">Buscar Película</label>
+									<input type="text" id="keyword" name="s" value="" onchange="">
+									<button type="submit" name="post_type" id="searchsubmit" alt="Search" value="cineteca"><img src="<?php echo get_template_directory_uri(); ?>/img/icon_search.png" alt=""></button>
+								</form>
+							</div>
+						</div>
+					<div class="loader">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
 					</div>
-					<input id="submit_filter" type="submit" value="Actualizar">
-					<img class="loader" src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
-				</form>
+				</div>
 			</div>
+		</div>
 
+		<div class="area">
 			<div id="result_area" class="ag_results">
-				<div class="internal"><?php
+				<div class="internal">
+					<div class="max_wrap">
+						<h3>Peliculas el <span><?php echo date_i18n( 'l, M d Y', strtotime( $queryDay ) ); ?></span> </h3>
+					</div><?php
 
 					if ( $query->have_posts() ) { ?>
 					<ul><?php

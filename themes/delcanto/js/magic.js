@@ -139,16 +139,28 @@ jQuery( function($) {
 		}
 	});
 
-	$( 'select#disciplina, select#lugar, form#top_day_controls input' ).change(function() {
+// Search Controls: Selects trigger #searchfilter
+	$( 'select#disciplina, select#lugar' ).change(function(e) {
 		$('form#searchfilter').submit();
 	});
 
-// Agenda: Ajax filtering
-	$('form#searchfilter, form#top_day_controls').on('submit',function(e){
+// Search Controls: Radio updates .datepicker, then triggers #searchfilter correctly
+	$( '.dates_control input[type="radio"]' ).click(function(e) {
+		var newDate = $(this).val();
+		var nY = newDate.substring(0,4);
+		var nM = (newDate.substring(4,6)) - 1;
+		var nD = newDate.substring(6,8);
+		console.log(newDate+'Y: '+nY+'. M: '+nM+'. D: '+nD);
+		$('input#visibleFecha').datepicker('setDate', new Date(nY,nM,nD) );
+
+		$("input#fecha").val(newDate);
+		$('form#searchfilter').submit();
+	});
+
+// Search Controls: Ajax filtering
+	$('form#searchfilter').on('submit',function(e){
 		e.preventDefault();
-		// $('img.loader').show();
-		$('.agenda_controls').addClass('loading');
-		// $('#agenda input[type="submit"]').addClass('disabled');
+		$('.search_controls').addClass('loading');
 		var action = $(this).attr('action');
 		var serial = $(this).serialize();
 		$.ajax({
@@ -157,69 +169,24 @@ jQuery( function($) {
 			url      : action,
 			data     : serial,
 			success  : function(data) {
-				console.log('act: '+action+' ser: '+serial);
 				$('.ag_results').html($('#result_area', data).html());
-				$('.td_controls').html($('#top_day_controls', data).html());
-				// $('img.loader').fadeOut();
-				$('.agenda_controls').removeClass('loading');
-				// $('#agenda input[type="submit"]').removeClass('disabled');
+				$('.dates_control').html($('.dates_control', data).html());
+				$( '.dates_control input[type="radio"]' ).click(function(e) {
+					var newDate = $(this).val();
+
+					var nY = newDate.substring(0,4);
+					var nM = (newDate.substring(4,6)) - 1;
+					var nD = newDate.substring(6,8);
+					console.log(newDate+'Y: '+nY+'. M: '+nM+'. D: '+nD);
+					$('input#visibleFecha').datepicker('setDate', new Date(nY,nM,nD) );
+
+					$("input#fecha").val(newDate);
+					$('form#searchfilter').submit();
+				});
+				$('.search_controls').removeClass('loading');
 			}
 		});
 	});
-
-	// $("form#top_day_controls button").click(function (e) {
-	//     e.preventDefault();
-	//
-	//     var button = $(e.target);
-	// 	var action = $(this).parents('form').attr('action');
-	//     var serial = button.parents('form').serialize()
-	//         + '&'
-	//         + encodeURI(button.attr('name'))
-	//         + '='
-	//         + encodeURI(button.attr('value'))
-	//     ;
-	// 	// Pass action to #searchfilter > #fecha, #visibleFecha
-	//
-	// 	$('.agenda_controls').addClass('loading');
-	// 	// $('#agenda input[type="submit"]').addClass('disabled');
-	// 	// var serial = $(this).serialize();
-	// 	$.ajax({
-	// 		type     : "GET",
-	// 		cache    : false,
-	// 		url      : action,
-	// 		data     : serial,
-	// 		success  : function(data) {
-	// 			$('.ag_results').html($('#result_area', data).html());
-	// 			console.log('act: '+action+' ser: '+serial);
-	// 			$('.td_controls').html($('#top_day_controls', data).html());
-	// 			$('.agenda_controls').removeClass('loading');
-	// 			// $('#agenda input[type="submit"]').removeClass('disabled');
-	// 		}
-	// 	});
-	//
-	//     console.log(result);
-	// });
-
-	// $('form#top_day_controls').on('submit',function(e){
-	// 	e.preventDefault();
-	// 	$('.agenda_controls').addClass('loading');
-	// 	// $('#agenda input[type="submit"]').addClass('disabled');
-	// 	var action = $(this).attr('action');
-	// 	var serial = $(this).serialize();
-	// 	$.ajax({
-	// 		type     : "GET",
-	// 		cache    : false,
-	// 		url      : action,
-	// 		data     : serial,
-	// 		success  : function(data) {
-	// 			$('.ag_results').html($('#result_area', data).html());
-	// 			console.log('act: '+action+' ser: '+serial);
-	// 			// $('.td_controls').html($('#top_day_controls', data).html());
-	// 			$('.agenda_controls').removeClass('loading');
-	// 			// $('#agenda input[type="submit"]').removeClass('disabled');
-	// 		}
-	// 	});
-	// });
 
 
 // Header: Searchbar

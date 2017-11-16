@@ -1,6 +1,6 @@
 <?php
 
-	/* Template Name: Slider y Rango */
+	/* Template Name: Exposiciones */
 	get_header();
 
 
@@ -14,11 +14,11 @@
 
 // First(Empty)
 	$post_slug = $post->post_name;
-	$today = current_time('Ymd');
+	$today = current_time('Ym\0\1');
 	$todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
 
 	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
-	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ymd');
+	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ym\0\1');
 
 	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
 	else { $queryDay = $today; }
@@ -48,20 +48,36 @@
 
 	<section id="content" role="main"><?php
 
-	get_template_part('inc/big', 'slider'); ?>
+	get_template_part('inc/big', 'slider');	?>
 
-		<div class="area" id="agenda">
+		<div class="head area" id="agenda">
 			<div class="max_wrap">
-				<h2 class="area_title">Busca <?php the_title(); ?></h2>
-				<p class="label">Estas viendo <?php echo $post_slug; ?> de:</p>
+				<div class="titles">
+					<h2>Busca <?php the_title(); ?></h2>
+					<p class="subtitle">Planea tu visita explorando exposiciones por mes:</p>
+				</div>
+				<div class="action"></div>
 				<div class="search_controls">
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url($post_slug)); ?>">
+
+					<div class="dates_control months flexbuttons"><?php
+						$mp1 = date('Ymd', strtotime("-1 month", strtotime($queryDay)));
+						$m1 = date('Ymd', strtotime("+1 month", strtotime($queryDay)));
+						$m2 = date('Ymd', strtotime("+2 months", strtotime($queryDay)));
+						$m3 = date('Ymd', strtotime("+3 months", strtotime($queryDay)));
+						$m4 = date('Ymd', strtotime("+4 months", strtotime($queryDay)));
+						$m5 = date('Ymd', strtotime("+5 months", strtotime($queryDay)));
+
+						echo adc_searcher_month_item($mp1);
+						echo adc_searcher_month_item($queryDay, 'active');
+						echo adc_searcher_month_item($m1);
+						echo adc_searcher_month_item($m2);
+						echo adc_searcher_month_item($m3);
+						echo adc_searcher_month_item($m4);
+						echo adc_searcher_month_item($m5); ?>
+					</div>
 					<div class="flexbuttons">
-						<div class="big input wrap <?php if($queryDay == $today) echo ' hoy'; ?>">
-							<label for="fecha">Fecha</label>
-							<input type="text" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>" onchange="this.form.submit()">
-							<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
-						</div>
+						<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none" onchange="this.form.submit()">
 					</div>
 					</form>
 					<div class="loader">
@@ -69,10 +85,14 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
+		<div class="area">
 			<div id="result_area" class="ag_results">
 				<div class="internal">
-					<?php // result_list($query, get_the_title(), $queryDay);
+					<div class="max_wrap">
+						<h3>Exposiciones en <span><?php echo date_i18n( 'F', strtotime( $queryDay ) ); ?></span> </h3>
+					</div><?php
 
 					if ( $query->have_posts() ) { ?>
 					<ul><?php
