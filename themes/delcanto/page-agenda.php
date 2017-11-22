@@ -26,7 +26,7 @@
 
 	$iArgs = array(
 		'post_type'		=> 'agenda',
-		// 'numberposts'	=> 1,
+		'posts_per_page'	=> -1,
 		'meta_key'		=> 'dates_picker_0_schedules_0_hour',
 		'orderby'		=> 'meta_value_num',
 		'order'			=> 'ASC',

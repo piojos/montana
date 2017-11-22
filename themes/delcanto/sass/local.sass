@@ -509,6 +509,9 @@ h2.area_title
 		width: 1.5em
 		border-color: rgba(0, 0, 0, 1)
 
+
+
+
 .ag_results
 	h3
 		font-size: 1.4em
@@ -534,20 +537,16 @@ h2.area_title
 			background: $white
 			padding-right: .4em
 			padding-left: .4em
+			border-bottom: .1rem solid $black
 			&:hover
 				background: $black
 				color: $white
 				border-top: .1rem solid
 				position: relative
 				top: -.1rem
-			&:last-child
-				border-bottom: 0.1rem solid
-				.max_wrap
-					border: none
 
 		.max_wrap
 			padding-left: 1em
-			border-bottom: .1rem solid $black
 			overflow: auto
 			> div
 				display: inline-block
@@ -556,9 +555,20 @@ h2.area_title
 				padding: 1.5em 1em 1.4em 0
 				&.schedule
 					width: 22%
-					font-family: $Helvetica
 					font-size: .9em
-					color: $gray
+					p.schedule_hours
+						display: inline-block
+						background: $black
+						border: 1px solid $white
+						padding: .55em .5em .4em
+						font-weight: bold
+						color: $white
+						border-radius: .4rem
+						+font-smoothing()
+					p.schedule_duration
+						+fnt_helv()
+						color: $gray
+						margin-top: 1em
 				&.thumbnail
 					display: none
 					border: .1rem solid
@@ -568,13 +578,23 @@ h2.area_title
 				&.title, &.location
 					width: 78%
 					float: right
+				.type
+					border: 1px solid
+					display: inline-block
+					font-size: 0.8em
+					font-weight: bold
+					padding: .55em 1em .3em
+					margin-top: 1em
+					max-width: 100%
+					+font-smoothing()
+					+ellipsis()
 				@media screen and (min-width: 50em)
 					&.schedule
 						width: 16%
 					&.thumbnail
 						display: inline-block
 						width: 16%
-						min-height: 4em
+						min-height: 6em
 					&.location
 						width: 18%
 						float: inherit

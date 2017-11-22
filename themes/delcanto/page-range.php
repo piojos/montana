@@ -50,10 +50,13 @@
 
 	get_template_part('inc/big', 'slider'); ?>
 
-		<div class="area" id="agenda">
+		<div class="head area" id="agenda">
 			<div class="max_wrap">
-				<h2 class="area_title">Busca <?php the_title(); ?></h2>
-				<p class="label">Estas viendo <?php echo $post_slug; ?> de:</p>
+				<div class="titles">
+					<h2>Busca <?php the_title(); ?></h2>
+					<p class="subtitle">Estas viendo <?php echo $post_slug; ?> de:</p>
+				</div>
+				<div class="action"></div>
 				<div class="search_controls">
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url($post_slug)); ?>">
 					<div class="flexbuttons">
@@ -69,7 +72,9 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
+		<div class="area">
 			<div id="result_area" class="ag_results">
 				<div class="internal">
 					<?php // result_list($query, get_the_title(), $queryDay);

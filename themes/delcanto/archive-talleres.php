@@ -5,11 +5,10 @@
 
 	$post_slug = $post->post_name;
 	$today = current_time('Ym\0\1');
-	$todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
+	// $todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-	echo $paged;
-	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
-	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ym\0\1');
+	// echo $paged;
+
 	if(htmlentities($_GET['disciplina']) == '') $_GET['disciplina'] = '';
 	if(htmlentities($_GET['lugar']) == '') $_GET['lugar'] = '';
 
@@ -58,8 +57,8 @@
 		<div class="head area" id="agenda">
 			<div class="max_wrap">
 				<div class="titles">
-					<h2>Busca <?php the_title(); ?></h2>
-					<p class="subtitle">Estas viendo <?php echo $post_slug; ?> de:</p>
+					<h2>Busca Talleres</h2>
+					<p class="subtitle">Aprende a expresar algo nuevo.</p>
 				</div>
 				<div class="action"></div>
 				<div class="search_controls">
@@ -69,14 +68,32 @@
 								<label for="disciplina">Disciplina</label>
 								<select name="disciplina" id="disciplina">
 									<option value="">Todas</option>
-									<?php echo listSelOptions('disciplinas'); ?>
+									<?php
+										// echo listSelOptions('disciplinas', $_GET['disciplina']);
+
+										$termsD = get_terms( 'disciplinas' );
+										if ( ! empty( $termsD ) && ! is_wp_error( $termsD ) ){ foreach ( $termsD as $term ) {
+											$stringD .= '<option value="' . $term->slug . '"';
+											if($term->slug == $_GET['disciplina']) $stringD .= ' selected';
+											$stringD .= '>' . $term->name . '</option>';
+										}}
+										echo $stringD; ?>
 								</select>
 							</div>
 							<div class="big input wrap select">
 								<label for="lugar">Espacio</label>
 								<select name="lugar" id="lugar">
 									<option value="">Todos</option>
-									<?php echo listSelOptions('lugares'); ?>
+									<?php // echo listSelOptions('lugares', $_GET['lugar']);
+
+										$termsE = get_terms( array( 'taxonomy' => 'lugares', 'parent' => 0 ) );
+										if ( ! empty( $termsE ) && ! is_wp_error( $termsE ) ){ foreach ( $termsE as $term ) {
+											$stringE .= '<option value="' . $term->slug . '"';
+											if($term->slug == $_GET['lugar']) $stringE .= ' selected';
+											$stringE .= '>' . $term->name . '</option>';
+										}}
+										echo $stringE;
+									?>
 								</select>
 							</div>
 						</div>
@@ -101,7 +118,7 @@
 								if($niceDisciplina) $listTitle .= ' de '.$niceDisciplina->name;
 								if($niceLugar) $listTitle .= ' en '.$niceLugar->name;
 							} else {
-								$listTitle = 'Todos los talleres';
+								$listTitle = 'Todos los Talleres';
 							}
 							echo $listTitle; ?></h3>
 					</div>
@@ -113,12 +130,12 @@
 							$query->the_post();
 							list_card($day);
 						} ?>
-					</ul><nav class="pagination">b <?php
+					</ul><nav class="pagination dynamic"><?php
 						echo paginate_links( array(
-							'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+							'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999, false ) ) ),
 							'total'        => $query->max_num_pages,
 							'current'      => max( 1, $paged ),
-							'format'       => '?paged=%#%',
+							'format'       => 'page/%#%',
 							'show_all'     => false,
 							'type'         => 'plain',
 							'end_size'     => 2,
@@ -135,7 +152,7 @@
 							<li>
 								<div class="max_wrap">
 									<div class="no-events">
-										<h2>No hay <?php echo get_the_title(); ?> en esta fecha.</h2>
+										<h2>No hay Talleres en esta fecha.</h2>
 									</div>
 								</div>
 							</li>

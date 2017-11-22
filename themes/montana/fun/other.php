@@ -338,10 +338,12 @@
 *	Generate option list for Select dropdown
 */
 
-	function listSelOptions($term = false) {
+	function listSelOptions($term = false, $queried_term = false) {
 		$terms = get_terms( $term );
 		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){ foreach ( $terms as $term ) {
-			$string .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
+			$string .= '<option value="' . $term->slug . '"';
+			if($term->slug == $queried_term) $string .= ' selected';
+			$string .= '>' . $term->name . '</option>';
 		}}
 		return $string;
 	}

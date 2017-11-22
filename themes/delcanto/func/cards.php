@@ -7,7 +7,7 @@
 
  * 	1 Functions
  * 	2 Card
- *	3 Listed card
+ *	3 Large card
  */
 
 
@@ -177,37 +177,36 @@
 		$date_ops = get_field('dates_options'); ?>
 		<li>
 			<a class="max_wrap" href="<?php the_permalink(); ?>">
-				<div class="schedule">
-					<p><?php
+				<div class="schedule"><?php
 					if($pt == 'cineteca' || $pt == 'agenda') {
 						if(is_singular('colecciones')) {
 							if($day != false) {
-								echo movieHoursClosestday($day, true);
+								echo '<p class="schedule_hours">'. movieHoursClosestday($day, true) .' </p>';
 							}
 						} elseif($pt == 'cineteca') {
-							echo movieHoursClosestday($day, true);
+							echo '<p class="schedule_hours">'. movieHoursClosestday($day, true) .' </p>';
 						} else {
 							if($date_ops == 'dates') {
-								echo movieHoursClosestday($day, true);
+								echo '<p class="schedule_hours">'. movieHoursClosestday($day, true) .' </p>';
 							} else {
-								echo schedule_hours();
+								echo '<p class="schedule_hours">'. schedule_hours() .'</p>';
 							}
 						}
 					} elseif( $pt == 'exposiciones' ) {
 						if($pt != 'convocatorias') {
 							$lc_sched = schedule_hours();
-							if(!empty($lc_sched)) echo $lc_sched.' <br>';
+							if(!empty($lc_sched)) echo '<p class="schedule_hours">'. $lc_sched .'</p>';
 						}
 						if(have_rows('range_date_picker')) {
 							while(have_rows('range_date_picker')){
 								the_row();
-								echo 'Hasta '.date_i18n( 'F j', strtotime( get_sub_field('end_day') ) ).'.';
+								echo '<p class="schedule_duration">Hasta '. date_i18n( 'F j', strtotime( get_sub_field('end_day') ) ) .'</p>';
 							}
 						}
 					} elseif( $pt == 'talleres' || $pt == 'convocatorias' ) {
 						if($pt != 'convocatorias') {
 							$lc_sched = schedule_hours();
-							if(!empty($lc_sched)) echo $lc_sched.' <br>';
+							if(!empty($lc_sched)) echo '<p class="schedule_hours">'. $lc_sched .'</p>';
 						}
 						if(have_rows('range_date_picker')) {
 							while(have_rows('range_date_picker')){
@@ -215,10 +214,10 @@
 								if(get_sub_field('start_day') == get_sub_field('end_day')) {
 									$fromto = '<span style="text-transform: capitalize;">'.date_i18n( 'F j', strtotime( get_sub_field('start_day') ) ).'</span>';
 								} else {
-									$fromto = date_i18n( 'M j', strtotime( get_sub_field('start_day') ) ).' → ';
+									$fromto =  date_i18n( 'M j', strtotime( get_sub_field('start_day') ) ).' → ';
 									$fromto .= date_i18n( 'M j', strtotime( get_sub_field('end_day') ) );
 								}
-								echo $fromto;
+								echo '<p class="schedule_duration">'. $fromto .'</p>';
 							}
 						}
 					} else {}
@@ -237,6 +236,18 @@
 				</div>
 				<div class="location">
 					<p><strong><?php echo get_place(); ?></strong></p>
+					<?php
+						$skills = get_skills();
+						$pt = get_post_type();
+						if($pt != 'cineteca') {
+							if(!empty($skills)) {
+								$type = '<p class="type">';
+								$type .= $sep.get_skills();
+								$type .= '</p>';
+							}
+						}
+						echo $type;
+					?>
 				</div>
 			</a>
 		</li><?php
@@ -366,13 +377,13 @@
 
 
 
-	function keyword_box($class = 'classy') {
+	function keyword_box($class = 'classy', $before = '<span class="parent_label">', $after = '</span>') {
 		 // Post type + Category (if available)
 		$pt = get_post_type();
 		if($pt != 'cineteca') {
-			$string = '<span class="parent_label">';
+			$string = $before;
 			$string .= keyword_gen($pt);
-			$string .= '</span>';
+			$string .= $after;
 		}
 		return $string;
 	}

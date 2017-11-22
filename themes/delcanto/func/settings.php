@@ -16,7 +16,7 @@
 				}
 				if(!empty($hour['hour-start'])) {
 					if($hour['hour-end']) {
-						$hours[] = $hour['hour-start'].' → '.$hour['hour-end'];
+						$hours[] = $hour['hour-start']. ' h. → '.$hour['hour-end'].' h.';
 					} else {
 						$hours[] = $hour['hour-start'];
 					}
@@ -189,7 +189,7 @@
 			if(have_rows('schedules')) {
 				$hours = array();
 				while (have_rows('schedules')) { the_row();
-				$hours[] = get_sub_field('hour');
+				$hours[] = get_sub_field('hour').' h.';
 				}
 			}
 			$daysList[] = array($day, $hours);
@@ -339,16 +339,20 @@
 *	Generate option list for Select dropdown
 */
 
-	function listSelOptions($term = false) {
-		$terms = get_terms( $term );
+	function listSelOptions($term = false, $queried_term = false) {
+		$terms = get_terms( array( 'taxonomy' => $term, 'parent' => 0 ) );
 		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){ foreach ( $terms as $term ) {
-			$string .= '<option value="' . $term->slug . '">' . $term->name . '</option>';
+			$string .= '<option value="' . $term->slug . '"';
+			if($term->slug == $queried_term) $string .= ' selected';
+			$string .= '>' . $term->name . '</option>';
 		}}
 		return $string;
 	}
 
-
-
+	function sl_fix_pagination($link) {
+	return str_replace('#038;', '&', $link);
+	}
+	add_filter('paginate_links', 'sl_fix_pagination');
 
 
 

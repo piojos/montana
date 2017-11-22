@@ -5,20 +5,19 @@
 
 	$post_slug = $post->post_name;
 	$today = current_time('Ym\0\1');
-	$todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
+	// $todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-	echo $paged;
-	if(htmlentities($_GET['visibleFecha']) == '') $_GET['visibleFecha'] = $todayNice;
-	if(htmlentities($_GET['fecha']) == '') $_GET['fecha'] = current_time('Ym\0\1');
+	// echo $paged;
+
 	if(htmlentities($_GET['disciplina']) == '') $_GET['disciplina'] = '';
-	if(htmlentities($_GET['lugar']) == '') $_GET['lugar'] = '';
+	// if(htmlentities($_GET['lugar']) == '') $_GET['lugar'] = '';
 
 	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
 	else { $queryDay = $today; }
 
 
 	$args = array(
-		'post_type' => 'talleres',
+		'post_type' => 'convocatorias',
 		'meta_query' => array(
 			array(
 				'key'		=> 'range_date_picker_0_end_day',
@@ -39,13 +38,13 @@
 		));
 	}
 
-	if($_GET['lugar'] != '') {
-		$args[tax_query][] = array( array(
-			'taxonomy' => 'lugares',
-			'field'    => 'slug',
-			'terms'    => $_GET['lugar'],
-		));
-	}
+	// if($_GET['lugar'] != '') {
+	// 	$args[tax_query][] = array( array(
+	// 		'taxonomy' => 'lugares',
+	// 		'field'    => 'slug',
+	// 		'terms'    => $_GET['lugar'],
+	// 	));
+	// }
 
 
 
@@ -58,25 +57,27 @@
 		<div class="head area" id="agenda">
 			<div class="max_wrap">
 				<div class="titles">
-					<h2>Busca <?php the_title(); ?></h2>
-					<p class="subtitle">Estas viendo <?php echo $post_slug; ?> de:</p>
+					<h2>Busca Convocatorias</h2>
+					<p class="subtitle">¡Involúcrate con la cultura y las artes! Explora nuestras convocatorias por disciplina:</p>
 				</div>
 				<div class="action"></div>
 				<div class="search_controls">
-					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('talleres')); ?>">
+					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('convocatorias')); ?>">
 						<div class="flexbuttons">
 							<div class="big input wrap select">
 								<label for="disciplina">Disciplina</label>
 								<select name="disciplina" id="disciplina">
 									<option value="">Todas</option>
-									<?php echo listSelOptions('disciplinas'); ?>
-								</select>
-							</div>
-							<div class="big input wrap select">
-								<label for="lugar">Espacio</label>
-								<select name="lugar" id="lugar">
-									<option value="">Todos</option>
-									<?php echo listSelOptions('lugares'); ?>
+									<?php
+										// echo listSelOptions('disciplinas', $_GET['disciplina']);
+
+										$terms = get_terms( 'disciplinas' );
+										if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){ foreach ( $terms as $term ) {
+											$string .= '<option value="' . $term->slug . '"';
+											if($term->slug == $_GET['disciplina']) $string .= ' selected';
+											$string .= '>' . $term->name . '</option>';
+										}}
+										echo $string; ?>
 								</select>
 							</div>
 						</div>
@@ -94,14 +95,12 @@
 					<div class="max_wrap">
 						<h3><?php
 							$niceDisciplina = get_term_by('slug', $_GET['disciplina'], 'disciplinas');
-							$niceLugar = get_term_by('slug', $_GET['lugar'], 'lugares');
 
 							if($niceDisciplina || $niceLugar) {
-								$listTitle = 'Talleres ';
+								$listTitle = 'Convocatorias ';
 								if($niceDisciplina) $listTitle .= ' de '.$niceDisciplina->name;
-								if($niceLugar) $listTitle .= ' en '.$niceLugar->name;
 							} else {
-								$listTitle = 'Todos los talleres';
+								$listTitle = 'Todas las Convocatorias';
 							}
 							echo $listTitle; ?></h3>
 					</div>
@@ -113,12 +112,12 @@
 							$query->the_post();
 							list_card($day);
 						} ?>
-					</ul><nav class="pagination">b <?php
+					</ul><nav class="pagination"><?php
 						echo paginate_links( array(
-							'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+							'base'         => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999, false ) ) ),
 							'total'        => $query->max_num_pages,
 							'current'      => max( 1, $paged ),
-							'format'       => '?paged=%#%',
+							'format'       => 'page/%#%',
 							'show_all'     => false,
 							'type'         => 'plain',
 							'end_size'     => 2,
@@ -135,7 +134,7 @@
 							<li>
 								<div class="max_wrap">
 									<div class="no-events">
-										<h2>No hay <?php echo get_the_title(); ?> en esta fecha.</h2>
+										<h2>No hay Convocatorias en esta fecha.</h2>
 									</div>
 								</div>
 							</li>

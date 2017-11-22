@@ -158,7 +158,7 @@ jQuery( function($) {
 	});
 
 // Search Controls: Ajax filtering
-	$('form#searchfilter').on('submit',function(e){
+	$(document).on('submit','form#searchfilter',function(e){
 		e.preventDefault();
 		$('.search_controls').addClass('loading');
 		var action = $(this).attr('action');
@@ -171,7 +171,7 @@ jQuery( function($) {
 			success  : function(data) {
 				$('.ag_results').html($('#result_area', data).html());
 				$('.dates_control').html($('.dates_control', data).html());
-				$( '.dates_control input[type="radio"]' ).click(function(e) {
+				$('.dates_control input[type="radio"]').click(function(e) {
 					var newDate = $(this).val();
 
 					var nY = newDate.substring(0,4);
@@ -188,6 +188,22 @@ jQuery( function($) {
 		});
 	});
 
+	$(document).on('click','.pagination.dynamic a',function(e){
+		e.preventDefault();
+		$('.search_controls').addClass('loading');
+		var action = $(this).attr('href');
+		$('html,body').animate({scrollTop:100},1000);
+		$.ajax({
+			type     : "GET",
+			cache    : false,
+			url      : action,
+			data     : '',
+			success  : function(data) {
+				$('.ag_results').html($('#result_area', data).html());
+				$('.search_controls').removeClass('loading');
+			}
+		});
+	});
 
 // Header: Searchbar
 	$('header form.searchform input#s').after('<a id="close_search">×</a>');
