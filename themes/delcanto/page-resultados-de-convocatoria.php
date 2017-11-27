@@ -1,6 +1,6 @@
 <?php
 
-	/* Convocatorias Archive */
+	/* Template Name: Resultados de Convocatoria */
 
 	get_header();
 
@@ -17,18 +17,18 @@
 	$args = array(
 		'post_type' => 'convocatorias',
 		'meta_query' => array(
-			array(
-				'key'		=> 'range_date_picker_0_end_day',
-				'compare'	=> '>=',
-				'value'		=> $queryDay,
-			),
+			// array(
+			// 	'key'		=> 'range_date_picker_0_end_day',
+			// 	'compare'	=> '>=',
+			// 	'value'		=> $queryDay,
+			// ),
 			array(
 				'key' 		=> 'result_post',
 				'compare' 	=> '==',
-				'value' 	=> '0',
+				'value' 	=> '1',
 			)
 		),
-		'posts_per_page' => 12,
+		'posts_per_page' => -1,
 		'paged' => $paged
 	);
 
@@ -52,11 +52,11 @@
 		<div class="head area" id="agenda">
 			<div class="max_wrap">
 				<div class="titles">
-					<h2>Busca Convocatorias</h2>
-					<p class="subtitle">¡Involúcrate con la cultura y las artes! Explora nuestras convocatorias por disciplina:</p>
+					<h2>Resultados de Convocatorias</h2>
+					<p class="subtitle">Conoce nuestras <a href="<?php echo esc_url( home_url('convocatorias')); ?>">convocatorias actuales</a>.</p>
 				</div>
 				<div class="action">
-				</div>
+				</div><?php /*
 				<div class="search_controls compact">
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('convocatorias')); ?>">
 						<div class="flexbuttons">
@@ -82,8 +82,8 @@
 					</div>
 				</div>
 				<div class="big cta">
-					<a href="<?php echo esc_url( home_url('resultados-de-convocatorias')); ?>">Resultados de<br>Convocatorias</a>
-				</div>
+					<a href="#">Resultados de <br>Convocatorias</a>
+				</div> */ ?>
 			</div>
 		</div>
 
@@ -91,7 +91,7 @@
 			<div id="result_area" class="ag_results">
 				<div class="internal">
 					<div class="max_wrap">
-						<h3><?php
+						<?php /*<h3>
 							$niceDisciplina = get_term_by('slug', $_GET['disciplina'], 'disciplinas');
 
 							if($niceDisciplina || $niceLugar) {
@@ -100,7 +100,7 @@
 							} else {
 								$listTitle = 'Todas las Convocatorias';
 							}
-							echo $listTitle; ?></h3>
+							echo $listTitle; </h3>*/ ?>
 					</div>
 					<?php
 
@@ -132,7 +132,7 @@
 							<li>
 								<div class="max_wrap">
 									<div class="no-events">
-										<h2>No hay Convocatorias en <?php echo $niceDisciplina->name; ?>.</h2>
+										<h2>No hay Convocatorias en esta fecha.</h2>
 									</div>
 								</div>
 							</li>
