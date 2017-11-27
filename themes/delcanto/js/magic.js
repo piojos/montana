@@ -142,6 +142,7 @@ jQuery( function($) {
 // Search Controls: Selects trigger #searchfilter
 	$( 'select#disciplina, select#lugar' ).change(function(e) {
 		$('form#searchfilter').submit();
+		console.log('Cuac');
 	});
 
 // Search Controls: Radio updates .datepicker, then triggers #searchfilter correctly
@@ -158,35 +159,35 @@ jQuery( function($) {
 	});
 
 // Search Controls: Ajax filtering
-	$(document).on('submit','form#searchfilter',function(e){
-		e.preventDefault();
-		$('.search_controls').addClass('loading');
-		var action = $(this).attr('action');
-		var serial = $(this).serialize();
-		$.ajax({
-			type     : "GET",
-			cache    : false,
-			url      : action,
-			data     : serial,
-			success  : function(data) {
-				$('.ag_results').html($('#result_area', data).html());
-				$('.dates_control').html($('.dates_control', data).html());
-				$('.dates_control input[type="radio"]').click(function(e) {
-					var newDate = $(this).val();
-
-					var nY = newDate.substring(0,4);
-					var nM = (newDate.substring(4,6)) - 1;
-					var nD = newDate.substring(6,8);
-					console.log(newDate+'Y: '+nY+'. M: '+nM+'. D: '+nD);
-					$('input#visibleFecha').datepicker('setDate', new Date(nY,nM,nD) );
-
-					$("input#fecha").val(newDate);
-					$('form#searchfilter').submit();
-				});
-				$('.search_controls').removeClass('loading');
-			}
-		});
-	});
+	// $(document).on('submit','form#searchfilter',function(e){
+	// 	e.preventDefault();
+	// 	$('.search_controls').addClass('loading');
+	// 	var action = $(this).attr('action');
+	// 	var serial = $(this).serialize();
+	// 	$.ajax({
+	// 		type     : "GET",
+	// 		cache    : false,
+	// 		url      : action,
+	// 		data     : serial,
+	// 		success  : function(data) {
+	// 			$('.ag_results').html($('#result_area', data).html());
+	// 			$('.dates_control').html($('.dates_control', data).html());
+	// 			$('.dates_control input[type="radio"]').click(function(e) {
+	// 				var newDate = $(this).val();
+	//
+	// 				var nY = newDate.substring(0,4);
+	// 				var nM = (newDate.substring(4,6)) - 1;
+	// 				var nD = newDate.substring(6,8);
+	// 				console.log(newDate+'Y: '+nY+'. M: '+nM+'. D: '+nD);
+	// 				$('input#visibleFecha').datepicker('setDate', new Date(nY,nM,nD) );
+	//
+	// 				$("input#fecha").val(newDate);
+	// 				$('form#searchfilter').submit();
+	// 			});
+	// 			$('.search_controls').removeClass('loading');
+	// 		}
+	// 	});
+	// });
 
 	$(document).on('click','.pagination.dynamic a',function(e){
 		e.preventDefault();

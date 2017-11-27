@@ -24,6 +24,8 @@
 	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
 	else { $queryDay = $today; }
 
+	$cleanDay = filter_input( INPUT_GET, 'fecha', FILTER_SANITIZE_NUMBER_INT );
+
 	$iArgs = array(
 		'post_type'		=> 'agenda',
 		'posts_per_page'	=> -1,
@@ -63,36 +65,59 @@
 		),
 	);
 
+
 	if($_GET['disciplina'] != '') {
-		$iArgs[tax_query] = array( array(
+		$disTaxArray = array( array(
 			'taxonomy' => 'disciplinas',
 			'field'    => 'slug',
 			'terms'    => $_GET['disciplina'],
 		));
-		$eArgs[tax_query] = array( array(
-			'taxonomy' => 'disciplinas',
-			'field'    => 'slug',
-			'terms'    => $_GET['disciplina'],
-		));
+		$iArgs[tax_query] = $disTaxArray;
+		$eArgs[tax_query] = $disTaxArray;
 	}
 
 	if($_GET['lugar'] != '') {
-		$iArgs[tax_query][] = array( array(
+		$lugTaxArray = array( array(
 			'taxonomy' => 'lugares',
 			'field'    => 'slug',
 			'terms'    => $_GET['lugar'],
 		));
-		$eArgs[tax_query][] = array( array(
-			'taxonomy' => 'lugares',
-			'field'    => 'slug',
-			'terms'    => $_GET['lugar'],
-		));
+		$iArgs[tax_query][] = $lugTaxArray;
+		$eArgs[tax_query][] = $lugTaxArray;
 	}
 
 
+	if(($_GET['disciplina'] != '') || ($_GET['lugar'] != '')) {
+		$fArgs = array(
+			'post_type'		=> 'agenda',
+			'posts_per_page'	=> -1,
+			// 'meta_key'		=> 'dates_picker_0_schedules_0_hour',
+			// 'orderby'		=> 'meta_value_num',
+			// 'order'			=> 'ASC',
+			// 'meta_query' => array (
+			// 	array(
+			// 		'key'       => 'everyday',
+			// 		'value'     => $queryDay,
+			// 		// 'type'		=> 'DATE',
+			// 		'compare'   => 'LIKE',
+			// 	)
+			// ),
+    'meta_query' => array(
+        array(
+            'key'     => 'everyday',
+            'value'   => 20171130,
+            'compare' => 'like',
+            // 'type'    => 'NUMERIC'
+        ),
+    )
+		);
+		if($_GET['disciplina'] != '') $fArgs[tax_query] = $disTaxArray;
+		if($_GET['lugar'] != '') $fArgs[tax_query][] = $lugTaxArray;
+	}
+
 	$int_query = new WP_Query( $iArgs );
 	$ext_query = new WP_Query( $eArgs );
-
+	if($fArgs) $fut_query = new WP_Query( $fArgs );
 
 
 	// Receive downloadable Agenda file
@@ -265,7 +290,38 @@
 							</li>
 						</ul><?php */
 					}
+					wp_reset_query();
+
+
+				if($fArgs) { echo $cleanDay; ?>
+
+				<div class="future">
+					<div class="max_wrap">
+						<h3>Eventos Futuros</h3>
+					</div><?php
+					if ( $fut_query->have_posts() ) { ?>
+					<div class="max_wrap"><?php
+						while ( $fut_query->have_posts() ) {
+							$fut_query->the_post();
+							the_field('everyday');
+							card('fours','',$queryDay);
+						} ?>
+					</div><?php
+					} else { ?>
+						<ul>
+							<li>
+								<div class="max_wrap">
+									<div class="no-events">
+										<h2>No hay eventos futuros</h2>
+										<p>Prueba con otra fecha o disciplina.</p>
+									</div>
+								</div>
+							</li>
+						</ul><?php
+					}
 					wp_reset_query(); ?>
+				</div><?php
+				} ?>
 			</div>
 		</div>
 	</section>
