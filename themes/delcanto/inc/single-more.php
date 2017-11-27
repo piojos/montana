@@ -27,7 +27,7 @@
 	} elseif($coll_obj) {
 		$collID = $coll_obj->ID;
 		$choose = get_field('options', $collID);
-		$more_title = 'Mas en <a href="'.get_permalink($collID).'" class="link">'. $coll_obj->post_title.'</a>';
+		$more_title = 'Más en <a href="'.get_permalink($collID).'" class="link">'. $coll_obj->post_title.'</a>';
 		if(is_singular('cineteca')) $more_class = 'fours movie';
 
 		if($choose == 'auto') {
