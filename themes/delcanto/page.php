@@ -5,8 +5,17 @@
 
 <section id="content" role="main" class="page">
 	<div class="header"><?php
-
-		if(has_post_thumbnail()) { ?>
+		$head_slider = get_field('head_slider');
+		if($head_slider) { ?>
+			<div class="big slider"><?php
+			foreach( $head_slider as $image ): ?>
+				<div class="slide">
+					<div class="bg_img" style="background-image:url(<?php echo wp_get_attachment_image_url($image['ID'], 'huge'); ?>);"></div>
+					<?php // echo wp_get_attachment_image( $image['ID'], 'full' ); ?>
+				</div><?php
+			endforeach; ?>
+			</div><?php
+		} elseif(has_post_thumbnail()) { ?>
 			<div class="bg_featured_banner" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>)"></div><?php
 		} else { ?>
 			<div class="bg_featured_banner no_image"></div><?php
