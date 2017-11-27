@@ -86,30 +86,47 @@
 		$eArgs[tax_query][] = $lugTaxArray;
 	}
 
+	$qdp1 = date('Ymd', strtotime("-1 day", strtotime($queryDay)));
+	$qd1 = date('Ymd', strtotime("+1 day", strtotime($queryDay)));
+	$qd2 = date('Ymd', strtotime("+2 day", strtotime($queryDay)));
+	$qd3 = date('Ymd', strtotime("+3 day", strtotime($queryDay)));
+	$qd4 = date('Ymd', strtotime("+4 day", strtotime($queryDay)));
+	$qd5 = date('Ymd', strtotime("+5 day", strtotime($queryDay)));
+	$qd6 = date('Ymd', strtotime("+6 day", strtotime($queryDay)));
+	$qd7 = date('Ymd', strtotime("+7 day", strtotime($queryDay)));
+	$qm1 = date('Ymd', strtotime("+1 month", strtotime($queryDay)));
 
 	if(($_GET['disciplina'] != '') || ($_GET['lugar'] != '')) {
 		$fArgs = array(
 			'post_type'		=> 'agenda',
 			'posts_per_page'	=> -1,
-			// 'meta_key'		=> 'dates_picker_0_schedules_0_hour',
-			// 'orderby'		=> 'meta_value_num',
-			// 'order'			=> 'ASC',
-			// 'meta_query' => array (
-			// 	array(
-			// 		'key'       => 'everyday',
-			// 		'value'     => $queryDay,
-			// 		// 'type'		=> 'DATE',
-			// 		'compare'   => 'LIKE',
-			// 	)
-			// ),
-    'meta_query' => array(
-        array(
-            'key'     => 'everyday',
-            'value'   => 20171130,
-            'compare' => 'like',
-            // 'type'    => 'NUMERIC'
-        ),
-    )
+			'meta_key'		=> 'dates_picker_0_schedules_0_hour',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+			'meta_query' => array (
+				'relation' => 'OR',
+				array(
+					'key' => 'everyday', 'value' => $qd1, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd2, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd3, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd4, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd5, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd6, 'compare' => 'LIKE'
+				),
+				array(
+					'key' => 'everyday', 'value' => $qd7, 'compare' => 'LIKE'
+				)
+			),
 		);
 		if($_GET['disciplina'] != '') $fArgs[tax_query] = $disTaxArray;
 		if($_GET['lugar'] != '') $fArgs[tax_query][] = $lugTaxArray;
@@ -201,13 +218,13 @@
 				<div class="search_controls">
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
 						<div class="dates_control flexbuttons"><?php
-							echo adc_searcher_day_item($queryDay - 1);
-							echo adc_searcher_day_item($queryDay, 'active');
-							echo adc_searcher_day_item($queryDay + 1);
-							echo adc_searcher_day_item($queryDay + 2);
-							echo adc_searcher_day_item($queryDay + 3);
-							echo adc_searcher_day_item($queryDay + 4);
-							echo adc_searcher_day_item($queryDay + 5); ?>
+							echo adc_searcher_day_item($qdp1);
+							echo adc_searcher_day_item($cleanDay, 'active');
+							echo adc_searcher_day_item($qd1);
+							echo adc_searcher_day_item($qd2);
+							echo adc_searcher_day_item($qd3);
+							echo adc_searcher_day_item($qd4);
+							echo adc_searcher_day_item($qd5); ?>
 						</div>
 						<div class="flexbuttons">
 							<div class="big input wrap select <?php if($queryDay == $today) echo ' hoy'; ?>">
@@ -219,14 +236,14 @@
 								<label for="disciplina">Disciplina</label>
 								<select name="disciplina" id="disciplina">
 									<option value="">Todas</option>
-									<?php echo listSelOptions('disciplinas'); ?>
+									<?php echo listSelOptions('disciplinas', $_GET['disciplina']); ?>
 								</select>
 							</div>
 							<div class="big input wrap select">
 								<label for="lugar">Espacio</label>
 								<select name="lugar" id="lugar">
 									<option value="">Todos</option>
-									<?php echo listSelOptions('lugares'); ?>
+									<?php echo listSelOptions('lugares', $_GET['lugar']); ?>
 								</select>
 							</div>
 						</div>
@@ -278,46 +295,40 @@
 						} ?>
 					</ul>
 				</div><?php
-				} else { /* ?>
-						<ul>
-							<li>
-								<div class="max_wrap">
-									<div class="no-events">
-										<h2>No hay eventos hoy 😞</h2>
-										<p>Prueba con otra fecha o disciplina.</p>
-									</div>
-								</div>
-							</li>
-						</ul><?php */
-					}
-					wp_reset_query();
+				}
+				wp_reset_query();
 
 
-				if($fArgs) { echo $cleanDay; ?>
+				if($fArgs) { ?>
 
 				<div class="future">
 					<div class="max_wrap">
-						<h3>Eventos Futuros</h3>
+						<h3><?php
+							$niceDisciplina = get_term_by('slug', $_GET['disciplina'], 'disciplinas');
+							$niceLugar = get_term_by('slug', $_GET['lugar'], 'lugares');
+
+							if($niceDisciplina || $niceLugar) {
+								$listTitle = 'Próximos eventos ';
+								if($niceDisciplina) $listTitle .= ' de '.$niceDisciplina->name;
+								if($niceLugar) $listTitle .= ' en '.$niceLugar->name;
+							}
+
+							echo $listTitle; ?></h3>
 					</div><?php
 					if ( $fut_query->have_posts() ) { ?>
 					<div class="max_wrap"><?php
 						while ( $fut_query->have_posts() ) {
 							$fut_query->the_post();
-							the_field('everyday');
 							card('fours','',$queryDay);
 						} ?>
 					</div><?php
 					} else { ?>
-						<ul>
-							<li>
-								<div class="max_wrap">
-									<div class="no-events">
-										<h2>No hay eventos futuros</h2>
-										<p>Prueba con otra fecha o disciplina.</p>
-									</div>
-								</div>
-							</li>
-						</ul><?php
+					<div class="max_wrap">
+						<div class="card fours no-events">
+							<p>No hay eventos futuros</p>
+							<p>Prueba con otra fecha o disciplina.</p>
+						</div>
+					</div><?php
 					}
 					wp_reset_query(); ?>
 				</div><?php
