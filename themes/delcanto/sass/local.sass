@@ -422,6 +422,9 @@ h2.area_title
 	.search_controls
 		position: relative
 		margin: 2em 0
+		&.compact
+			width: 50%
+			float: left
 		&.loading
 			.loader
 				width: 15% !important
@@ -668,10 +671,10 @@ form#local_searchform
 		&:focus + input#searchsubmit
 			opacity: 1
 
-
 .area
 	margin-top: 10vh
 	&.head
+		overflow: auto
 		h2
 			+fnt_newj()
 			font-weight: bold
@@ -692,6 +695,21 @@ form#local_searchform
 			width: 69%
 			display: inline-block
 			padding-left: 1em
+		.big.cta
+			width: 50%
+			height: 4em
+			display: block
+			float: left
+			text-align: center
+			font-weight: bold
+			margin: 1.4em 0
+			padding-top: 1em
+			font-size: 1.4em
+			line-height: 1.2em
+			+font-smoothing()
+			text-decoration: underline
+			a
+				color: $gray
 	&.white
 		background: $white
 		padding: 4em 0
@@ -720,7 +738,6 @@ form#local_searchform
 		padding-top: 10vh
 		padding-bottom: 6vh
 		background: $white
-
 
 
 
