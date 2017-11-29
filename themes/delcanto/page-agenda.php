@@ -24,7 +24,7 @@
 	if($_GET['fecha']) { $queryDay = $_GET['fecha']; }
 	else { $queryDay = $today; }
 
-	$cleanDay = filter_input( INPUT_GET, 'fecha', FILTER_SANITIZE_NUMBER_INT );
+	// $cleanDay = filter_input( INPUT_GET, 'fecha', FILTER_SANITIZE_NUMBER_INT );
 
 	$iArgs = array(
 		'post_type'		=> 'agenda',
@@ -219,7 +219,7 @@
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
 						<div class="dates_control flexbuttons"><?php
 							echo adc_searcher_day_item($qdp1);
-							echo adc_searcher_day_item($cleanDay, 'active');
+							echo adc_searcher_day_item($queryDay, 'active');
 							echo adc_searcher_day_item($qd1);
 							echo adc_searcher_day_item($qd2);
 							echo adc_searcher_day_item($qd3);
