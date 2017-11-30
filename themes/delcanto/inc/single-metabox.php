@@ -95,6 +95,7 @@
 		echo mta_future_schedule('F d', 'cineteca');
 	} elseif(get_field('dates_options') == 'dates') {
 		echo mta_future_schedule('F d Y', 'agenda');
+		echo '<style> .atcb-link:focus~ul,.atcb-link:active~ul,.atcb-list:hover{visibility:visible;} </style>';
 	} else { ?>
 		<dt class="label">Fechas</dt>
 		<dd><?php echo schedule_days(); ?></dd><?php
@@ -128,7 +129,7 @@
 
 	if($placeTerm) { ?>
 		<dt class="label">Lugar</dt>
-		<dd><?php echo $placeTerm; ?></dd><?php
+		<dd><a href="<?php echo esc_url( home_url('espacios')); ?>" class="location"><?php echo $placeTerm; ?></a></dd><?php
 	}
 
 

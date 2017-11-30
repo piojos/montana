@@ -18,7 +18,7 @@
 					if($hour['hour-end']) {
 						$hours[] = $hour['hour-start']. ' h. → '.$hour['hour-end'].' h.';
 					} else {
-						$hours[] = $hour['hour-start'];
+						$hours[] = $hour['hour-start']. ' h.';
 					}
 				}
 			}
@@ -247,7 +247,33 @@
 				$niceday = date_i18n('l j', strtotime($key[0]));
 				$string .= prefix_forDay($key[0], '', ', ');
 				$string .= $niceday.$month.': ';
-				$string .= implode(", ", $key[1]);
+				// Add to Calendar buttons
+				// $string .= implode(", ", $key[1]);
+				// Uncomment for simple', 'hours.
+				$hoursRaw = $key[1];
+				$atcHours = array();
+				foreach($hoursRaw AS $hour) {
+					// $hoursTest [] =
+					$hourSlug = str_replace(' h.', '',$hour);
+					$hourSlug = date(" H:i:s", strtotime($hourSlug));
+					$fullDate = $key[0].$hourSlug;
+					$stDate = date_i18n('Y-m-d H:i:s', strtotime($fullDate));
+					$enDate = date('Y-m-d H:i:s', strtotime("+2 hours", strtotime($fullDate)));
+					$buttonbuild = '<span class="addtocalendar atc-style-orange">';
+					$buttonbuild .= '	<a class="atcb-link">'.$hour.'</a><var class="atc_event">';
+					$buttonbuild .= '	<var class="atc_date_start">'.$stDate.'</var> <var class="atc_date_end">'.$enDate.'</var>';
+					$buttonbuild .= '	<var class="atc_timezone">America/Mexico_City</var>';
+					$buttonbuild .= '	<var class="atc_title">'.get_the_title().'</var>';
+					$buttonbuild .= '	<var class="atc_description">'.get_the_excerpt().' –– '.get_the_permalink().'</var>';
+					$buttonbuild .= '	<var class="atc_location">'.get_place().'</var>';
+					$buttonbuild .= '</var></span>';
+					$atcHours[] = $buttonbuild;
+				}
+				// $string .= $buttonbuild;
+				$boom = implode(' ', $atcHours);
+				$string .= $boom;
+				// $string .= $hoursRaw;
+				// $buttonbuild = false;
 				$string .= '<br>';
 
 				$nm = date_i18n('F', strtotime($key[0]));
@@ -261,6 +287,13 @@
 		return $string;
 		// print_r($stDays);
 	}
+
+
+	// function mta_future_schedule_addevent($hourArray) {
+	// 	$string .= implode(", ", $hourArray);
+	// 	return $string;
+	// }
+
 
 	function mta_future_schedule_array($format = 'Ymd') {
 		$schedArray = movieSchedule_array($format);

@@ -100,7 +100,7 @@ a.close
 	cursor: pointer
 	&:before, &:after
 		content: ''
-		border-top: .3rem solid white
+		border-top: .3rem solid $white
 		width: 100%
 		display: block
 		transform: rotate(45deg)
@@ -109,6 +109,26 @@ a.close
 	&:before
 		transform: rotate(-45deg)
 
+a.location:before
+	content: ''
+	background: url(../img/icon_location.png) no-repeat center
+	margin-right: .2em
+	display: inline-block
+	width: 1rem
+	min-height: 1.3rem
+	background-size: contain
+
+a.share
+	display: inline-block
+	width: 3em
+	height: 3em
+	padding-top: .6em
+	margin-right: 1em
+	border: .1rem solid $gray
+	border-radius: 50%
+	text-align: center
+	&:hover
+		border-color: $black
 
 .embed-container
 	position: relative
@@ -513,3 +533,102 @@ span
 		display: none
 	select option
 		color: $black
+
+
+
+
+// Mobile /Desktop UI
+
+@media screen and (min-width: 50em)
+	.mobile-ui
+		display: none
+
+@media screen and (max-width: 50em)
+	.desktop-ui
+		display: none
+
+
+
+
+
+// Add to Calendar
+
+.addtocalendar
+	position: relative
+	display: inline-block
+	background: transparent !important
+	var
+		display: none
+
+.atcb-link
+	display: block
+	outline: none !important
+	cursor: pointer
+
+.atcb-link:focus ~ ul,
+.atcb-link:active ~ ul,
+.atcb-link:hover
+	visibility: visible
+
+.atcb-list
+	visibility: hidden
+	position: absolute
+	top: 100%
+	left: .5em
+	min-width: 11em
+	margin-top: .2em
+	z-index: 10
+
+.atcb-list,
+.atcb-item
+	list-style: none
+	background: $white
+
+.atcb-item
+	float: none
+	text-align: left
+	&.hover,
+	&:hover
+		position: relative
+		z-index: 110
+		cursor: pointer
+		text-decoration: none
+		outline: none
+
+.atcb-item-link
+	text-decoration: none
+	outline: none
+	display: block
+
+.atc-style-orange
+	.atcb-link
+		margin: 0 .5em
+		padding: .2em .5em
+		vertical-align: middle
+		border-radius: .4rem
+		border: .1rem solid $gray
+		&:hover,
+		&:active,
+		&:focus
+			border-color: $white
+
+	.atcb-list,
+	.atcb-item
+		color: $black
+
+	.atcb-item,
+	.atcb-item-link
+		line-height: 1.3em
+		vertical-align: middle
+
+	.atcb-item-link,
+	.atcb-item-link:hover,
+	.atcb-item-link:active,
+	.atcb-item-link:focus
+		padding: .5em 1em
+
+	.atcb-item-link:hover,
+	.atcb-item-link:active,
+	.atcb-item-link:focus
+		background: $orange
+		color: $white

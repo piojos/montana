@@ -59,13 +59,16 @@
 					} ?>
 				</div>
 
-				<div class="status_label">
+				<div class="status_label desktop-ui">
 					<?php get_template_part('inc/sharer'); ?>
 				</div>
 			</div><?php
 			if(is_singular(array('agenda', 'cineteca', 'talleres', 'exposiciones', 'convocatorias'))) {
 				get_template_part('inc/single', 'metabox');
 			} ?>
+			<div class="mobile-ui status_label">
+				<?php get_template_part('inc/sharer'); ?>
+			</div>
 		</div>
 	</div>
 

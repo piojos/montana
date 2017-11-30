@@ -24,23 +24,51 @@
 	else { $queryDay = $today; }
 
 
-	$args = array(
+	$thisMonthStart = date('Y-m-d', strtotime($queryDay));
+	$thisMonthStartB = date('Y-m-d', strtotime("+0 days", strtotime($queryDay)));
+	$nextMonth = date('Y-m-d', strtotime("+1 month", strtotime($queryDay)));
+	$thisMonthEnd = date('Y-m-d', strtotime("-1 day", strtotime($nextMonth)));
+
+
+	$newExposArgs = array(
 		'post_type' => $post_slug,
 		'meta_query' => array(
-			// 'relation'		=> 'OR',
 			array(
 				'key'		=> 'range_date_picker_0_start_day',
-				'compare'	=> '<=',
-				'value'		=> $queryDay,
-			),
-			array(
-				'key'		=> 'range_date_picker_0_end_day',
-				'compare'	=> '>=',
-				'value'		=> $queryDay,
+				'compare'	=> 'BETWEEN',
+				'value'		=> array($thisMonthStart, $thisMonthEnd),
+				'type'		=> 'DATE'
 			)
 		),
 	);
 
+	$newExposQuery = new WP_Query( $newExposArgs );
+	$excExpos = array();
+	if($newExposQuery->have_posts()) : while ($newExposQuery->have_posts()) : $newExposQuery->the_post();
+		$excExpos[] = get_the_ID();
+	endwhile; endif;
+	wp_reset_query();
+
+
+	$args = array(
+		'post_type' => $post_slug,
+		'post__not_in' 		=> $excExpos,
+		'meta_query' => array(
+			'relation'		=> 'AND',
+			array(
+				'key'		=> 'range_date_picker_0_start_day',
+				'compare'	=> '<=',
+				'value'		=> $thisMonthEnd,
+				'type'		=> 'DATE'
+			),
+			array(
+				'key'		=> 'range_date_picker_0_end_day',
+				'compare'	=> '>=',
+				'value'		=> $thisMonthStart,
+				'type'		=> 'DATE'
+			)
+		),
+	);
 
 
 
@@ -88,32 +116,37 @@
 		</div>
 
 		<div class="area">
-			<div id="result_area" class="ag_results">
+			<div id="result_area" class="ag_results"><?php
+
+			if ( $newExposQuery->have_posts() ) { ?>
 				<div class="internal">
 					<div class="max_wrap">
-						<h3>Exposiciones en <span><?php echo date_i18n( 'F', strtotime( $queryDay ) ); ?></span> </h3>
-					</div><?php
+						<h3>Nuevas exposiciones en <span style="text-transform:capitalize"><?php echo date_i18n( 'F', strtotime( $queryDay ) ); ?></span> </h3>
+					</div>
+					<ul><?php
+						while ( $newExposQuery->have_posts() ) {
+							$newExposQuery->the_post();
+							list_card($day);
+						} ?>
+					</ul>
+				</div><?php
+				}
+				wp_reset_query();
 
-					if ( $query->have_posts() ) { ?>
+				if ( $query->have_posts() ) { ?>
+				<div class="internal">
+					<div class="max_wrap">
+						<h3>Exposiciones en <span style="text-transform:capitalize"><?php echo date_i18n( 'F', strtotime( $queryDay ) ); ?></span> </h3>
+					</div>
 					<ul><?php
 						while ( $query->have_posts() ) {
 							$query->the_post();
 							list_card($day);
 						} ?>
-					</ul><?php
-					} else { ?>
-						<ul>
-							<li>
-								<div class="max_wrap">
-									<div class="no-events">
-										<h2>No hay <?php echo get_the_title(); ?> en esta fecha.</h2>
-									</div>
-								</div>
-							</li>
-						</ul><?php
-					}
-					wp_reset_query(); ?>
-				</div>
+					</ul>
+				</div><?php
+				}
+				wp_reset_query(); ?>
 			</div>
 		</div>
 	</section>

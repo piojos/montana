@@ -36,6 +36,7 @@
 		wp_enqueue_script( 'fitvids', get_template_directory_uri() . '/js/jquery.fitvids.js', array( 'jquery' ) );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'Magic', get_template_directory_uri() . '/js/magic.js', array('jquery') );
+		wp_enqueue_script( 'AddToCalendar', 'https://addtocalendar.com/atc/1.5/atc.min.js' );
 
 	// CONDITIONAL LOADS
 		// if(is_page('agenda')) {
