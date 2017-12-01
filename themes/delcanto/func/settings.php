@@ -138,12 +138,18 @@
 				$start_day = get_sub_field('start_day');
 				$end_day = get_sub_field('end_day');
 				$weekdays = get_sub_field('weekdays');
-				$notes = get_sub_field('notes');
+				// $notes = get_sub_field('notes');
 			}}
 			if($short == false AND $weekdays) {
 				$string = createRangeWeekdays($weekdays).'<br>';
 			}
-			$start_day = date_i18n('j \d\e F', strtotime($start_day));
+			$start_only_month = date_i18n('M', strtotime($start_day));
+			$end_only_month = date_i18n('M', strtotime($end_day));
+			if($start_only_month == $end_only_month) {
+				$start_day = date_i18n('j', strtotime($start_day));
+			} else {
+				$start_day = date_i18n('j \d\e F', strtotime($start_day));
+			}
 			if($short == true) {
 				$end_day = date_i18n('F d', strtotime($end_day));
 				$end_day = ucfirst(strtolower($end_day));
@@ -151,9 +157,9 @@
 			} else {
 				$end_day = date_i18n('j \d\e F Y', strtotime($end_day));
 				$string .= 'Del '. $start_day .' al '. $end_day;
-				if($notes) {
-					$string .= '<br>'.$notes;
-				}
+				// if($notes) {
+				// 	$string .= '<br>'.$notes;
+				// }
 			}
 		}
 
@@ -245,7 +251,7 @@
 				$nm = '';
 				if($m != $nm) $month = ' <strong> de '.ucfirst($m).'</strong>';
 				$niceday = date_i18n('l j', strtotime($key[0]));
-				$string .= prefix_forDay($key[0], '', ', ');
+				$string .= '<p>'.prefix_forDay($key[0], '', ', ');
 				$string .= $niceday.$month.': ';
 				// Add to Calendar buttons
 				// $string .= implode(", ", $key[1]);
@@ -269,12 +275,9 @@
 					$buttonbuild .= '</var></span>';
 					$atcHours[] = $buttonbuild;
 				}
-				// $string .= $buttonbuild;
 				$boom = implode(' ', $atcHours);
 				$string .= $boom;
-				// $string .= $hoursRaw;
-				// $buttonbuild = false;
-				$string .= '<br>';
+				$string .= '</p>';
 
 				$nm = date_i18n('F', strtotime($key[0]));
 				$month = false;

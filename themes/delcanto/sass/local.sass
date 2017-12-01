@@ -324,7 +324,7 @@ h2.area_title
 	margin-top: -8em
 	margin-bottom: 4em
 	position: relative
-	overflow: auto
+	overflow: visible
 	top: -1em
 	+transition(all .25s ease)
 	&.loading
@@ -359,8 +359,10 @@ h2.area_title
 	dd
 		font-family: $Helvetica
 		line-height: 1.4em
-		margin-bottom: 1em
+		margin: .3em 0 2em
 		font-weight: bold
+		p
+			margin-bottom: .2em
 	a.button
 		border: .1rem solid $white
 		padding-top: .65em
@@ -377,10 +379,10 @@ h2.area_title
 
 @media screen and (min-width: 50em)
 	.main_content_column
-		width: 55%
-		overflow: auto
+		width: 50%
+		overflow: hidden
 	.post_meta
-		width: 45%
+		width: 50%
 	.single .post_meta, .single .post_info
 		float: left
 	.page
@@ -770,7 +772,24 @@ form#local_searchform
 		height: auto
 
 
-
+.single-convocatorias
+	.post_head
+		margin-bottom: -3em
+	.post_body
+		position: relative
+		top: -1em
+		padding: 1em
+		.main_content_column
+			border: 1px solid $black
+			background: $white
+			border-top: none
+			margin: 2em auto
+			width: 100%
+			padding: 6em 0
+			margin-bottom: 8em
+	.body_content
+		max-width: 50em
+		margin: 0 auto
 
 
 // 404

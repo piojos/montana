@@ -3,11 +3,12 @@
 	// Get Hours
 	$schHrs = schedule_hours();
 
-	// Get Results Hours (convocatoria)
+	// Get Results Hours (convocatoria) || Date notes for exposiciones y talleres
 	if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) {
 		the_row();
 		$rsltDay = get_sub_field('results_day');
 		$rsltUrl = get_sub_field('results_url');
+		$dateNotes = get_sub_field('notes');
 		if($rsltDay) {
 			$rsltDay = date_i18n('l d \d\e F, Y', strtotime($rsltDay));
 			if($rsltUrl) $rsltDay = '<a href="'.$rsltUrl.'">'.$rsltDay.'</a>';
@@ -17,15 +18,28 @@
 	// Get Presentors
 	$presentor = get_field('presentor');
 
+	// Get Audience
+	$audience = get_field('audience');
+
 	// Get Cost
 	$costOptions = get_field('cost_options');
 	if( $costOptions && in_array('free', $costOptions) ) {
-		$finalCost = '<strong>Entrada libre</strong>. ';
+		$finalCost = 'Entrada libre';
 	} else {
-		$finalCost = '<strong>$'.get_field('cost').'</strong> ';
-	}
-	if(get_field('cost_message')) {
-		$finalCost .= get_field('cost_message').'.';
+		// $finalCost = '<strong>$'.get_field('cost').'</strong> ';
+
+		if(have_rows('cost_groups')) : while (have_rows('cost_groups')) : the_row();
+			$bC_cost = get_sub_field('cost');
+			$bC_group = get_sub_field('group');
+			if($bC_cost) {
+				$buildCost = '$'. $bC_cost;
+				if($bC_group) $buildCost .= ' – ';
+			}
+			if($bC_group) $buildCost .= $bC_group;
+			$buildCost .= ' <br>';
+			$finalCost .= $buildCost;
+			$buildCost = '';
+		endwhile; endif;
 	}
 
 	// Get Place
@@ -93,9 +107,21 @@
 
 	if(is_singular('cineteca')) {
 		echo mta_future_schedule('F d', 'cineteca');
+		echo '<style> .atcb-link:focus~ul,.atcb-link:active~ul,.atcb-list:hover{visibility:visible;} </style>';
 	} elseif(get_field('dates_options') == 'dates') {
 		echo mta_future_schedule('F d Y', 'agenda');
 		echo '<style> .atcb-link:focus~ul,.atcb-link:active~ul,.atcb-list:hover{visibility:visible;} </style>';
+	} elseif(is_singular('exposiciones') || is_singular('talleres')) { ?>
+		<dt class="label">Fechas y Horarios</dt>
+		<dd>
+			<p><?php echo schedule_days(); ?></p><?php
+		if(!empty($schHrs)) { ?>
+			<p><?php echo $schHrs; ?></p><?php
+		}
+		if(!empty($dateNotes)) { ?>
+			<p><?php echo $dateNotes; ?></p><?php
+		} ?>
+		</dd><?php
 	} else { ?>
 		<dt class="label">Fechas</dt>
 		<dd><?php echo schedule_days(); ?></dd><?php
@@ -104,7 +130,6 @@
 			<dd><?php echo $schHrs; ?></dd><?php
 		}
 	}
-
 
 	if(is_singular('convocatorias')) {
 		if($rsltDay) { ?>
@@ -116,6 +141,11 @@
 	if($presentor) { ?>
 		<dt class="label">Imparte</dt>
 		<dd><?php echo $presentor; ?></dd><?php
+	}
+
+	if($audience) { ?>
+		<dt class="label">Dirigido a</dt>
+		<dd><?php echo $audience; ?></dd><?php
 	}
 
 	if(is_singular('convocatorias')) {}
