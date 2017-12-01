@@ -51,6 +51,7 @@
 					}
 					if(is_singular('convocatorias')) {
 						the_field('override_excerpt');
+					} elseif(is_singular('noticias')) {
 					} else {
 						the_content();
 					}
@@ -81,7 +82,7 @@
 		} else { ?>
 
 		<div class="main_content_column"><?php
-			if(is_singular('convocatorias')) { ?>
+			if(is_singular('convocatorias') || is_singular('noticias')) { ?>
 				<div class="body_content format">
 					<?php the_content(); ?>
 				</div><?php
@@ -94,31 +95,6 @@
 			} ?>
 		</div><?php
 		}
-
-
-		if(is_singular('cineteca')) { ?>
-			<div class="area max_wrap">
-				<h2 class="area_title">Otras fechas y horarios para <?php the_title(); ?></h2>
-				<div class="deck"><?php
-					$schedArray = mta_future_schedule_array('Ymd');
-					if($schedArray) {
-						foreach ($schedArray as $key) {
-							$niceday = date_i18n('l F d', strtotime($key[0]));
-							echo '<div class="schedule card fours"><div class="details box"><div class="wrap">';
-							echo prefix_forDay($key[0]);
-							echo $niceday.'<br><ul class="hours">';
-							if(is_array($key[1])){ foreach ($key[1] as $hour) {
-								echo '<li>'.$hour.'</li>';
-							}}
-							echo '</ul></div></div></div>';
-						}
-					} else {
-						echo '<div class="schedule card fours"><div class="details box"><div class="wrap"> Esta película no se ha programado nuevamente en cartelera.</div></div></div>';
-					} ?>
-				</div>
-			</div><?php
-		}
-
 
 		get_template_part('inc/single', 'more'); ?>
 
