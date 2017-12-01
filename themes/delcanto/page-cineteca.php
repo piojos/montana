@@ -25,6 +25,13 @@
 		),
 	);
 
+	$qdp1 = date('Ymd', strtotime("-1 day", strtotime($queryDay)));
+	$qd1 = date('Ymd', strtotime("+1 day", strtotime($queryDay)));
+	$qd2 = date('Ymd', strtotime("+2 day", strtotime($queryDay)));
+	$qd3 = date('Ymd', strtotime("+3 day", strtotime($queryDay)));
+	$qd4 = date('Ymd', strtotime("+4 day", strtotime($queryDay)));
+	$qd5 = date('Ymd', strtotime("+5 day", strtotime($queryDay)));
+
 	$query = new WP_Query( $args ); ?>
 
 	<section id="content" role="main"><?php
@@ -57,19 +64,19 @@
 			<div class="max_wrap">
 				<div class="titles">
 					<h2><strong>Cineteca</strong> CON<strong>ARTE</strong></h2>
-					<p class="subtitle">Costos regulares: $40 General | $25 Preferente.</p>
+					<p class="subtitle">Costos regulares: $40 General | $25 Preferentes.</p>
 				</div>
 				<div class="action"></div>
 				<div class="search_controls">
 					<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('cineteca')); ?>">
 						<div class="dates_control flexbuttons"><?php
-							echo adc_searcher_day_item($queryDay - 1);
+							echo adc_searcher_day_item($qdp1);
 							echo adc_searcher_day_item($queryDay, 'active');
-							echo adc_searcher_day_item($queryDay + 1);
-							echo adc_searcher_day_item($queryDay + 2);
-							echo adc_searcher_day_item($queryDay + 3);
-							echo adc_searcher_day_item($queryDay + 4);
-							echo adc_searcher_day_item($queryDay + 5); ?>
+							echo adc_searcher_day_item($qd1);
+							echo adc_searcher_day_item($qd2);
+							echo adc_searcher_day_item($qd3);
+							echo adc_searcher_day_item($qd4);
+							echo adc_searcher_day_item($qd5); ?>
 						</div>
 						<div class="flexbuttons">
 							<div class="big input wrap select <?php if($queryDay == $today) echo ' hoy'; ?>">
