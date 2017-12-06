@@ -46,10 +46,10 @@
 	$placeTerm = get_place();
 
 	// Get Contact
-	$contact_text = get_field('contact_text');
+	$contact_text = get_field('contact_text'); // <-- Convocatorias
 	if( $costOptions && in_array('showcontact', $costOptions) ) {
 		$place_id = get_field('location_picker');
-		if(in_array('overridecontact', $costOptions)) {
+		if(is_singular('servicios') || in_array('overridecontact', $costOptions)) {
 			if(have_rows('contact')) {
 				while (have_rows('contact')) {
 					the_row();
@@ -57,6 +57,7 @@
 					$place_tel = get_sub_field('tel');
 				}
 			}
+		// Automatic Contact by place.
 		} elseif(!empty($place_id)) {
 			if(have_rows('contact', 'lugares_'.$place_id)) {
 				while (have_rows('contact', 'lugares_'.$place_id)) {
@@ -66,12 +67,12 @@
 				}
 			}
 		} else {
-			// $contactTerm = 'error';
+			$contactTerm = 'error';
 		}
 	}
-	if($place_tel && $place_email) {
+	if($place_tel || $place_email) {
 		$contactTerm = $place_email;
-		if($place_tel && $place_email)$contactTerm .= ', ';
+		if($place_tel && $place_email) $contactTerm .= '<br>';
 		$contactTerm .= $place_tel;
 	} elseif($contact_text) {
 		$contactTerm = '<div style="font-size:.9em;">'. $contact_text.'</div>';
@@ -122,8 +123,14 @@
 			<p><?php echo $dateNotes; ?></p><?php
 		} ?>
 		</dd><?php
+	} elseif(is_singular('servicios')) {
+		if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) { the_row();
+			$notes = get_sub_field('notes');
+		}} ?>
+		<dt class="label">Fechas y Horarios</dt>
+		<dd><?php echo $notes; ?></dd><?php
 	} else { ?>
-		<dt class="label">Fechas</dt>
+		<dt class="label">Fechas </dt>
 		<dd><?php echo schedule_days(); ?></dd><?php
 		if(!empty($schHrs)) { ?>
 			<dt class="label">Horarios</dt>

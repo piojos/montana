@@ -51,7 +51,12 @@
 					}
 					if(is_singular('convocatorias')) {
 						the_field('override_excerpt');
-					} elseif(is_singular('noticias')) {
+					} elseif(is_singular('post')) {
+						$infoNo = get_field('info_no');
+						if($infoNo) echo 'Información No. '. $infoNo;
+						echo '<p class="published">Publicada: ';
+						the_time('M j, Y.');
+						echo '</p>';
 					} else {
 						the_content();
 					}
@@ -64,7 +69,7 @@
 					<?php get_template_part('inc/sharer'); ?>
 				</div>
 			</div><?php
-			if(is_singular(array('agenda', 'cineteca', 'talleres', 'exposiciones', 'convocatorias'))) {
+			if(is_singular(array('agenda', 'cineteca', 'talleres', 'exposiciones', 'convocatorias', 'servicios'))) {
 				get_template_part('inc/single', 'metabox');
 			} ?>
 			<div class="mobile-ui status_label">
@@ -82,9 +87,16 @@
 		} else { ?>
 
 		<div class="main_content_column"><?php
-			if(is_singular('convocatorias') || is_singular('noticias')) { ?>
+			if(is_singular('convocatorias') || is_singular('post')) { ?>
 				<div class="body_content format">
-					<?php the_content(); ?>
+					<?php the_content();
+
+				if(is_singular('post')) { ?>
+					<div class="status_label">
+						<?php get_template_part('inc/sharer'); ?>
+					</div><?php
+				} ?>
+
 				</div><?php
 			}
 			get_template_part('inc/widgets');
