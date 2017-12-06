@@ -91,10 +91,26 @@ function slug_register_acf() {
 		);
 	}
 }
-function slug_get_acf( $object, $field_name, $request ) {
+
+
+function slug_get_acf( $object = false, $field_name = false, $request = false ) {
 	return get_fields($object[ 'id' ]);
 }
 
+function jf_costlist($costgroup = FALSE) {
+	if(is_array($costgroup)) {
+		$list = array();
+		foreach($costgroup as $group) {
+			$list[] = array(
+				'concept' => $group['group'],
+				'cost' => $group['cost']
+			);
+		}
+	} else {
+		$list .= 'somethin else';
+	}
+	return $list;
+}
 
 
 add_action( 'rest_api_init', 'joes_register_api_hooks');
@@ -129,6 +145,14 @@ function joes_register_api_hooks() {
 		'workshop',
 		array(
 			'get_callback'    => 'joe_return_expos_talleres',
+		)
+	);
+
+
+	register_rest_field( 'servicios',
+		'services',
+		array(
+			'get_callback'    => 'joe_return_basics',
 		)
 	);
 }
@@ -186,6 +210,12 @@ function joe_return_basics( $object, $field_name, $request ) {
 			$keyval['price'] = '$'.$object['j_custom']['cost'];
 		}
 	} else {
+		// foreach($costs as $cost) {
+		// 	$keyval['cost'] = '$'.$cost['cost'];
+		// 	$keyval['concept'] = $cost['group'];
+		// }
+		$costlist = $object['j_custom']['cost_groups'];
+		$keyval['price'] = jf_costlist($costlist);
 		// No 'cost_options'
 		// $keyval['price'] = '$'.$object['j_custom']['cost'];
 	}
@@ -204,7 +234,7 @@ function joe_return_basics( $object, $field_name, $request ) {
 		}
 	} elseif($object['type'] == 'cineteca') {
 		$keyval['dates'] = jf_datesSchedule_array();
-	} elseif($object['type'] == 'exposiciones' || $object['type'] == 'talleres') {
+	} elseif($object['type'] == 'exposiciones' || $object['type'] == 'talleres' || $object['type'] == 'servicios') {
 		$keyval['dates'] = jf_rangeSchedule($object);
 	} else {
 		$keyval['dates'] = 'no $tempchoose (not an event).';

@@ -138,7 +138,7 @@
 				$start_day = get_sub_field('start_day');
 				$end_day = get_sub_field('end_day');
 				$weekdays = get_sub_field('weekdays');
-				// $notes = get_sub_field('notes');
+				$notes = get_sub_field('notes');
 			}}
 			if($short == false AND $weekdays) {
 				$string = createRangeWeekdays($weekdays).'<br>';
@@ -157,9 +157,9 @@
 			} else {
 				$end_day = date_i18n('j \d\e F Y', strtotime($end_day));
 				$string .= 'Del '. $start_day .' al '. $end_day;
-				// if($notes) {
-				// 	$string .= '<br>'.$notes;
-				// }
+				if($notes) {
+					$string .= '<br>'.$notes;
+				}
 			}
 		}
 
@@ -175,7 +175,7 @@
 		if($weekdays) {
 			$wdString = implode(", ", $weekdays);
 			$codex = array("mon", "tue", "wed", "thu", "fri", "sat", "sun");
-			$nice = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo");
+			$nice = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
 			$string = str_replace($codex, $nice, $wdString);
 		} else {
 			$string = 'error';
