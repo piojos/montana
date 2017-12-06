@@ -279,7 +279,7 @@
 			'show_in_nav_menus'   => true,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
-			'menu_position'       => 8,
+			'menu_position'       => 5,
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => false,
@@ -319,7 +319,7 @@
 			'show_in_nav_menus'   => true,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
-			'menu_position'       => 8,
+			'menu_position'       => 5,
 			'can_export'          => true,
 			'has_archive'         => true,
 			'exclude_from_search' => false,
@@ -359,7 +359,7 @@
 			'show_in_nav_menus'   => true,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
-			'menu_position'       => 8,
+			'menu_position'       => 5,
 			'can_export'          => true,
 			'has_archive'         => true,
 			'exclude_from_search' => false,
@@ -399,7 +399,7 @@
 			'show_in_nav_menus'   => true,
 			'show_in_rest'        => true,
 			'show_in_admin_bar'   => true,
-			'menu_position'       => 8,
+			'menu_position'       => 5,
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => false,
@@ -408,6 +408,45 @@
 		);
 
 		register_post_type( 'exposiciones', $args );
+
+
+
+		$args = array(
+			'label'               => __( 'servicios'),
+			'description'         => __( 'Listado de Servicios'),
+			'labels'              => array(
+				'name'                => _x( 'Servicio permanente', 'Post Type General Name' ),
+				'singular_name'       => _x( 'Servicios permanentes', 'Post Type Singular Name' ),
+				'menu_name'           => __( 'Servicios' ),
+				// 'parent_item_colon'   => __( 'Servicio Padre' ),
+				'all_items'           => __( 'Todos los servicios permanentes' ),
+				'view_item'           => __( 'Ver servicio permanente' ),
+				'add_new_item'        => __( 'Agregar nuevo servicio permanente' ),
+				'add_new'             => __( 'Agregar nuevo' ),
+				'edit_item'           => __( 'Editar servicio permanente' ),
+				'update_item'         => __( 'Actualizar servicio permanente' ),
+				'search_items'        => __( 'Buscar servicio permanente' ),
+				'not_found'           => __( 'No se encontró' ),
+				'not_found_in_trash'  => __( 'No se encontró en la basura' ),
+									),
+			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+			// 'taxonomies'          => array( 'ubicaciones', 'disciplinas' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true,
+			'show_in_admin_bar'   => true,
+			'menu_position'       => 5,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			// 'capability_type'     => 'page',
+		);
+
+		register_post_type( 'servicios', $args );
 
 	}
 
