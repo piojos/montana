@@ -271,7 +271,7 @@
 					$buttonbuild .= '	<var class="atc_timezone">America/Mexico_City</var>';
 					$buttonbuild .= '	<var class="atc_title">'.get_the_title().'</var>';
 					$buttonbuild .= '	<var class="atc_description">'.get_the_excerpt().' –– '.get_the_permalink().'</var>';
-					$buttonbuild .= '	<var class="atc_location">'.get_place().'</var>';
+					$buttonbuild .= '	<var class="atc_location">'.get_place_name().'</var>';
 					$buttonbuild .= '</var></span>';
 					$atcHours[] = $buttonbuild;
 				}

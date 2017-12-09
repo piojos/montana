@@ -77,7 +77,7 @@
 								}
 								if($sl_ops && in_array('show_location', $sl_ops)){
 									if($pt == 'colecciones') { $fpLocations = the_field('coll_locations'); }
-									else { $fpLocations = get_place(); }
+									else { $fpLocations = get_place_name(); }
 									echo '<p>'.$fpLocations.'</p>';
 								} ?>
 							</div>

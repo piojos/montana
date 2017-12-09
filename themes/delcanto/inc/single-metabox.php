@@ -43,12 +43,14 @@
 	}
 
 	// Get Place
-	$placeTerm = get_place();
+	$place_id = get_field('location_picker');
+	$placeTerm = get_place_name();
+	$placeUrl = get_place_url();
+
 
 	// Get Contact
 	$contact_text = get_field('contact_text'); // <-- Convocatorias
 	if( $costOptions && in_array('showcontact', $costOptions) ) {
-		$place_id = get_field('location_picker');
 		if(is_singular('servicios') || in_array('overridecontact', $costOptions)) {
 			if(have_rows('contact')) {
 				while (have_rows('contact')) {
@@ -70,6 +72,8 @@
 			$contactTerm = 'error';
 		}
 	}
+	$place_tel = false;
+	$place_email = false;
 	if($place_tel || $place_email) {
 		$contactTerm = $place_email;
 		if($place_tel && $place_email) $contactTerm .= '<br>';
@@ -166,7 +170,7 @@
 
 	if($placeTerm) { ?>
 		<dt class="label">Lugar</dt>
-		<dd><a href="<?php echo esc_url( home_url('espacios')); ?>" class="location"><?php echo $placeTerm; ?></a></dd><?php
+		<dd><a href="<?php echo $placeUrl; ?>" class="location"><?php echo $placeTerm; ?></a></dd><?php
 	}
 
 

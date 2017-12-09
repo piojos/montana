@@ -43,13 +43,51 @@
 
 
 
+	function get_place_name($id = false) {
+		if($id != false) {
+			$place_id = $id;
+		} else {
+			$place_id = get_field('location_picker');
+		}
+		$place_term = get_term_by('id', $place_id, 'lugares');
+		$place_name = $place_term->name;
 
-	function get_place() {
-		$aTerm = get_field('location_picker');
-		$placeTerm = get_term_by('id', $aTerm, 'lugares');
-		return $placeTerm->name;
+		$parent_place_id = wp_get_term_taxonomy_parent_id($place_id, 'lugares');
+
+		if($parent_place_id) {
+			$parent_term = get_term_by('id', $parent_place_id, 'lugares');
+			$parent_slug = $parent_term->slug;
+			if($parent_slug != 'otros-espacios') {
+				$place_name .= ', '.$parent_term->name;
+			}
+		}
+
+		return $place_name;
 	}
 
+	function get_place_url($id = false) {
+		if($id != false) {
+			$place_id = $id;
+		} else {
+			$place_id = get_field('location_picker');
+		}
+		$place_term = get_term_by('id', $place_id, 'lugares');
+		$this_place_url = get_field('placepage_url', 'lugares_'.$place_id);
+		$parent_place_id = wp_get_term_taxonomy_parent_id($place_id, 'lugares');
+
+		if($this_place_url) {
+			$place_url = $this_place_url;
+		} else {
+			if($parent_place_id) {
+				$parent_term = get_term_by('id', $parent_place_id, 'lugares');
+				$place_url = get_field('placepage_url', 'lugares_'.$parent_place_id);
+			} else {
+				$place_url =  esc_url( home_url('espacios'));
+			}
+		}
+
+		return $place_url;
+	}
 
 
 	function card($class = false, $setData = false, $day = false) {
@@ -102,7 +140,7 @@
 			if($locations) { $string .= '<p>'.$locations.'</p>'; }
 		} elseif(get_post_type() == 'cineteca') {
 			if(!is_search()) {
-				$placeTerm = get_place();
+				$placeTerm = get_place_name();
 				$string = '<p><strong>'. mta_next_movie('F j') .'</strong></p>';
 				if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
 			}
@@ -110,7 +148,7 @@
 		} elseif(get_post_type() == 'post') {
 			$string = '<p style="text-transform: capitalize;"><strong>'.get_the_date('F j ').'</strong> '.get_the_date('Y').'</p>';
 		} else {
-			$placeTerm = get_place();
+			$placeTerm = get_place_name();
 			$string = '<p>'.schedule_hours().'</p>';
 			$string .= '<p><strong>'. schedule_days('F j Y', true, true) .'</strong></p>';
 			if($placeTerm) { $string .= '<p>'.$placeTerm.'</p>'; }
@@ -235,7 +273,7 @@
 					</div>
 				</div>
 				<div class="location">
-					<p><strong><?php echo get_place(); ?></strong></p>
+					<p><strong><?php echo get_place_name(); ?></strong></p>
 					<?php
 						$skills = get_skills();
 						$pt = get_post_type();
