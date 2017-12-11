@@ -10,7 +10,7 @@ jQuery( function($) {
 	});
 	$( ".slick-dots" ).wrap( "<div class='max_wrap'></div>" );
 	$('.slider_deck').slick({
-		arrows : false,
+		arrows : true,
 		variableWidth: true,
 		infinite: false,
 		swipeToSlide: true

@@ -154,9 +154,39 @@ if( have_rows('section_blocks') ):
 			$ftd_choose = get_sub_field('choose_format');
 			$ftd_title = get_sub_field('title');
 			$ftd_events = get_sub_field('ftd_events');
+			// echo $ftd_choose;
 
-			if( $ftd_choose && in_array('bigslider', $ftd_choose) ) {
 
+			if( $ftd_choose == 'bigslider' ) {
+				if( $ftd_events ) { ?>
+				<div class="big slider"><?php
+					foreach( $ftd_events as $post) {
+						setup_postdata($post); ?>
+						<div class="slide">
+							<a href="<?php the_permalink(); ?>">
+								<div class="bg_img" style="background-image:url(<?php the_post_thumbnail_url('huge'); ?>);"></div>
+							</a>
+							<div class="max_wrap">
+								<div class="details box">
+									<a href="<?php the_permalink(); ?>">
+										<?php echo keyword_box(); ?>
+										<?php logo_or_title('h2'); ?>
+										<?php if(get_field('kicker')) echo '<p class="subtitle">'.get_field('kicker').'</p>'; ?>
+										<div class="about excerpt">
+											<?php the_excerpt(); ?>
+										</div>
+									</a>
+									<div class="status_label"><?php get_template_part('inc/sharer'); ?>
+									</div>
+								</div>
+							</div>
+						</div><?php
+					} ?>
+				</div><?php
+				wp_reset_postdata();
+				}
+
+			} elseif( $ftd_choose == 'background' ) {
 				if( $ftd_events ): ?>
 				<div class="area head_blur">
 					<div class="max_wrap"><?php
@@ -173,14 +203,12 @@ if( have_rows('section_blocks') ):
 					</div>
 				</div><?php
 					wp_reset_postdata();
+				else :
+					echo 'nope';
 				endif;
-
-			if( $ftd_choose && in_array('background', $ftd_choose) ) {
-
-				get_template_part('inc/big', 'slider');
-
-			} else {}
-
+			} else {
+				// No events
+			}
 
 
 		elseif( get_row_layout() == 'block_explore' ):
