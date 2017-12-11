@@ -26,7 +26,13 @@
 			$class .= ' today';
 		}
 		$class = ' class="input wrap radio '.$class.'"';
-		$string = '<div'. $class .'><input type="radio" name="fecha" value="'. $day .'" id="qf_'. $day .'" onClick="document.getElementById(\'visibleFecha\').value=this.value"><label for="qf_'. $day .'">'. date_i18n( $dc_format, strtotime( $day ) ) .'</label></div>';
+		$readyDate = date_i18n( $dc_format, strtotime( $day ) );
+
+		$codex = array("Mie", "Sab");
+		$nice = array("Mié", "Sáb");
+		$readyDate = str_replace($codex, $nice, $readyDate);
+
+		$string = '<div'. $class .'><input type="radio" name="fecha" value="'. $day .'" id="qf_'. $day .'" onClick="document.getElementById(\'visibleFecha\').value=this.value"><label for="qf_'. $day .'">'. $readyDate .'</label></div>';
 		// $string = '<button type="submit" name="fecha" value="'. $day .'"'.$class.'>'. date_i18n( $dc_format, strtotime( $day ) ) .'</button>';
 		return $string;
 	}
