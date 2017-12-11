@@ -429,7 +429,7 @@
 				'not_found'           => __( 'No se encontró' ),
 				'not_found_in_trash'  => __( 'No se encontró en la basura' ),
 									),
-			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'page-attributes' ),
 			// 'taxonomies'          => array( 'ubicaciones', 'disciplinas' ),
 			'hierarchical'        => false,
 			'public'              => true,
