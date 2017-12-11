@@ -130,9 +130,11 @@
 	} elseif(is_singular('servicios')) {
 		if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) { the_row();
 			$notes = get_sub_field('notes');
-		}} ?>
-		<dt class="label">Fechas y Horarios</dt>
-		<dd><?php echo $notes; ?></dd><?php
+		}}
+		if($notes) {?>
+			<dt class="label">Fechas y Horarios</dt>
+			<dd><?php echo $notes; ?></dd><?php
+		}
 	} else { ?>
 		<dt class="label">Fechas </dt>
 		<dd><?php echo schedule_days(); ?></dd><?php

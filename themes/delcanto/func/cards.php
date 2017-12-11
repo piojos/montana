@@ -147,6 +147,11 @@
 			$string .= '<br>'.movie_meta();
 		} elseif(get_post_type() == 'post') {
 			$string = '<p style="text-transform: capitalize;"><strong>'.get_the_date('F j ').'</strong> '.get_the_date('Y').'</p>';
+		} elseif(get_post_type() == 'servicios') {
+			if(have_rows('range_date_picker')) { while (have_rows('range_date_picker')) { the_row();
+				$notes = get_sub_field('notes');
+			}}
+			$string = '<p style="text-transform: capitalize;">'.$notes.'</p>';
 		} else {
 			$placeTerm = get_place_name();
 			$string = '<p>'.schedule_hours().'</p>';
