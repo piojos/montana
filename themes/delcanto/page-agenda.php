@@ -141,6 +141,144 @@
 	<section id="content" role="main"><?php
 
 
+			// Receive downloadable Agenda file
+			if( have_rows('current_agenda') ):
+				while ( have_rows('current_agenda') ) : the_row();
+					$f_m = get_sub_field('month');
+					$f_y = get_sub_field('year');
+					$file = get_sub_field('file_url');
+				endwhile;
+				else :
+			endif; ?>
+
+
+				<div class="head area" id="agenda">
+					<div class="max_wrap">
+						<div class="titles">
+							<h2><strong>Agenda</strong> CON<strong>ARTE</strong></h2>
+							<p class="subtitle">Encuentra eventos por <strong>día</strong>, <strong>disciplina</strong> o <strong>espacio</strong>. <?php if($file) echo ' Descarga la <a href="'.$file.'" target="_blank"><strong>agenda de '.$f_m.' '.$f_y.'</strong></a>.'; ?></p>
+						</div>
+						<div class="action"></div>
+						<div class="search_controls">
+							<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
+								<div class="dates_control flexbuttons"><?php
+									echo adc_searcher_day_item($qdp1);
+									echo adc_searcher_day_item($queryDay, 'active');
+									echo adc_searcher_day_item($qd1);
+									echo adc_searcher_day_item($qd2);
+									echo adc_searcher_day_item($qd3);
+									echo adc_searcher_day_item($qd4);
+									echo adc_searcher_day_item($qd5); ?>
+								</div>
+								<div class="flexbuttons">
+									<div class="big input wrap select <?php if($queryDay == $today) echo ' hoy'; ?>">
+										<label for="fecha">Fecha</label>
+										<input type="text" name="visibleFecha" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>" onchange="this.form.submit()">
+										<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
+									</div>
+									<div class="big input wrap select">
+										<label for="disciplina">Disciplina</label>
+										<select name="disciplina" id="disciplina">
+											<option value="">Todas</option>
+											<?php echo listSelOptions('disciplinas', $_GET['disciplina']); ?>
+										</select>
+									</div>
+									<div class="big input wrap select">
+										<label for="lugar">Espacio</label>
+										<select name="lugar" id="lugar">
+											<option value="">Todos</option>
+											<?php echo listSelOptions('lugares', $_GET['lugar']); ?>
+										</select>
+									</div>
+								</div>
+							</form>
+							<div class="loader">
+								<img src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="area">
+					<div id="result_area" class="ag_results">
+
+						<div class="internal">
+							<div class="max_wrap">
+								<h3>Eventos CONARTE</h3>
+							</div><?php
+
+							if ( $int_query->have_posts() ) { ?>
+							<ul><?php
+								while ( $int_query->have_posts() ) {
+									$int_query->the_post();
+									list_card($queryDay);
+								} ?>
+							</ul><?php
+							} else { ?>
+								<ul>
+									<li>
+										<div class="max_wrap">
+											<div class="no-events">
+												<h2>No hay eventos hoy 😞</h2>
+												<p>Prueba con otra fecha o disciplina.</p>
+											</div>
+										</div>
+									</li>
+								</ul><?php
+							}
+							wp_reset_query(); ?>
+						</div><?php
+
+							if ( $ext_query->have_posts() ) { ?>
+						<div class="external">
+							<h3 class="max_wrap">Eventos Externos</h3>
+							<ul><?php
+								while ( $ext_query->have_posts() ) {
+									$ext_query->the_post();
+									list_card($queryDay);
+								} ?>
+							</ul>
+						</div><?php
+						}
+						wp_reset_query();
+
+
+						if($fArgs) { ?>
+
+						<div class="future">
+							<div class="max_wrap">
+								<h3><?php
+									$niceDisciplina = get_term_by('slug', $_GET['disciplina'], 'disciplinas');
+									$niceLugar = get_term_by('slug', $_GET['lugar'], 'lugares');
+
+									if($niceDisciplina || $niceLugar) {
+										$listTitle = 'Próximos eventos ';
+										if($niceDisciplina) $listTitle .= ' de '.$niceDisciplina->name;
+										if($niceLugar) $listTitle .= ' en '.$niceLugar->name;
+									}
+
+									echo $listTitle; ?></h3>
+							</div><?php
+							if ( $fut_query->have_posts() ) { ?>
+							<div class="max_wrap"><?php
+								while ( $fut_query->have_posts() ) {
+									$fut_query->the_post();
+									card('fours','',$queryDay);
+								} ?>
+							</div><?php
+							} else { ?>
+							<div class="max_wrap">
+								<div class="card fours no-events">
+									<p>No hay eventos futuros</p>
+									<p>Prueba con otra fecha o disciplina.</p>
+								</div>
+							</div><?php
+							}
+							wp_reset_query(); ?>
+						</div><?php
+						} ?>
+					</div>
+				</div><?php
 
 
 if( have_rows('section_blocks') ):
@@ -257,144 +395,6 @@ if( have_rows('section_blocks') ):
 
 		elseif( get_row_layout() == 'block_search' ):
 
-		// Receive downloadable Agenda file
-		if( have_rows('current_agenda') ):
-			while ( have_rows('current_agenda') ) : the_row();
-				$f_m = get_sub_field('month');
-				$f_y = get_sub_field('year');
-				$file = get_sub_field('file_url');
-			endwhile;
-			else :
-		endif; ?>
-
-
-			<div class="head area" id="agenda">
-				<div class="max_wrap">
-					<div class="titles">
-						<h2><strong>Agenda</strong> CON<strong>ARTE</strong></h2>
-						<p class="subtitle">Encuentra eventos por <strong>día</strong>, <strong>disciplina</strong> o <strong>espacio</strong>. <?php if($file) echo ' Descarga la <a href="'.$file.'" target="_blank"><strong>agenda de '.$f_m.' '.$f_y.'</strong></a>.'; ?></p>
-					</div>
-					<div class="action"></div>
-					<div class="search_controls">
-						<form role="search" method="get" id="searchfilter" class="searchform ag_filter" action="<?php echo esc_url( home_url('agenda')); ?>">
-							<div class="dates_control flexbuttons"><?php
-								echo adc_searcher_day_item($qdp1);
-								echo adc_searcher_day_item($queryDay, 'active');
-								echo adc_searcher_day_item($qd1);
-								echo adc_searcher_day_item($qd2);
-								echo adc_searcher_day_item($qd3);
-								echo adc_searcher_day_item($qd4);
-								echo adc_searcher_day_item($qd5); ?>
-							</div>
-							<div class="flexbuttons">
-								<div class="big input wrap select <?php if($queryDay == $today) echo ' hoy'; ?>">
-									<label for="fecha">Fecha</label>
-									<input type="text" name="visibleFecha" id="visibleFecha" value="<?php echo $_GET['visibleFecha']; ?>" onchange="this.form.submit()">
-									<input type="text" name="fecha" id="fecha" value="<?php echo $_GET['fecha']; ?>" style="display:none">
-								</div>
-								<div class="big input wrap select">
-									<label for="disciplina">Disciplina</label>
-									<select name="disciplina" id="disciplina">
-										<option value="">Todas</option>
-										<?php echo listSelOptions('disciplinas', $_GET['disciplina']); ?>
-									</select>
-								</div>
-								<div class="big input wrap select">
-									<label for="lugar">Espacio</label>
-									<select name="lugar" id="lugar">
-										<option value="">Todos</option>
-										<?php echo listSelOptions('lugares', $_GET['lugar']); ?>
-									</select>
-								</div>
-							</div>
-						</form>
-						<div class="loader">
-							<img src="<?php echo get_template_directory_uri(); ?>/img/loader.gif" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="area">
-				<div id="result_area" class="ag_results">
-
-					<div class="internal">
-						<div class="max_wrap">
-							<h3>Eventos CONARTE</h3>
-						</div><?php
-
-						if ( $int_query->have_posts() ) { ?>
-						<ul><?php
-							while ( $int_query->have_posts() ) {
-								$int_query->the_post();
-								list_card($queryDay);
-							} ?>
-						</ul><?php
-						} else { ?>
-							<ul>
-								<li>
-									<div class="max_wrap">
-										<div class="no-events">
-											<h2>No hay eventos hoy 😞</h2>
-											<p>Prueba con otra fecha o disciplina.</p>
-										</div>
-									</div>
-								</li>
-							</ul><?php
-						}
-						wp_reset_query(); ?>
-					</div><?php
-
-						if ( $ext_query->have_posts() ) { ?>
-					<div class="external">
-						<h3 class="max_wrap">Eventos Externos</h3>
-						<ul><?php
-							while ( $ext_query->have_posts() ) {
-								$ext_query->the_post();
-								list_card($queryDay);
-							} ?>
-						</ul>
-					</div><?php
-					}
-					wp_reset_query();
-
-
-					if($fArgs) { ?>
-
-					<div class="future">
-						<div class="max_wrap">
-							<h3><?php
-								$niceDisciplina = get_term_by('slug', $_GET['disciplina'], 'disciplinas');
-								$niceLugar = get_term_by('slug', $_GET['lugar'], 'lugares');
-
-								if($niceDisciplina || $niceLugar) {
-									$listTitle = 'Próximos eventos ';
-									if($niceDisciplina) $listTitle .= ' de '.$niceDisciplina->name;
-									if($niceLugar) $listTitle .= ' en '.$niceLugar->name;
-								}
-
-								echo $listTitle; ?></h3>
-						</div><?php
-						if ( $fut_query->have_posts() ) { ?>
-						<div class="max_wrap"><?php
-							while ( $fut_query->have_posts() ) {
-								$fut_query->the_post();
-								card('fours','',$queryDay);
-							} ?>
-						</div><?php
-						} else { ?>
-						<div class="max_wrap">
-							<div class="card fours no-events">
-								<p>No hay eventos futuros</p>
-								<p>Prueba con otra fecha o disciplina.</p>
-							</div>
-						</div><?php
-						}
-						wp_reset_query(); ?>
-					</div><?php
-					} ?>
-				</div>
-			</div><?php
 
 		endif;
 
