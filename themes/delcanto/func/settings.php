@@ -265,7 +265,7 @@
 					$fullDate = $key[0].$hourSlug;
 					$stDate = date_i18n('Y-m-d H:i:s', strtotime($fullDate));
 					$enDate = date('Y-m-d H:i:s', strtotime("+2 hours", strtotime($fullDate)));
-					$buttonbuild = '<span class="addtocalendar atc-style-orange">';
+					$buttonbuild = '<span class="addtocalendar atc-style-orange" data-calendars="iCalendar, Google Calendar, Outlook Online, Outlook">';
 					$buttonbuild .= '	<a class="atcb-link">'.$hour.'</a><var class="atc_event">';
 					$buttonbuild .= '	<var class="atc_date_start">'.$stDate.'</var> <var class="atc_date_end">'.$enDate.'</var>';
 					$buttonbuild .= '	<var class="atc_timezone">America/Mexico_City</var>';
