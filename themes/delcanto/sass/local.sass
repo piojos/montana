@@ -246,17 +246,16 @@ h2.area_title
 	position: absolute
 	top: 50%
 	display: block
-	width: 3.2rem
-	height: 3.2rem
+	width: 20px
+	height: 20px
 	margin-top: -10px
 	padding: 0
 	cursor: pointer
 	color: transparent
 	border: none
 	outline: none
-	border: .2rem solid $black
 	background: url(../img/arrow.png) center no-repeat
-	background-size: 40%
+	background-size: 60%
 
 	&:before
 		font-size: 20px
@@ -273,6 +272,31 @@ h2.area_title
 	right: -30px
 	&:before
 		content: ''
+
+.slider_deck
+	overflow: visible
+	.slick-arrow
+		background-size: 40%
+		background-position: 60% center
+		background-color: $whitegray
+		+border-radius(50%)
+		width: 3.2rem
+		height: 3.2rem
+		+transition(opacity .5s)
+		opacity: 1
+		&.slick-disabled
+			opacity: 0
+
+	button.slick-next
+		right: 4rem
+
+	button.slick-prev
+		left: 4rem
+		z-index: 1
+
+
+
+
 
 @media screen and (max-width: 40em)
 	.collections .collection-slides .img-large
