@@ -453,7 +453,18 @@
 	add_action( 'init', 'custom_post_types', 0 );
 
 
+	function posts_for_current_author($query) {
 
+		if($query->is_admin) {
+
+		if ($query->get('post_type') == 'servicios') {
+			$query->set('orderby', 'menu_order');
+			$query->set('order', 'ASC');
+			}
+		}
+		return $query;
+	}
+	add_filter('pre_get_posts', 'posts_for_current_author');
 
 
 

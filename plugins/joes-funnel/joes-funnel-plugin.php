@@ -73,6 +73,31 @@ function jf_get_current_agenda() {
 		return $daysList;
 	}
 
+	function alt_rangeSchedule($object) {
+		$format = 'Y-m-d H:i:s';
+
+		$dates_repeater = get_field('range_date_picker' );
+		$stday = $dates_repeater[0]['start_day'];
+		$sthour = $dates_repeater[0]['hour'];
+		$enday = $dates_repeater[0]['end_day'];
+
+
+		// $stday = $object['j_custom']['range_date_picker'][0]['start_day'];
+		// $sthour = $object['j_custom']['schedules'][0]['hour'];
+		// $enday = $object['j_custom']['range_date_picker'][0]['end_day'];
+
+		$hourlater = strtotime($sthour) + 60*60;
+		$strHour = date('H:i:s', strtotime($sthour));
+		$endHour = date('H:i:s', $hourlater);
+		$stDate = date_i18n($format, strtotime($stday.$strHour));
+		$enDate = date_i18n($format, strtotime($enday.$endHour));
+
+		$daysList = array(
+			'start' => $stDate.'a',
+			'end' => $enDate
+		);
+		return $daysList;
+	}
 
 
 
@@ -351,12 +376,14 @@ function myplugin_add_karma() {
 	) );
 }
 
-
-
-
-
-
-
+function show_message_function( $comment_ID, $comment_approved ) {
+	if( 1 === $comment_approved ){
+		$gets_comment = get_comment( $comment_ID );
+		$comment_post_id = $gets_comment->comment_post_ID ;
+		update_field( 'public_rating', 'alo', $comment_post_id );
+	}
+}
+add_action( 'comment_post', 'show_message_function', 10, 2 );
 
 
 
@@ -365,3 +392,330 @@ function filter_rest_allow_anonymous_comments() {
 	return true;
 }
 add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
+
+
+
+
+
+
+// Route para Agenda
+add_action( 'rest_api_init', 'jf_register_api_hooks_f' );
+function jf_register_api_hooks_f() {
+	register_rest_route( 'apiconarte/v1', '/agenda/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_age',
+	) );
+
+	register_rest_route( 'apiconarte/v1', '/cineteca/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_cin',
+	) );
+
+	register_rest_route( 'apiconarte/v1', '/exposiciones/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_exp',
+	) );
+
+	register_rest_route( 'apiconarte/v1', '/talleres/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_tal',
+	) );
+
+	register_rest_route( 'apiconarte/v1', '/servicios/', array(
+		'methods' => 'GET',
+		'callback' => 'jf_get_ser',
+	) );
+}
+
+function jf_get_age() {
+
+	$today = current_time('Ymd0000');
+
+	$args = array(
+		'post_type'		=> 'agenda',
+		'posts_per_page'	=> -1,
+		'meta_query' => array (
+			array(
+				'key'       => 'order_day',
+				'value'     => $today,
+				'compare'   => '>',
+			)
+		),
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
+
+	$filter = new WP_Query( $args );
+	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
+		$img_id = get_post_thumbnail_id();
+		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
+
+		$costOptions = get_field('cost_options');
+		if( $costOptions && in_array('free', $costOptions) ) {
+			$finalCost = 'Entrada libre';
+		} else {
+			$finalCost = get_field('cost_groups');
+		}
+		$costOptions = get_field('cost_options');
+
+		$all_post_ids[] = array(
+			'id' => get_the_id(),
+			'title' => get_the_title(),
+			'link' => get_the_permalink(),
+			'category' => get_skills(),
+			'description' => get_the_content(),
+			'place' => get_place_name(),
+			'prices' => $finalCost,
+			'dates' => jf_datesSchedule_array(),
+			'images' => $img_url[0],
+			'order_day' => get_field('order_day'),
+		);
+	endwhile; wp_reset_postdata(); endif;
+
+	return $all_post_ids;
+
+}
+
+
+
+
+
+function jf_get_cin() {
+
+	$today = current_time('Ymd0000');
+
+	$args = array(
+		'post_type'		=> 'cineteca',
+		'posts_per_page'	=> -1,
+		'meta_query' => array (
+			array(
+				'key'       => 'order_day',
+				'value'     => $today,
+				'compare'   => '>',
+			)
+		),
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
+
+	$filter = new WP_Query( $args );
+	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
+		$img_id = get_post_thumbnail_id();
+		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
+
+		$costOptions = get_field('cost_options');
+		if( $costOptions && in_array('free', $costOptions) ) {
+			$finalCost = 'Entrada libre';
+		} else {
+			$finalCost = get_field('cost_groups');
+		}
+
+		// if(have_rows('meta')){
+		// 	while (have_rows('meta')) {
+		// 		the_row();
+		// 		$mYear = get_sub_field('year');
+		// 		$mCountry = get_sub_field('countries');
+		// 		$mDirector = get_sub_field('director');
+		// 		$mGenre = get_sub_field('genre');
+		// 		$mLength = get_sub_field('length');
+		// 		$mAudience = get_sub_field('rating');
+		// 	}
+		// }
+
+		$meta_repeater = get_field('meta');
+		$meta = $meta_repeater[0];
+
+		$all_post_ids[] = array(
+			'id' => get_the_id(),
+			'title' => get_the_title(),
+			'link' => get_the_permalink(),
+			'category' => get_skills(),
+			'description' => get_the_content(),
+			'place' => get_place_name(),
+			'prices' => $finalCost,
+			'dates' => jf_datesSchedule_array(),
+			'images' => $img_url[0],
+			'meta' => $meta,
+			// if($mAudience) 'audience' = $mAudience;
+			// if($mGenre) 'genre' = $mGenre;
+			// if($mYear) 'year' = $mYear;
+			// if($mDirector) 'director' = $mDirector;
+			// if($mCast) 'cast' = $mCast;
+			// if($mLength) 'runtime' = $mLength;
+			'order_day' => get_field('order_day'),
+		);
+
+	endwhile; wp_reset_postdata(); endif;
+
+	return $all_post_ids;
+
+}
+
+
+
+
+function jf_get_exp() {
+
+	$today = current_time('Ymd0000');
+	$thisMonthStart = date('Y-m-d', strtotime($today));
+	$nextMonth = date('Y-m-d', strtotime("+1 month", strtotime($today)));
+	$thisMonthEnd = date('Y-m-d', strtotime("-1 day", strtotime($nextMonth)));
+
+	$args = array(
+		'post_type'		=> 'exposiciones',
+		'posts_per_page'	=> -1,
+		'meta_query' => array(
+			'relation'		=> 'AND',
+			array(
+				'key'		=> 'range_date_picker_0_start_day',
+				'compare'	=> '<=',
+				'value'		=> $thisMonthEnd,
+				'type'		=> 'DATE'
+			),
+			array(
+				'key'		=> 'range_date_picker_0_end_day',
+				'compare'	=> '>=',
+				'value'		=> $thisMonthStart,
+				'type'		=> 'DATE'
+			)
+		),
+	);
+
+	$filter = new WP_Query( $args );
+
+	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
+		$img_id = get_post_thumbnail_id();
+		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
+
+		$costOptions = get_field('cost_options');
+		if( $costOptions && in_array('free', $costOptions) ) {
+			$finalCost = 'Entrada libre';
+		} else {
+			$finalCost = get_field('cost_groups');
+		}
+		$costOptions = get_field('cost_options');
+
+		$dates_repeater = get_field('range_date_picker' );
+
+		$all_post_ids[] = array(
+			'id' => get_the_id(),
+			'title' => get_the_title(),
+			'link' => get_the_permalink(),
+			'category' => get_skills(),
+			'description' => get_the_content(),
+			'place' => get_place_name(),
+			'prices' => $finalCost,
+			'dates' => $dates_repeater,
+			'images' => $img_url[0],
+			'order_day' => get_field('order_day'),
+		);
+	endwhile; wp_reset_postdata(); endif;
+
+	return $all_post_ids;
+
+}
+
+
+
+
+
+
+
+function jf_get_tal() {
+
+	$today = current_time('Ym\0\1\0\0\0\0');
+
+	$args = array(
+		'post_type'		=> 'talleres',
+		'posts_per_page'	=> -1,
+		'meta_query' => array (
+			array(
+				'key'       => 'range_date_picker_0_end_day',
+				'value'     => $today,
+				'compare'   => '>=',
+			)
+		),
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
+
+	$filter = new WP_Query( $args );
+	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
+		$img_id = get_post_thumbnail_id();
+		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
+
+		$costOptions = get_field('cost_options');
+		if( $costOptions && in_array('free', $costOptions) ) {
+			$finalCost = 'Entrada libre';
+		} else {
+			$finalCost = get_field('cost_groups');
+		}
+		$costOptions = get_field('cost_options');
+
+		$all_post_ids[] = array(
+			'id' => get_the_id(),
+			'title' => get_the_title(),
+			'link' => get_the_permalink(),
+			'category' => get_skills(),
+			'description' => get_the_content(),
+			'place' => get_place_name(),
+			'prices' => $finalCost,
+			'dates' => alt_rangeSchedule(),
+			'images' => $img_url[0],
+			'order_day' => get_field('order_day'),
+		);
+	endwhile; wp_reset_postdata(); endif;
+
+	return $all_post_ids;
+
+}
+
+
+
+
+
+
+
+function jf_get_ser() {
+
+	$args = array(
+		'post_type'		=> 'servicios',
+		'posts_per_page'	=> -1,
+	);
+
+	$filter = new WP_Query( $args );
+	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
+		$img_id = get_post_thumbnail_id();
+		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
+
+		$costOptions = get_field('cost_options');
+		if( $costOptions && in_array('free', $costOptions) ) {
+			$finalCost = 'Entrada libre';
+		} else {
+			$finalCost = get_field('cost_groups');
+		}
+		$costOptions = get_field('cost_options');
+
+		$dates_repeater = get_field('range_date_picker' );
+		$date = $dates_repeater[0]['notes'];
+
+		$all_post_ids[] = array(
+			'id' => get_the_id(),
+			'title' => get_the_title(),
+			'link' => get_the_permalink(),
+			'category' => get_skills(),
+			'description' => get_the_content(),
+			'place' => get_place_name(),
+			'prices' => $finalCost,
+			'dates' => $date,
+			'images' => $img_url[0],
+			'order_day' => get_field('order_day'),
+		);
+	endwhile; wp_reset_postdata(); endif;
+
+	return $all_post_ids;
+
+}
