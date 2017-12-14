@@ -396,6 +396,13 @@ function jf_register_api_hooks_f() {
 	register_rest_route( 'apiconarte/v1', '/agenda/', array(
 		'methods' => 'GET',
 		'callback' => 'jf_get_age',
+		// 'args' => array(
+		// 	'page' => array(
+		// 		'validate_callback' => function($param, $request, $key) {
+		// 			return is_numeric( $param );
+		// 		}
+		// 	),
+		// ),
 	) );
 
 	register_rest_route( 'apiconarte/v1', '/cineteca/', array(
@@ -419,26 +426,51 @@ function jf_register_api_hooks_f() {
 	) );
 }
 
-function jf_get_age() {
+function jf_get_age( WP_REST_Request $request ) {
 
 	$today = current_time('Ymd0000');
+	if($request['page']) {
+		$args = array(
+			'post_type'		=> 'agenda',
+			'posts_per_page'	=> 40,
+			'paged'				=> $request['page'],
+			'meta_query' => array (
+				array(
+					'key'       => 'order_day',
+					'value'     => $today,
+					'compare'   => '>',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	} else {
+		$args = array(
+			'post_type'		=> 'agenda',
+			'posts_per_page'	=> -1,
+			'meta_query' => array (
+				array(
+					'key'       => 'order_day',
+					'value'     => $today,
+					'compare'   => '>',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	}
 
-	$args = array(
-		'post_type'		=> 'agenda',
-		'posts_per_page'	=> -1,
-		'meta_query' => array (
-			array(
-				'key'       => 'order_day',
-				'value'     => $today,
-				'compare'   => '>',
-			)
-		),
-		'meta_key'		=> 'order_day',
-		'orderby'		=> 'meta_value_num',
-		'order'			=> 'ASC',
-	);
 
 	$filter = new WP_Query( $args );
+
+	$all_post_ids[] = array(
+		'request' => $request['page'],
+		'total_results' => $filter->post_count
+	);
+
+
 	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
 		$img_id = get_post_thumbnail_id();
 		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
@@ -453,10 +485,31 @@ function jf_get_age() {
 
 		$post_ID = get_the_id();
 
-
 		$comments = get_comments(array('post_id' => $post_ID));
 		$countcomments = count($comments);
+		$single_rate = array();
 
+		foreach($comments as $comment) {
+			$single_rate[] = $comment->comment_karma;
+		}
+
+		if($countcomments == 0) {
+			$rating_status = 'Not Rated';
+		} else {
+			$rating_status = array_sum($single_rate)/count($single_rate);
+		}
+
+
+		$place_id = get_field('location_picker');
+		if( $costOptions && in_array('showcontact', $costOptions) ) {
+			if(in_array('overridecontact', $costOptions)) {
+				$contact_status = get_field('contact');
+			} elseif(!empty($place_id)) {
+				$contact_status = get_field('contact', 'lugares_'.$place_id);
+			} else {
+				$contact_status = 'No contact';
+			}
+		}
 
 		$all_post_ids[] = array(
 			'id' => $post_ID,
@@ -468,7 +521,8 @@ function jf_get_age() {
 			'prices' => $finalCost,
 			'dates' => jf_datesSchedule_array(),
 			'images' => $img_url[0],
-			'ratings' => $countcomments,
+			'rating' => $rating_status,
+			'contact' => $contact_status,
 			'order_day' => get_field('order_day'),
 		);
 	endwhile; wp_reset_postdata(); endif;
@@ -481,26 +535,49 @@ function jf_get_age() {
 
 
 
-function jf_get_cin() {
+function jf_get_cin( WP_REST_Request $request ) {
 
-	$today = current_time('Ymd0000');
-
-	$args = array(
-		'post_type'		=> 'cineteca',
-		'posts_per_page'	=> -1,
-		'meta_query' => array (
-			array(
-				'key'       => 'order_day',
-				'value'     => $today,
-				'compare'   => '>',
-			)
-		),
-		'meta_key'		=> 'order_day',
-		'orderby'		=> 'meta_value_num',
-		'order'			=> 'ASC',
-	);
+	$today = current_time('Ymd\0\0\0\0');
+	if($request['page']) {
+		$args = array(
+			'post_type'		=> 'cineteca',
+			'posts_per_page'	=> 40,
+			'paged'				=> $request['page'],
+			'meta_query' => array (
+				array(
+					'key'       => 'order_day',
+					'value'     => $today,
+					'compare'   => '>',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	} else {
+		$args = array(
+			'post_type'		=> 'cineteca',
+			'posts_per_page'	=> -1,
+			'meta_query' => array (
+				array(
+					'key'       => 'order_day',
+					'value'     => $today,
+					'compare'   => '>',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	}
 
 	$filter = new WP_Query( $args );
+
+	$all_post_ids[] = array(
+		'request' => $request['page'],
+		'total_results' => $filter->post_count
+	);
+
 	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
 		$img_id = get_post_thumbnail_id();
 		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
@@ -512,38 +589,51 @@ function jf_get_cin() {
 			$finalCost = get_field('cost_groups');
 		}
 
-		// if(have_rows('meta')){
-		// 	while (have_rows('meta')) {
-		// 		the_row();
-		// 		$mYear = get_sub_field('year');
-		// 		$mCountry = get_sub_field('countries');
-		// 		$mDirector = get_sub_field('director');
-		// 		$mGenre = get_sub_field('genre');
-		// 		$mLength = get_sub_field('length');
-		// 		$mAudience = get_sub_field('rating');
-		// 	}
-		// }
-
 		$meta_repeater = get_field('meta');
 		$meta = $meta_repeater[0];
 
+
+		$post_ID = get_the_id();
+
+		$comments = get_comments(array('post_id' => $post_ID));
+		$countcomments = count($comments);
+		$single_rate = array();
+
+		foreach($comments as $comment) {
+			$single_rate[] = $comment->comment_karma;
+		}
+
+		if($countcomments == 0) {
+			$rating_status = 'Not Rated';
+		} else {
+			$rating_status = array_sum($single_rate)/count($single_rate);
+		}
+
+
+		$place_id = get_field('location_picker');
+		if( $costOptions && in_array('showcontact', $costOptions) ) {
+			if(in_array('overridecontact', $costOptions)) {
+				$contact_status = get_field('contact');
+			} elseif(!empty($place_id)) {
+				$contact_status = get_field('contact', 'lugares_'.$place_id);
+			} else {
+				$contact_status = 'No contact';
+			}
+		}
+
+
 		$all_post_ids[] = array(
-			'id' => get_the_id(),
+			'id' => $post_ID,
 			'title' => get_the_title(),
 			'link' => get_the_permalink(),
-			'category' => get_skills(),
 			'description' => get_the_content(),
 			'place' => get_place_name(),
 			'prices' => $finalCost,
 			'dates' => jf_datesSchedule_array(),
 			'images' => $img_url[0],
 			'meta' => $meta,
-			// if($mAudience) 'audience' = $mAudience;
-			// if($mGenre) 'genre' = $mGenre;
-			// if($mYear) 'year' = $mYear;
-			// if($mDirector) 'director' = $mDirector;
-			// if($mCast) 'cast' = $mCast;
-			// if($mLength) 'runtime' = $mLength;
+			'rating' => $rating_status,
+			'contact' => $contact_status,
 			'order_day' => get_field('order_day'),
 		);
 
@@ -556,32 +646,54 @@ function jf_get_cin() {
 
 
 
-function jf_get_exp() {
+function jf_get_exp( WP_REST_Request $request ) {
 
-	$today = current_time('Ymd0000');
+	$today = current_time('Ymd\0\0\0\0');
 	$thisMonthStart = date('Y-m-d', strtotime($today));
 	$nextMonth = date('Y-m-d', strtotime("+1 month", strtotime($today)));
 	$thisMonthEnd = date('Y-m-d', strtotime("-1 day", strtotime($nextMonth)));
-
-	$args = array(
-		'post_type'		=> 'exposiciones',
-		'posts_per_page'	=> -1,
-		'meta_query' => array(
-			'relation'		=> 'AND',
-			array(
-				'key'		=> 'range_date_picker_0_start_day',
-				'compare'	=> '<=',
-				'value'		=> $thisMonthEnd,
-				'type'		=> 'DATE'
+	if($request['page']) {
+		$args = array(
+			'post_type'		=> 'exposiciones',
+			'posts_per_page'	=> 40,
+			'paged'				=> $request['page'],
+			'meta_query' => array(
+				'relation'		=> 'AND',
+				array(
+					'key'		=> 'range_date_picker_0_start_day',
+					'compare'	=> '<=',
+					'value'		=> $thisMonthEnd,
+					'type'		=> 'DATE'
+				),
+				array(
+					'key'		=> 'range_date_picker_0_end_day',
+					'compare'	=> '>=',
+					'value'		=> $thisMonthStart,
+					'type'		=> 'DATE'
+				)
 			),
-			array(
-				'key'		=> 'range_date_picker_0_end_day',
-				'compare'	=> '>=',
-				'value'		=> $thisMonthStart,
-				'type'		=> 'DATE'
-			)
-		),
-	);
+		);
+	} else {
+		$args = array(
+			'post_type'		=> 'exposiciones',
+			'posts_per_page'	=> -1,
+			'meta_query' => array(
+				'relation'		=> 'AND',
+				array(
+					'key'		=> 'range_date_picker_0_start_day',
+					'compare'	=> '<=',
+					'value'		=> $thisMonthEnd,
+					'type'		=> 'DATE'
+				),
+				array(
+					'key'		=> 'range_date_picker_0_end_day',
+					'compare'	=> '>=',
+					'value'		=> $thisMonthStart,
+					'type'		=> 'DATE'
+				)
+			),
+		);
+	}
 
 	$filter = new WP_Query( $args );
 
@@ -599,8 +711,37 @@ function jf_get_exp() {
 
 		$dates_repeater = get_field('range_date_picker' );
 
+		$post_ID = get_the_id();
+
+		$comments = get_comments(array('post_id' => $post_ID));
+		$countcomments = count($comments);
+		$single_rate = array();
+
+		foreach($comments as $comment) {
+			$single_rate[] = $comment->comment_karma;
+		}
+
+		if($countcomments == 0) {
+			$rating_status = 'Not Rated';
+		} else {
+			$rating_status = array_sum($single_rate)/count($single_rate);
+		}
+
+
+		$place_id = get_field('location_picker');
+		if( $costOptions && in_array('showcontact', $costOptions) ) {
+			if(in_array('overridecontact', $costOptions)) {
+				$contact_status = get_field('contact');
+			} elseif(!empty($place_id)) {
+				$contact_status = get_field('contact', 'lugares_'.$place_id);
+			} else {
+				$contact_status = 'No contact';
+			}
+		}
+
+
 		$all_post_ids[] = array(
-			'id' => get_the_id(),
+			'id' => $post_ID,
 			'title' => get_the_title(),
 			'link' => get_the_permalink(),
 			'category' => get_skills(),
@@ -609,6 +750,8 @@ function jf_get_exp() {
 			'prices' => $finalCost,
 			'dates' => $dates_repeater,
 			'images' => $img_url[0],
+			'rating' => $rating_status,
+			'contact' => $contact_status,
 			'order_day' => get_field('order_day'),
 		);
 	endwhile; wp_reset_postdata(); endif;
@@ -623,24 +766,41 @@ function jf_get_exp() {
 
 
 
-function jf_get_tal() {
+function jf_get_tal( WP_REST_Request $request ) {
 
 	$today = current_time('Ym\0\1\0\0\0\0');
-
-	$args = array(
-		'post_type'		=> 'talleres',
-		'posts_per_page'	=> -1,
-		'meta_query' => array (
-			array(
-				'key'       => 'range_date_picker_0_end_day',
-				'value'     => $today,
-				'compare'   => '>=',
-			)
-		),
-		'meta_key'		=> 'order_day',
-		'orderby'		=> 'meta_value_num',
-		'order'			=> 'ASC',
-	);
+	if($request['page']) {
+		$args = array(
+			'post_type'		=> 'talleres',
+			'posts_per_page'	=> 40,
+			'paged'				=> $request['page'],
+			'meta_query' => array (
+				array(
+					'key'       => 'range_date_picker_0_end_day',
+					'value'     => $today,
+					'compare'   => '>=',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	} else {
+		$args = array(
+			'post_type'		=> 'talleres',
+			'posts_per_page'	=> -1,
+			'meta_query' => array (
+				array(
+					'key'       => 'range_date_picker_0_end_day',
+					'value'     => $today,
+					'compare'   => '>=',
+				)
+			),
+			'meta_key'		=> 'order_day',
+			'orderby'		=> 'meta_value_num',
+			'order'			=> 'ASC',
+		);
+	}
 
 	$filter = new WP_Query( $args );
 	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
@@ -655,8 +815,37 @@ function jf_get_tal() {
 		}
 		$costOptions = get_field('cost_options');
 
+		$post_ID = get_the_id();
+
+		$comments = get_comments(array('post_id' => $post_ID));
+		$countcomments = count($comments);
+		$single_rate = array();
+
+		foreach($comments as $comment) {
+			$single_rate[] = $comment->comment_karma;
+		}
+
+		if($countcomments == 0) {
+			$rating_status = 'Not Rated';
+		} else {
+			$rating_status = array_sum($single_rate)/count($single_rate);
+		}
+
+
+		$place_id = get_field('location_picker');
+		if( $costOptions && in_array('showcontact', $costOptions) ) {
+			if(in_array('overridecontact', $costOptions)) {
+				$contact_status = get_field('contact');
+			} elseif(!empty($place_id)) {
+				$contact_status = get_field('contact', 'lugares_'.$place_id);
+			} else {
+				$contact_status = 'No contact';
+			}
+		}
+
+
 		$all_post_ids[] = array(
-			'id' => get_the_id(),
+			'id' => $post_ID,
 			'title' => get_the_title(),
 			'link' => get_the_permalink(),
 			'category' => get_skills(),
@@ -665,6 +854,8 @@ function jf_get_tal() {
 			'prices' => $finalCost,
 			'dates' => alt_rangeSchedule(),
 			'images' => $img_url[0],
+			'rating' => $rating_status,
+			'contact' => $contact_status,
 			'order_day' => get_field('order_day'),
 		);
 	endwhile; wp_reset_postdata(); endif;
@@ -702,8 +893,37 @@ function jf_get_ser() {
 		$dates_repeater = get_field('range_date_picker' );
 		$date = $dates_repeater[0]['notes'];
 
+		$post_ID = get_the_id();
+
+		$comments = get_comments(array('post_id' => $post_ID));
+		$countcomments = count($comments);
+		$single_rate = array();
+
+		foreach($comments as $comment) {
+			$single_rate[] = $comment->comment_karma;
+		}
+
+		if($countcomments == 0) {
+			$rating_status = 'Not Rated';
+		} else {
+			$rating_status = array_sum($single_rate)/count($single_rate);
+		}
+
+
+		$place_id = get_field('location_picker');
+		if( $costOptions && in_array('showcontact', $costOptions) ) {
+			if(in_array('overridecontact', $costOptions)) {
+				$contact_status = get_field('contact');
+			} elseif(!empty($place_id)) {
+				$contact_status = get_field('contact', 'lugares_'.$place_id);
+			} else {
+				$contact_status = 'No contact';
+			}
+		}
+
+
 		$all_post_ids[] = array(
-			'id' => get_the_id(),
+			'id' => $post_ID,
 			'title' => get_the_title(),
 			'link' => get_the_permalink(),
 			'category' => get_skills(),
@@ -712,6 +932,8 @@ function jf_get_ser() {
 			'prices' => $finalCost,
 			'dates' => $date,
 			'images' => $img_url[0],
+			'rating' => $rating_status,
+			'contact' => $contact_status,
 			'order_day' => get_field('order_day'),
 		);
 	endwhile; wp_reset_postdata(); endif;
