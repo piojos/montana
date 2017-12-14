@@ -100,22 +100,22 @@ function jf_get_current_agenda() {
 	}
 
 
-
-add_action( 'rest_api_init', 'slug_register_acf' );
-function slug_register_acf() {
-	$post_types = get_post_types(['public'=>true], 'names');
-	foreach ($post_types as $type) {
-		register_api_field (
-			$type,
-			'j_custom',
-			array(
-				'get_callback'    => 'slug_get_acf',
-				'update_callback' => null,
-				'schema'          => null,
-			)
-		);
-	}
-}
+//
+// add_action( 'rest_api_init', 'slug_register_acf' );
+// function slug_register_acf() {
+// 	$post_types = get_post_types(['public'=>true], 'names');
+// 	foreach ($post_types as $type) {
+// 		register_api_field (
+// 			$type,
+// 			'j_custom',
+// 			array(
+// 				'get_callback'    => 'slug_get_acf',
+// 				'update_callback' => null,
+// 				'schema'          => null,
+// 			)
+// 		);
+// 	}
+// }
 
 
 function slug_get_acf( $object = false, $field_name = false, $request = false ) {
@@ -132,146 +132,146 @@ function jf_costlist($costgroup = FALSE) {
 			);
 		}
 	} else {
-		$list .= 'somethin else';
+		$list .= '_';
 	}
 	return $list;
 }
 
 
-add_action( 'rest_api_init', 'joes_register_api_hooks');
-function joes_register_api_hooks() {
-	// $allCPTs = array( 'agenda', 'cineteca', 'talleres', 'exposiciones' );
-
-	register_rest_field( 'agenda',
-		'event',
-		array(
-			'get_callback'    => 'joe_return_basics',
-		)
-	);
-
-
-	register_rest_field( 'cineteca',
-		'cinema',
-		array(
-			'get_callback'    => 'joe_return_movie',
-		)
-	);
-
-
-	register_rest_field( 'exposiciones',
-		'exposition',
-		array(
-			'get_callback'    => 'joe_return_expos_talleres',
-		)
-	);
-
-
-	register_rest_field( 'talleres',
-		'workshop',
-		array(
-			'get_callback'    => 'joe_return_expos_talleres',
-		)
-	);
-
-
-	register_rest_field( 'servicios',
-		'services',
-		array(
-			'get_callback'    => 'joe_return_basics',
-		)
-	);
-}
-
-
-
-
-function joe_return_basics( $object, $field_name, $request ) {
-
-	// id
-	$keyval = array('id' => $object['id']);
-
-	// Order day
-	$order_day = $object['j_custom']['order_day'];
-	if($order_day) {
-		$keyval['order_num'] = $order_day;
-	}
-
-	// title
-	$title = strip_tags( html_entity_decode( $object['title']['rendered'] ) );
-	$keyval['title'] = $title;
-
-	// skills
-	$skillID = $object['j_custom']['skill_picker'];
-	$skillArray = array();
-	if(is_array($skillID) || is_object($skillID)) {
-		foreach ($skillID as $skill) {
-			$skillObject = get_term_by('term_id', $skill, 'disciplinas');
-			$skillArray[] = $skillObject->name;
-		}
-	}
-	$keyval['category'] = $skillArray;
-
-	// description
-	$description = strip_tags( html_entity_decode( $object['content']['rendered'] ) );
-	$keyval['description'] = $description;
-
-	// place
-	$placeID = $object['j_custom']['location_picker'];
-	$thisPlace = get_term_by('term_id', $placeID, 'lugares');
-	$keyval['place'] = $thisPlace->name;
-
-	// time
-	$keyval['time'] = schedule_hours();
-
-	// more_info
-	$keyval['more_info'] = $object['j_custom']['cost_message'];
-
-	// Cost
-	$checkCost = $object['j_custom']['cost_options'];
-	if($checkCost) {
-		if(in_array('free', $checkCost)) {
-			$keyval['price'] = 'free';
-		} else {
-			$keyval['price'] = '$'.$object['j_custom']['cost'];
-		}
-	} else {
-		// foreach($costs as $cost) {
-		// 	$keyval['cost'] = '$'.$cost['cost'];
-		// 	$keyval['concept'] = $cost['group'];
-		// }
-		$costlist = $object['j_custom']['cost_groups'];
-		$keyval['price'] = jf_costlist($costlist);
-		// No 'cost_options'
-		// $keyval['price'] = '$'.$object['j_custom']['cost'];
-	}
-
-	// rating ??? Movies
-	// $keyval['rating'] = $object['j_custom']['rating'];
-
-	// dates
-	$tempchoose = $object['j_custom']['dates_options'];
-	// $keyval['dates_choose'] = $tempchoose;
-	if(!empty($tempchoose)) {
-		if($tempchoose == 'dates') {
-			$keyval['dates'] = jf_datesSchedule_array();
-		} elseif($tempchoose == 'range') {
-			$keyval['dates'] = jf_rangeSchedule($object);
-		}
-	} elseif($object['type'] == 'cineteca') {
-		$keyval['dates'] = jf_datesSchedule_array();
-	} elseif($object['type'] == 'exposiciones' || $object['type'] == 'talleres' || $object['type'] == 'servicios') {
-		$keyval['dates'] = jf_rangeSchedule($object);
-	} else {
-		$keyval['dates'] = 'no $tempchoose (not an event).';
-	}
-	// images
-	$keyval['images'] = $object['better_featured_image']['source_url'];
-
-	// Contact
-	// $keyval['contact'] = $object['j_custom']['meta']['contacto'];
-
-	return $keyval;
-}
+// add_action( 'rest_api_init', 'joes_register_api_hooks');
+// function joes_register_api_hooks() {
+// 	// $allCPTs = array( 'agenda', 'cineteca', 'talleres', 'exposiciones' );
+//
+// 	register_rest_field( 'agenda',
+// 		'event',
+// 		array(
+// 			'get_callback'    => 'joe_return_basics',
+// 		)
+// 	);
+//
+//
+// 	register_rest_field( 'cineteca',
+// 		'cinema',
+// 		array(
+// 			'get_callback'    => 'joe_return_movie',
+// 		)
+// 	);
+//
+//
+// 	register_rest_field( 'exposiciones',
+// 		'exposition',
+// 		array(
+// 			'get_callback'    => 'joe_return_expos_talleres',
+// 		)
+// 	);
+//
+//
+// 	register_rest_field( 'talleres',
+// 		'workshop',
+// 		array(
+// 			'get_callback'    => 'joe_return_expos_talleres',
+// 		)
+// 	);
+//
+//
+// 	register_rest_field( 'servicios',
+// 		'services',
+// 		array(
+// 			'get_callback'    => 'joe_return_basics',
+// 		)
+// 	);
+// }
+//
+//
+//
+//
+// function joe_return_basics( $object, $field_name, $request ) {
+//
+// 	// id
+// 	$keyval = array('id' => $object['id']);
+//
+// 	// Order day
+// 	$order_day = $object['j_custom']['order_day'];
+// 	if($order_day) {
+// 		$keyval['order_num'] = $order_day;
+// 	}
+//
+// 	// title
+// 	$title = strip_tags( html_entity_decode( $object['title']['rendered'] ) );
+// 	$keyval['title'] = $title;
+//
+// 	// skills
+// 	$skillID = $object['j_custom']['skill_picker'];
+// 	$skillArray = array();
+// 	if(is_array($skillID) || is_object($skillID)) {
+// 		foreach ($skillID as $skill) {
+// 			$skillObject = get_term_by('term_id', $skill, 'disciplinas');
+// 			$skillArray[] = $skillObject->name;
+// 		}
+// 	}
+// 	$keyval['category'] = $skillArray;
+//
+// 	// description
+// 	$description = strip_tags( html_entity_decode( $object['content']['rendered'] ) );
+// 	$keyval['description'] = $description;
+//
+// 	// place
+// 	$placeID = $object['j_custom']['location_picker'];
+// 	$thisPlace = get_term_by('term_id', $placeID, 'lugares');
+// 	$keyval['place'] = $thisPlace->name;
+//
+// 	// time
+// 	$keyval['time'] = schedule_hours();
+//
+// 	// more_info
+// 	$keyval['more_info'] = $object['j_custom']['cost_message'];
+//
+// 	// Cost
+// 	$checkCost = $object['j_custom']['cost_options'];
+// 	if($checkCost) {
+// 		if(in_array('free', $checkCost)) {
+// 			$keyval['price'] = 'free';
+// 		} else {
+// 			$keyval['price'] = '$'.$object['j_custom']['cost'];
+// 		}
+// 	} else {
+// 		// foreach($costs as $cost) {
+// 		// 	$keyval['cost'] = '$'.$cost['cost'];
+// 		// 	$keyval['concept'] = $cost['group'];
+// 		// }
+// 		$costlist = $object['j_custom']['cost_groups'];
+// 		$keyval['price'] = jf_costlist($costlist);
+// 		// No 'cost_options'
+// 		// $keyval['price'] = '$'.$object['j_custom']['cost'];
+// 	}
+//
+// 	// rating ??? Movies
+// 	// $keyval['rating'] = $object['j_custom']['rating'];
+//
+// 	// dates
+// 	$tempchoose = $object['j_custom']['dates_options'];
+// 	// $keyval['dates_choose'] = $tempchoose;
+// 	if(!empty($tempchoose)) {
+// 		if($tempchoose == 'dates') {
+// 			$keyval['dates'] = jf_datesSchedule_array();
+// 		} elseif($tempchoose == 'range') {
+// 			$keyval['dates'] = jf_rangeSchedule($object);
+// 		}
+// 	} elseif($object['type'] == 'cineteca') {
+// 		$keyval['dates'] = jf_datesSchedule_array();
+// 	} elseif($object['type'] == 'exposiciones' || $object['type'] == 'talleres' || $object['type'] == 'servicios') {
+// 		$keyval['dates'] = jf_rangeSchedule($object);
+// 	} else {
+// 		$keyval['dates'] = 'no $tempchoose (not an event).';
+// 	}
+// 	// images
+// 	$keyval['images'] = $object['better_featured_image']['source_url'];
+//
+// 	// Contact
+// 	// $keyval['contact'] = $object['j_custom']['meta']['contacto'];
+//
+// 	return $keyval;
+// }
 
 
 
@@ -281,33 +281,33 @@ function joe_return_basics( $object, $field_name, $request ) {
 
 // Movie Fields
 
-function joe_return_movie( $object, $field_name, $request ) {
-
-	$keyval = joe_return_basics( $object, $field_name, $request );
-
-	// program
-	$allMeta = $object['j_custom']['meta'];
-	if(is_array($allMeta) || is_object($allMeta)) {
-		foreach ($allMeta as $meta) {
-			$m_aud = $meta['rating']['label'];
-			$m_gen = $meta['genre']['label'];
-			$m_yea = $meta['year'];
-			$m_dir = $meta['director'];
-			$m_cas = $meta['cast'];
-			$m_run = $meta['length'];
-			// $keyval['rating'] = $meta['rating']['label']; // Movie rating: Does not exist!
-
-			if($m_aud) $keyval['audience'] = $m_aud;
-			if($m_gen) $keyval['genre'] = $m_gen;
-			if($m_yea) $keyval['year'] = $m_yea;
-			if($m_dir) $keyval['director'] = $m_dir;
-			if($m_cas) $keyval['cast'] = $m_cas;
-			if($m_run) $keyval['runtime'] = $m_run;
-		}
-	}
-
-	return $keyval;
-}
+// function joe_return_movie( $object, $field_name, $request ) {
+//
+// 	$keyval = joe_return_basics( $object, $field_name, $request );
+//
+// 	// program
+// 	$allMeta = $object['j_custom']['meta'];
+// 	if(is_array($allMeta) || is_object($allMeta)) {
+// 		foreach ($allMeta as $meta) {
+// 			$m_aud = $meta['rating']['label'];
+// 			$m_gen = $meta['genre']['label'];
+// 			$m_yea = $meta['year'];
+// 			$m_dir = $meta['director'];
+// 			$m_cas = $meta['cast'];
+// 			$m_run = $meta['length'];
+// 			// $keyval['rating'] = $meta['rating']['label']; // Movie rating: Does not exist!
+//
+// 			if($m_aud) $keyval['audience'] = $m_aud;
+// 			if($m_gen) $keyval['genre'] = $m_gen;
+// 			if($m_yea) $keyval['year'] = $m_yea;
+// 			if($m_dir) $keyval['director'] = $m_dir;
+// 			if($m_cas) $keyval['cast'] = $m_cas;
+// 			if($m_run) $keyval['runtime'] = $m_run;
+// 		}
+// 	}
+//
+// 	return $keyval;
+// }
 
 
 
@@ -315,32 +315,32 @@ function joe_return_movie( $object, $field_name, $request ) {
 
 // exposiciones
 
-function joe_return_expos_talleres( $object, $field_name, $request ) {
-
-	// Get all Basics
-	$keyval = joe_return_basics( $object, $field_name, $request );
-
-	// Presentor
-	$checkPresentor = $object['j_custom']['presentor'];
-	if($checkPresentor) {
-		$keyval['imparte'] = $checkPresentor;
-	}
-
-	// Program
-	$allWidgets = $object['j_custom']['widgets'];
-	if(is_array($allWidgets) || is_object($allWidgets)) {
-		foreach ($allWidgets as $widget) {
-			if($widget['acf_fc_layout'] == 'list_type') {
-				$createProgram = array( 'title' => $widget['title'], 'list' => $widget['list'] );
-			}
-		}
-	}
-	if($createProgram) {
-		$keyval['program'] = $createProgram;
-	}
-
-	return $keyval;
-}
+// function joe_return_expos_talleres( $object, $field_name, $request ) {
+//
+// 	// Get all Basics
+// 	$keyval = joe_return_basics( $object, $field_name, $request );
+//
+// 	// Presentor
+// 	$checkPresentor = $object['j_custom']['presentor'];
+// 	if($checkPresentor) {
+// 		$keyval['imparte'] = $checkPresentor;
+// 	}
+//
+// 	// Program
+// 	$allWidgets = $object['j_custom']['widgets'];
+// 	if(is_array($allWidgets) || is_object($allWidgets)) {
+// 		foreach ($allWidgets as $widget) {
+// 			if($widget['acf_fc_layout'] == 'list_type') {
+// 				$createProgram = array( 'title' => $widget['title'], 'list' => $widget['list'] );
+// 			}
+// 		}
+// 	}
+// 	if($createProgram) {
+// 		$keyval['program'] = $createProgram;
+// 	}
+//
+// 	return $keyval;
+// }
 
 
 
@@ -376,14 +376,6 @@ function myplugin_add_karma() {
 	) );
 }
 
-function show_message_function( $comment_ID, $comment_approved ) {
-	if( 1 === $comment_approved ){
-		$gets_comment = get_comment( $comment_ID );
-		$comment_post_id = $gets_comment->comment_post_ID ;
-		update_field( 'public_rating', 'alo', $comment_post_id );
-	}
-}
-add_action( 'comment_post', 'show_message_function', 10, 2 );
 
 
 
@@ -459,8 +451,15 @@ function jf_get_age() {
 		}
 		$costOptions = get_field('cost_options');
 
+		$post_ID = get_the_id();
+
+
+		$comments = get_comments(array('post_id' => $post_ID));
+		$countcomments = count($comments);
+
+
 		$all_post_ids[] = array(
-			'id' => get_the_id(),
+			'id' => $post_ID,
 			'title' => get_the_title(),
 			'link' => get_the_permalink(),
 			'category' => get_skills(),
@@ -469,6 +468,7 @@ function jf_get_age() {
 			'prices' => $finalCost,
 			'dates' => jf_datesSchedule_array(),
 			'images' => $img_url[0],
+			'ratings' => $countcomments,
 			'order_day' => get_field('order_day'),
 		);
 	endwhile; wp_reset_postdata(); endif;
