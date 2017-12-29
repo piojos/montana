@@ -24,6 +24,41 @@ function jf_get_current_agenda() {
 	return $all_post_ids;
 }
 
+
+// function jf_get_current_agenda() {
+// 	// $currentAgenda = get_field('monthly_agenda', 'options');
+// 	$ag_date = 'a';
+// 	if( have_rows('section_blocks', 6) ):
+// 		$ag_date .= 'b';
+//
+// 		while ( have_rows('section_blocks', 6) ) : the_row();
+// 			$ag_date .= 'c';
+//
+// 		elseif( get_row_layout() == 'block_search' ):
+// 			if( have_rows('current_agenda') ):
+// 				while ( have_rows('current_agenda') ) : the_row();
+// 					$f_m = get_sub_field('month');
+// 					$f_y = get_sub_field('year');
+// 					$ag_file = get_sub_field('file_url');
+// 				endwhile;
+// 				else :
+// 			endif;
+//
+// 		endif;
+//
+// 		endwhile;
+// 	else :
+// 	endif;
+//
+// 	$ag_date = $f_m.', '.$f_y;
+//
+// 	$all_post_ids = array(
+// 		'date' => $ag_date,
+// 		'url' => $ag_file);
+// 	return $all_post_ids;
+// }
+
+
 // Get dates array
 	function jf_datesSchedule_array() {
 		$format = 'Y-m-d H:i:s';
@@ -32,10 +67,11 @@ function jf_get_current_agenda() {
 		foreach($sched_array as $day) {
 			$jfDS_day = $day[0];
 			foreach($day[1] as $hour) {
+				$hour = str_replace(' h.', ':00', $hour);
 				$hourlater = strtotime($hour) + 60*60;
 				$strHour = date('H:i:s', strtotime($hour));
 				$endHour = date('H:i:s', $hourlater);
-				$stDate = date_i18n($format, strtotime($jfDS_day.$strHour));
+				$stDate = date($format, strtotime($jfDS_day.$strHour));
 				$enDate = date_i18n($format, strtotime($jfDS_day.$endHour));
 				$daysList[] = array(
 					// Debugging
@@ -93,29 +129,13 @@ function jf_get_current_agenda() {
 		$enDate = date_i18n($format, strtotime($enday.$endHour));
 
 		$daysList = array(
-			'start' => $stDate.'a',
+			'start' => $stDate,
 			'end' => $enDate
 		);
 		return $daysList;
 	}
 
 
-//
-// add_action( 'rest_api_init', 'slug_register_acf' );
-// function slug_register_acf() {
-// 	$post_types = get_post_types(['public'=>true], 'names');
-// 	foreach ($post_types as $type) {
-// 		register_api_field (
-// 			$type,
-// 			'j_custom',
-// 			array(
-// 				'get_callback'    => 'slug_get_acf',
-// 				'update_callback' => null,
-// 				'schema'          => null,
-// 			)
-// 		);
-// 	}
-// }
 
 
 function slug_get_acf( $object = false, $field_name = false, $request = false ) {
@@ -136,212 +156,6 @@ function jf_costlist($costgroup = FALSE) {
 	}
 	return $list;
 }
-
-
-// add_action( 'rest_api_init', 'joes_register_api_hooks');
-// function joes_register_api_hooks() {
-// 	// $allCPTs = array( 'agenda', 'cineteca', 'talleres', 'exposiciones' );
-//
-// 	register_rest_field( 'agenda',
-// 		'event',
-// 		array(
-// 			'get_callback'    => 'joe_return_basics',
-// 		)
-// 	);
-//
-//
-// 	register_rest_field( 'cineteca',
-// 		'cinema',
-// 		array(
-// 			'get_callback'    => 'joe_return_movie',
-// 		)
-// 	);
-//
-//
-// 	register_rest_field( 'exposiciones',
-// 		'exposition',
-// 		array(
-// 			'get_callback'    => 'joe_return_expos_talleres',
-// 		)
-// 	);
-//
-//
-// 	register_rest_field( 'talleres',
-// 		'workshop',
-// 		array(
-// 			'get_callback'    => 'joe_return_expos_talleres',
-// 		)
-// 	);
-//
-//
-// 	register_rest_field( 'servicios',
-// 		'services',
-// 		array(
-// 			'get_callback'    => 'joe_return_basics',
-// 		)
-// 	);
-// }
-//
-//
-//
-//
-// function joe_return_basics( $object, $field_name, $request ) {
-//
-// 	// id
-// 	$keyval = array('id' => $object['id']);
-//
-// 	// Order day
-// 	$order_day = $object['j_custom']['order_day'];
-// 	if($order_day) {
-// 		$keyval['order_num'] = $order_day;
-// 	}
-//
-// 	// title
-// 	$title = strip_tags( html_entity_decode( $object['title']['rendered'] ) );
-// 	$keyval['title'] = $title;
-//
-// 	// skills
-// 	$skillID = $object['j_custom']['skill_picker'];
-// 	$skillArray = array();
-// 	if(is_array($skillID) || is_object($skillID)) {
-// 		foreach ($skillID as $skill) {
-// 			$skillObject = get_term_by('term_id', $skill, 'disciplinas');
-// 			$skillArray[] = $skillObject->name;
-// 		}
-// 	}
-// 	$keyval['category'] = $skillArray;
-//
-// 	// description
-// 	$description = strip_tags( html_entity_decode( $object['content']['rendered'] ) );
-// 	$keyval['description'] = $description;
-//
-// 	// place
-// 	$placeID = $object['j_custom']['location_picker'];
-// 	$thisPlace = get_term_by('term_id', $placeID, 'lugares');
-// 	$keyval['place'] = $thisPlace->name;
-//
-// 	// time
-// 	$keyval['time'] = schedule_hours();
-//
-// 	// more_info
-// 	$keyval['more_info'] = $object['j_custom']['cost_message'];
-//
-// 	// Cost
-// 	$checkCost = $object['j_custom']['cost_options'];
-// 	if($checkCost) {
-// 		if(in_array('free', $checkCost)) {
-// 			$keyval['price'] = 'free';
-// 		} else {
-// 			$keyval['price'] = '$'.$object['j_custom']['cost'];
-// 		}
-// 	} else {
-// 		// foreach($costs as $cost) {
-// 		// 	$keyval['cost'] = '$'.$cost['cost'];
-// 		// 	$keyval['concept'] = $cost['group'];
-// 		// }
-// 		$costlist = $object['j_custom']['cost_groups'];
-// 		$keyval['price'] = jf_costlist($costlist);
-// 		// No 'cost_options'
-// 		// $keyval['price'] = '$'.$object['j_custom']['cost'];
-// 	}
-//
-// 	// rating ??? Movies
-// 	// $keyval['rating'] = $object['j_custom']['rating'];
-//
-// 	// dates
-// 	$tempchoose = $object['j_custom']['dates_options'];
-// 	// $keyval['dates_choose'] = $tempchoose;
-// 	if(!empty($tempchoose)) {
-// 		if($tempchoose == 'dates') {
-// 			$keyval['dates'] = jf_datesSchedule_array();
-// 		} elseif($tempchoose == 'range') {
-// 			$keyval['dates'] = jf_rangeSchedule($object);
-// 		}
-// 	} elseif($object['type'] == 'cineteca') {
-// 		$keyval['dates'] = jf_datesSchedule_array();
-// 	} elseif($object['type'] == 'exposiciones' || $object['type'] == 'talleres' || $object['type'] == 'servicios') {
-// 		$keyval['dates'] = jf_rangeSchedule($object);
-// 	} else {
-// 		$keyval['dates'] = 'no $tempchoose (not an event).';
-// 	}
-// 	// images
-// 	$keyval['images'] = $object['better_featured_image']['source_url'];
-//
-// 	// Contact
-// 	// $keyval['contact'] = $object['j_custom']['meta']['contacto'];
-//
-// 	return $keyval;
-// }
-
-
-
-
-
-
-
-// Movie Fields
-
-// function joe_return_movie( $object, $field_name, $request ) {
-//
-// 	$keyval = joe_return_basics( $object, $field_name, $request );
-//
-// 	// program
-// 	$allMeta = $object['j_custom']['meta'];
-// 	if(is_array($allMeta) || is_object($allMeta)) {
-// 		foreach ($allMeta as $meta) {
-// 			$m_aud = $meta['rating']['label'];
-// 			$m_gen = $meta['genre']['label'];
-// 			$m_yea = $meta['year'];
-// 			$m_dir = $meta['director'];
-// 			$m_cas = $meta['cast'];
-// 			$m_run = $meta['length'];
-// 			// $keyval['rating'] = $meta['rating']['label']; // Movie rating: Does not exist!
-//
-// 			if($m_aud) $keyval['audience'] = $m_aud;
-// 			if($m_gen) $keyval['genre'] = $m_gen;
-// 			if($m_yea) $keyval['year'] = $m_yea;
-// 			if($m_dir) $keyval['director'] = $m_dir;
-// 			if($m_cas) $keyval['cast'] = $m_cas;
-// 			if($m_run) $keyval['runtime'] = $m_run;
-// 		}
-// 	}
-//
-// 	return $keyval;
-// }
-
-
-
-
-
-// exposiciones
-
-// function joe_return_expos_talleres( $object, $field_name, $request ) {
-//
-// 	// Get all Basics
-// 	$keyval = joe_return_basics( $object, $field_name, $request );
-//
-// 	// Presentor
-// 	$checkPresentor = $object['j_custom']['presentor'];
-// 	if($checkPresentor) {
-// 		$keyval['imparte'] = $checkPresentor;
-// 	}
-//
-// 	// Program
-// 	$allWidgets = $object['j_custom']['widgets'];
-// 	if(is_array($allWidgets) || is_object($allWidgets)) {
-// 		foreach ($allWidgets as $widget) {
-// 			if($widget['acf_fc_layout'] == 'list_type') {
-// 				$createProgram = array( 'title' => $widget['title'], 'list' => $widget['list'] );
-// 			}
-// 		}
-// 	}
-// 	if($createProgram) {
-// 		$keyval['program'] = $createProgram;
-// 	}
-//
-// 	return $keyval;
-// }
-
 
 
 
@@ -426,47 +240,102 @@ function jf_register_api_hooks_f() {
 	) );
 }
 
+
+
+
+
+
 function jf_get_age( WP_REST_Request $request ) {
 
 	$today = current_time('Ymd0000');
+
+
+	$today_min = current_time('Ymd');
+	$qd1 = date('Ymd', strtotime("+1 day", strtotime($today_min)));
+	$qd2 = date('Ymd', strtotime("+2 day", strtotime($today_min)));
+	$qd3 = date('Ymd', strtotime("+3 day", strtotime($today_min)));
+	$qd4 = date('Ymd', strtotime("+4 day", strtotime($today_min)));
+	$qd5 = date('Ymd', strtotime("+5 day", strtotime($today_min)));
+	$qd6 = date('Ymd', strtotime("+6 day", strtotime($today_min)));
+	$qd7 = date('Ymd', strtotime("+7 day", strtotime($today_min)));
+	$qd8 = date('Ymd', strtotime("+8 day", strtotime($today_min)));
+	$qd9 = date('Ymd', strtotime("+9 day", strtotime($today_min)));
+	$qd10 = date('Ymd', strtotime("+10 day", strtotime($today_min)));
+	$qd11 = date('Ymd', strtotime("+11 day", strtotime($today_min)));
+	$qd12 = date('Ymd', strtotime("+12 day", strtotime($today_min)));
+	$qd13 = date('Ymd', strtotime("+13 day", strtotime($today_min)));
+	$qd14 = date('Ymd', strtotime("+14 day", strtotime($today_min)));
+
+
 	if($request['page']) {
-		$args = array(
-			'post_type'		=> 'agenda',
-			'posts_per_page'	=> 40,
-			'paged'				=> $request['page'],
-			'meta_query' => array (
-				array(
-					'key'       => 'order_day',
-					'value'     => $today,
-					'compare'   => '>',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = $request['page'];
 	} else {
-		$args = array(
-			'post_type'		=> 'agenda',
-			'posts_per_page'	=> -1,
-			'meta_query' => array (
-				array(
-					'key'       => 'order_day',
-					'value'     => $today,
-					'compare'   => '>',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = 1;
 	}
+	$args = array(
+		'post_type'		=> 'agenda',
+		'meta_query' => array (
+			'relation' => 'OR',
+			array(
+				'key'       => 'order_day',
+				'value'     => $today,
+				'compare'   => '>',
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd1, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd2, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd3, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd4, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd5, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd6, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd7, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd8, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd9, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd10, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd11, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd12, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd13, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd14, 'compare' => 'LIKE'
+			)
+		),
+		'posts_per_page'	=> 40,
+		'paged'				=> $page_num,
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
 
 
 	$filter = new WP_Query( $args );
 
 	$all_post_ids[] = array(
-		'request' => $request['page'],
+		'requested_page' => $page_num,
 		'total_results' => $filter->post_count
 	);
 
@@ -537,44 +406,93 @@ function jf_get_age( WP_REST_Request $request ) {
 
 function jf_get_cin( WP_REST_Request $request ) {
 
-	$today = current_time('Ymd\0\0\0\0');
+	$today = current_time('Ymd0000');
+	$today_min = current_time('Ymd');
+	$qd1 = date('Ymd', strtotime("+1 day", strtotime($today_min)));
+	$qd2 = date('Ymd', strtotime("+2 day", strtotime($today_min)));
+	$qd3 = date('Ymd', strtotime("+3 day", strtotime($today_min)));
+	$qd4 = date('Ymd', strtotime("+4 day", strtotime($today_min)));
+	$qd5 = date('Ymd', strtotime("+5 day", strtotime($today_min)));
+	$qd6 = date('Ymd', strtotime("+6 day", strtotime($today_min)));
+	$qd7 = date('Ymd', strtotime("+7 day", strtotime($today_min)));
+	$qd8 = date('Ymd', strtotime("+8 day", strtotime($today_min)));
+	$qd9 = date('Ymd', strtotime("+9 day", strtotime($today_min)));
+	$qd10 = date('Ymd', strtotime("+10 day", strtotime($today_min)));
+	$qd11 = date('Ymd', strtotime("+11 day", strtotime($today_min)));
+	$qd12 = date('Ymd', strtotime("+12 day", strtotime($today_min)));
+	$qd13 = date('Ymd', strtotime("+13 day", strtotime($today_min)));
+	$qd14 = date('Ymd', strtotime("+14 day", strtotime($today_min)));
+
 	if($request['page']) {
-		$args = array(
-			'post_type'		=> 'cineteca',
-			'posts_per_page'	=> 40,
-			'paged'				=> $request['page'],
-			'meta_query' => array (
-				array(
-					'key'       => 'order_day',
-					'value'     => $today,
-					'compare'   => '>',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = $request['page'];
 	} else {
-		$args = array(
-			'post_type'		=> 'cineteca',
-			'posts_per_page'	=> -1,
-			'meta_query' => array (
-				array(
-					'key'       => 'order_day',
-					'value'     => $today,
-					'compare'   => '>',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = 1;
 	}
+
+	$args = array(
+		'post_type'		=> 'cineteca',
+		'meta_query' => array (
+			'relation' => 'OR',
+			array(
+				'key'       => 'order_day',
+				'value'     => $today,
+				'compare'   => '>',
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd1, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd2, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd3, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd4, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd5, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd6, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd7, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd8, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd9, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd10, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd11, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd12, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd13, 'compare' => 'LIKE'
+			),
+			array(
+				'key' => 'everyday', 'value' => $qd14, 'compare' => 'LIKE'
+			)
+		),
+		'posts_per_page'	=> 40,
+		'paged'				=> $page_num,
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
+
 
 	$filter = new WP_Query( $args );
 
 	$all_post_ids[] = array(
-		'request' => $request['page'],
+		'page_request' => $page_num,
 		'total_results' => $filter->post_count
 	);
 
@@ -648,54 +566,44 @@ function jf_get_cin( WP_REST_Request $request ) {
 
 function jf_get_exp( WP_REST_Request $request ) {
 
-	$today = current_time('Ymd\0\0\0\0');
+	$today = current_time('Ymd0000');
 	$thisMonthStart = date('Y-m-d', strtotime($today));
 	$nextMonth = date('Y-m-d', strtotime("+1 month", strtotime($today)));
 	$thisMonthEnd = date('Y-m-d', strtotime("-1 day", strtotime($nextMonth)));
+
 	if($request['page']) {
-		$args = array(
-			'post_type'		=> 'exposiciones',
-			'posts_per_page'	=> 40,
-			'paged'				=> $request['page'],
-			'meta_query' => array(
-				'relation'		=> 'AND',
-				array(
-					'key'		=> 'range_date_picker_0_start_day',
-					'compare'	=> '<=',
-					'value'		=> $thisMonthEnd,
-					'type'		=> 'DATE'
-				),
-				array(
-					'key'		=> 'range_date_picker_0_end_day',
-					'compare'	=> '>=',
-					'value'		=> $thisMonthStart,
-					'type'		=> 'DATE'
-				)
-			),
-		);
+		$page_num = $request['page'];
 	} else {
-		$args = array(
-			'post_type'		=> 'exposiciones',
-			'posts_per_page'	=> -1,
-			'meta_query' => array(
-				'relation'		=> 'AND',
-				array(
-					'key'		=> 'range_date_picker_0_start_day',
-					'compare'	=> '<=',
-					'value'		=> $thisMonthEnd,
-					'type'		=> 'DATE'
-				),
-				array(
-					'key'		=> 'range_date_picker_0_end_day',
-					'compare'	=> '>=',
-					'value'		=> $thisMonthStart,
-					'type'		=> 'DATE'
-				)
-			),
-		);
+		$page_num = 1;
 	}
 
+	$args = array(
+		'post_type'		=> 'exposiciones',
+		'posts_per_page'	=> 40,
+		'paged'				=> $page_num,
+		'meta_query' => array(
+			'relation'		=> 'AND',
+			array(
+				'key'		=> 'range_date_picker_0_start_day',
+				'compare'	=> '<=',
+				'value'		=> $thisMonthEnd,
+				'type'		=> 'DATE'
+			),
+			array(
+				'key'		=> 'range_date_picker_0_end_day',
+				'compare'	=> '>=',
+				'value'		=> $thisMonthStart,
+				'type'		=> 'DATE'
+			)
+		),
+	);
+
 	$filter = new WP_Query( $args );
+
+	$all_post_ids[] = array(
+		'page_request' => $page_num,
+		'total_results' => $filter->post_count
+	);
 
 	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
 		$img_id = get_post_thumbnail_id();
@@ -768,41 +676,37 @@ function jf_get_exp( WP_REST_Request $request ) {
 
 function jf_get_tal( WP_REST_Request $request ) {
 
-	$today = current_time('Ym\0\1\0\0\0\0');
+	$today = current_time('Ymd0000');
+
 	if($request['page']) {
-		$args = array(
-			'post_type'		=> 'talleres',
-			'posts_per_page'	=> 40,
-			'paged'				=> $request['page'],
-			'meta_query' => array (
-				array(
-					'key'       => 'range_date_picker_0_end_day',
-					'value'     => $today,
-					'compare'   => '>=',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = $request['page'];
 	} else {
-		$args = array(
-			'post_type'		=> 'talleres',
-			'posts_per_page'	=> -1,
-			'meta_query' => array (
-				array(
-					'key'       => 'range_date_picker_0_end_day',
-					'value'     => $today,
-					'compare'   => '>=',
-				)
-			),
-			'meta_key'		=> 'order_day',
-			'orderby'		=> 'meta_value_num',
-			'order'			=> 'ASC',
-		);
+		$page_num = 1;
 	}
 
+	$args = array(
+		'post_type'		=> 'talleres',
+		'posts_per_page'	=> 40,
+		'paged'				=> $page_num,
+		'meta_query' => array (
+			array(
+				'key'       => 'range_date_picker_0_end_day',
+				'value'     => $today,
+				'compare'   => '>=',
+			)
+		),
+		'meta_key'		=> 'order_day',
+		'orderby'		=> 'meta_value_num',
+		'order'			=> 'ASC',
+	);
+
 	$filter = new WP_Query( $args );
+
+	$all_post_ids[] = array(
+		'page_request' => $page_num,
+		'total_results' => $filter->post_count
+	);
+
 	if ( $filter->have_posts() ) : while ( $filter->have_posts() ) : $filter->the_post();
 		$img_id = get_post_thumbnail_id();
 		$img_url = wp_get_attachment_image_src( $img_id, 'medium' );
