@@ -4,7 +4,7 @@
 	get_header();
 
 	$post_slug = $post->post_name;
-	$today = current_time('Ym\0\1');
+	$today = current_time('Ymd');
 	// $todayNice = date_i18n( 'l, M d Y', strtotime( $_GET['fecha'] ) );
 	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
 	// echo $paged;
