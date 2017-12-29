@@ -463,8 +463,17 @@ h2.area_title
 			.loader
 				width: 15% !important
 				padding: 1em !important
+				@media screen and (max-width: 50em)
+					width: 20% !important
+				@media screen and (max-width: 30em)
+					width: 40% !important
+					border-left: .1rem solid $black
 			.flexbuttons
 				width: 85%
+				@media screen and (max-width: 50em)
+					width: 80%
+				@media screen and (max-width: 30em)
+					width: 100%
 	.input.wrap
 		position: relative
 	input[type="submit"]
@@ -488,6 +497,14 @@ h2.area_title
 		+transition(width .2s ease, padding .2s ease)
 		img
 			height: 100%
+			@media screen and (max-width: 40em)
+				width: 100%
+				height: auto
+				margin-top: 1.25em
+			@media screen and (max-width: 30em)
+				margin: 0
+				height: 100%
+				width: auto
 	.flexbuttons
 		width: 100%
 		+transition(width .2s ease)
@@ -508,6 +525,9 @@ h2.area_title
 		font-size: .5em
 		font-weight: bold
 		text-transform: uppercase
+		@media screen and (max-width: 30em)
+			top: 1em
+			left: 1.5em
 	&.select:after
 		content: ''
 		background: url('../img/arrow.png') no-repeat center
@@ -520,6 +540,9 @@ h2.area_title
 		height: 1em
 		transform: rotate(90deg)
 		transition: transform .5s ease
+		@media screen and (max-width: 30em)
+			top: .3em
+			right: .5em
 	&.select:hover::after
 		transform: rotate(270deg)
 	&.active
@@ -541,10 +564,16 @@ h2.area_title
 			width: 100%
 			height: auto
 			display: block
+		@media screen and (max-width: 30em)
+			top: .2em
+			right: .2em
 	&.submit_button:hover button[type="submit"]
 		top: 1.1em
 		width: 1.5em
 		border-color: rgba(0, 0, 0, 1)
+		@media screen and (max-width: 30em)
+			top: 1.4em
+			right: .5em
 
 
 
@@ -729,6 +758,8 @@ form#local_searchform
 			width: 69%
 			display: inline-block
 			padding-left: 1em
+			@media screen and (max-width: 30em)
+				width: 100%
 		.big.cta
 			width: 50%
 			height: 4em
@@ -744,6 +775,8 @@ form#local_searchform
 			text-decoration: underline
 			a
 				color: $gray
+			@media screen and (max-width: 30em)
+				padding-top: 0
 	&.white
 		background: $white
 		padding: 4em 0
@@ -839,3 +872,65 @@ form#local_searchform
 		font-size: 2em
 		font-weight: bold
 		margin-bottom: 1em
+
+
+
+// Newsletter modal
+.modal_overlay
+	position: fixed
+	background: rgba(0, 0, 0, 0.5)
+	width: 100vw
+	height: 100vh
+	z-index: 100000
+	top: 0
+	left: 0
+	+transition(background .5s ease)
+	&.open
+		display: block
+		.modal.newsletter
+			bottom: -1px
+
+
+.modal.newsletter
+	background: $white
+	width: 40em
+	border: 1px solid $gray
+	padding: 2em
+	position: absolute
+	left: 50%
+	transform: translate(-50%)
+	bottom: -100vh
+	+transition(bottom .5s ease)
+	h2
+		font-size: 1.6em
+		font-weight: bold
+		margin: .4em 0 2em
+	input[type="email"]
+		display: block
+		border: none
+		border-bottom: 1px solid
+		margin-bottom: 2em
+		padding: 0.4em 0
+		font-size: 1.6em
+	label
+		font-family: $Helvetica
+		color: $gray
+	form ul
+		columns: 2
+		font-weight: bold
+		margin: 1em 0 2em
+		input
+			vertical-align: middle
+			margin: .2em .2em .5em 0
+	input[type="submit"]
+		border: none
+		background: $orange
+		color: $white
+		font-weight: bold
+		+font-smoothing()
+	a.close
+		top: inherit
+		bottom: 2.5em
+		right: 2em
+		&:before, &.close:after
+			border-top: .3rem solid #000

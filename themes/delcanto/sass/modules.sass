@@ -472,6 +472,8 @@ span
 				+border-radius(.4rem)
 				+font-smoothing()
 				margin-right: .5em
+				@media screen and (max-width: 30em)
+					display: none
 			&:hover
 				border-color: $orange
 			& + div.active
@@ -483,6 +485,8 @@ span
 				border-left: none
 	.input.wrap
 		flex: 1
+		@media screen and (max-width: 30em)
+			padding: .75em
 	& + .flexbuttons > div
 		border-top: none
 
@@ -527,12 +531,17 @@ span
 		border: none
 		+ellipsis()
 		cursor: pointer
+		@media screen and (max-width: 30em)
+			padding: .75em .75em 0
 	input[type="radio"]
 		opacity: 0
 	select::-ms-expand
 		display: none
 	select option
 		color: $black
+
+
+
 
 
 
